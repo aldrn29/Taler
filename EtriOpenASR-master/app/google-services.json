@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "682238001715",
+    "firebase_url": "https://taler-js.firebaseio.com",
+    "project_id": "taler-js",
+    "storage_bucket": "taler-js.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682238001715:android:be7ad4f01340cef21a1946",
+        "android_client_info": {
+          "package_name": "etri.etriopenasr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682238001715-km19p4u49htpl9nh4orbpkttisrnp7al.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfMHgTmoCiedSEao7H2J8NBABu_B-N7ok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682238001715-km19p4u49htpl9nh4orbpkttisrnp7al.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

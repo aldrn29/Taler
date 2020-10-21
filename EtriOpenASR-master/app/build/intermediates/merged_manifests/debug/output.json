@@ -21,7 +21,7 @@
       "properties": {
         "packageId": "etri.etriopenasr",
         "split": "",
-        "minSdkVersion": "15"
+        "minSdkVersion": "16"
       }
     }
   ]
