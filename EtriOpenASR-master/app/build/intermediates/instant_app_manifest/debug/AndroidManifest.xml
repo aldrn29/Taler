@@ -31,12 +31,14 @@
         android:testOnly="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
-        <activity android:name="etri.etriopenasr.MainActivity" >
+        <activity android:name="etri.etriopenasr.Menu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name="etri.etriopenasr.MainActivity" >
         </activity>
 
         <service
