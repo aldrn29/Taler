@@ -1,10 +1,17 @@
 {
     "logs": [
         {
+<<<<<<< HEAD
             "outputFile": "C:\\Users\\aldrn\\Documents\\Git\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-watch-v21\\values-watch-v21.xml",
             "map": [
                 {
                     "source": "C:\\Users\\aldrn\\.gradle\\caches\\transforms-2\\files-2.1\\7929aa55933cf837dbf4c0f31ed63a75\\appcompat-1.0.0\\res\\values-watch-v21\\values-watch-v21.xml",
+=======
+            "outputFile": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-watch-v21\\values-watch-v21.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\USER\\.gradle\\caches\\transforms-2\\files-2.1\\7929aa55933cf837dbf4c0f31ed63a75\\appcompat-1.0.0\\res\\values-watch-v21\\values-watch-v21.xml",
+>>>>>>> 55ad24ac2b69afa537a64b328d071a15abec61b6
                     "from": {
                         "startLines": "2,6,10",
                         "startColumns": "4,4,4",

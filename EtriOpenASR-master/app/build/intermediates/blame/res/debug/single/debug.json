@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "merged": "C:\\Users\\aldrn\\Documents\\Git\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\aldrn\\Documents\\Git\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },
@@ -42,5 +43,49 @@
     {
         "merged": "C:\\Users\\aldrn\\Documents\\Git\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\aldrn\\Documents\\Git\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+=======
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\USER\\Documents\\Taler\\EtriOpenASR-master\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+>>>>>>> 55ad24ac2b69afa537a64b328d071a15abec61b6
     }
 ]
