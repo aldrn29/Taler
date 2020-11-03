@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
