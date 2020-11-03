@@ -17,9 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("one"));
-        tabLayout.addTab(tabLayout.newTab().setText("two"));
-        tabLayout.addTab(tabLayout.newTab().setText("three"));
+        //Todo setIcon()으로 바꾸면 좋겠음
+        tabLayout.addTab(tabLayout.newTab().setText("Profile"));
+        tabLayout.addTab(tabLayout.newTab().setText("Contents"));
+        tabLayout.addTab(tabLayout.newTab().setText("Setting"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
