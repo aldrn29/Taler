@@ -40,6 +40,22 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
+
+        <!-- TODO 분리된 두개의 선택지 text로 우선 한다.-->
+
+        <ImageButton
+            android:id="@+id/speech_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button_speech_story"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/app_name" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
