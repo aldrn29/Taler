@@ -19,7 +19,7 @@
         <activity android:name=".StoryActivity"></activity>
         <activity android:name=".MediaActivity"></activity>
 
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".LoginActivity">
 
         <meta-data
             android:name="com.google.android.actions"
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".RegisterActivity"></activity>
 
     </application>
 
