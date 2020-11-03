@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.taler">
 
     <!-- 인터넷 사용 권한 -->
@@ -15,23 +16,22 @@
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme">
 
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".StoryActivity"></activity>
-        <activity android:name=".MediaActivity"></activity>
+        <!-- Activity -->
+        <activity android:name=".MainActivity">
 
+        </activity>
+        <activity android:name=".StoryActivity"/>
+        <activity android:name=".MediaActivity"/>
         <activity android:name=".LoginActivity">
+            <meta-data android:name="com.google.android.actions" android:resource="@drawable/toggle_btn_play" />
 
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@drawable/toggle_btn_play" />
-
-        <intent-filter>
+            <!-- Start Activity 설정부분 -->
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity"/>
 
     </application>
 

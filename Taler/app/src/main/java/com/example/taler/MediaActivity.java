@@ -1,16 +1,23 @@
 package com.example.taler;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MediaActivity extends AppCompatActivity {
 
     MediaPlayer player;
+    TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,12 @@ public class MediaActivity extends AppCompatActivity {
                     // mp3 file create
                     player = MediaPlayer.create(MediaActivity.this, R.raw.friends_101);
                     player.start();
+
+                    // txt
+                    text = findViewById(R.id.textView1);
+                    String s = readTxtfile(MediaActivity.this, R.raw.friends_);
+                    text.setText(s);
+
                 } else {
                     view.setSelected(false);
                     player.pause();
@@ -52,5 +65,24 @@ public class MediaActivity extends AppCompatActivity {
                 if (player != null) player.seekTo(0);
             }
         });
+    }
+
+    public String readTxtfile(Context context, int resId) {
+        String result = "";
+        InputStream txtResource = context.getResources().openRawResource(resId);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
+        try {
+            i = txtResource.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = txtResource.read();
+            }
+            result = new String(byteArrayOutputStream.toByteArray(), "UTF-8");
+            txtResource.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result.trim();
     }
 }
