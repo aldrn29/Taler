@@ -44,20 +44,6 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        ImageButton imageButton4 = view.findViewById(R.id.imageButton4);
-        imageButton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-        ImageButton imageButton5 = view.findViewById(R.id.imageButton5);
-        imageButton5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
         return view;
     }
 
