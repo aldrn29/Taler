@@ -31,7 +31,6 @@
             app:srcCompat="@drawable/alice_drink_or_not" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 선택지 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
@@ -55,6 +54,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:contentDescription="@string/app_name" />
+<!--임시버튼-->
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start"
+            android:layout_marginBottom="35dp"
+            android:layout_marginLeft="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/speech_button"
+            app:layout_constraintStart_toStartOf="parent" />
+
+<!--        녹음된 음성 확인-->
+        <TextView
+            android:id="@+id/textResult"
+            android:layout_width="380dp"
+            android:layout_height="50dp"
+            android:layout_weight="0"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/background_light"
+            android:inputType="textMultiLine"
+            android:text="Check the result"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
