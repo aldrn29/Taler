@@ -15,23 +15,22 @@
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme">
 
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".StoryActivity"></activity>
-        <activity android:name=".MediaActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".StoryActivity" />
+        <activity android:name=".MediaActivity" />
 
         <activity android:name=".LoginActivity">
-
-        <meta-data
-            android:name="com.google.android.actions"
-            android:resource="@drawable/toggle_btn_play" />
-
-        <intent-filter>
+            <meta-data
+                android:name="com.google.android.actions"
+                android:resource="@drawable/toggle_btn_play" />
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
 
     </application>
 
