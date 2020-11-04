@@ -40,7 +40,6 @@ public class MediaActivity extends AppCompatActivity {
                 if (!view.isSelected()) {
                     view.setSelected(true);
 
-                    /*싱크 맞추기*/
                     // mp3 file create
                     player = MediaPlayer.create(MediaActivity.this, R.raw.friends_101);
                     player.start();
