@@ -41,6 +41,8 @@ public class MenuFragment extends Fragment {
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PopTestActivity.class);
+                startActivity(intent);
             }
         });
 

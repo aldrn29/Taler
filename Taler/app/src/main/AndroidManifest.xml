@@ -2,37 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.taler">
-
     <!-- 인터넷 사용 권한 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
-
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme">
 
+        <activity android:name=".PopTestActivity"></activity>
         <!-- Activity -->
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".StoryActivity"/>
-        <activity android:name=".MediaActivity"/>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".StoryActivity" />
+        <activity android:name=".MediaActivity" />
         <activity android:name=".LoginActivity">
-            <meta-data android:name="com.google.android.actions" android:resource="@drawable/toggle_btn_play" />
+            <meta-data
+                android:name="com.google.android.actions"
+                android:resource="@drawable/toggle_btn_play" />
 
             <!-- Start Activity 설정부분 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"/>
-
+        <activity android:name=".RegisterActivity" />
     </application>
 
 </manifest>
