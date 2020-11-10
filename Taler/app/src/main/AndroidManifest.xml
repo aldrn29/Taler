@@ -18,7 +18,8 @@
         <activity android:name=".PopTestActivity"></activity>
         <!-- Activity -->
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".StoryActivity" />
+        <activity android:name=".CardListActivity"></activity>
+        <activity android:name=".StoryCardActivity" />
         <activity android:name=".MediaActivity" />
         <activity android:name=".LoginActivity">
             <meta-data

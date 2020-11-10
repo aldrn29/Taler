@@ -32,7 +32,7 @@ public class MenuFragment extends Fragment {
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), StoryActivity.class);
+                Intent intent = new Intent(getActivity(), CardListActivity.class);
                 startActivity(intent);
             }
         });

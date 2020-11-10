@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class StoryActivity extends AppCompatActivity {
+public class StoryCardActivity extends AppCompatActivity {
     int CHECK_NUM = 0; // 스위치 변경확인
 
     @Override
