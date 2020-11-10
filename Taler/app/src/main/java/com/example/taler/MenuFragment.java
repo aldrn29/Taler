@@ -36,7 +36,7 @@ public class MenuFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        //임시로 사용하는 메뉴.
         ImageButton imageButton3 = view.findViewById(R.id.imageButton3);
         imageButton3.setOnClickListener(new View.OnClickListener() {
             @Override
