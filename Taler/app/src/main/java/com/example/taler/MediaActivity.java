@@ -25,7 +25,6 @@ public class MediaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_media);
 
         /*
-        * 되잖아 멍충아
         * start(): 재생 시작/ stop(): 정지/ prepare(): 준비/ pause(): 일시 정지
         * release(): 메모리 해제/ seekTo(): 재생 위치 지정/ getCurrentPosition(): 재생 위치/ getDuration(): 재생 시간
         * getVideoHeight():영상 높이값/ getVideoWidth():영상 너비값/ setLooping():반복 설정/ setVolumn():볼륨 설정
