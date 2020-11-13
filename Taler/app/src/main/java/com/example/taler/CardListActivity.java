@@ -20,6 +20,8 @@ public class CardListActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true); // 모은 아이템뷰의 사이즈가 고정되어있음
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this); //layoutManager 생성
+        layoutManager.setAutoMeasureEnabled(false); //레이아웃 메니저가 아이템뷰의 폭을 임의로 조정하지 않도록 설정
+
         recyclerView.setLayoutManager(layoutManager); //연결
 
         RecyclerView.Adapter adapter = new CardListRecyclerViewAdapter(); // 객체생성
