@@ -18,9 +18,37 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <!-- 제목 -->
+        <TextView
+            android:id="@+id/textView_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="#1"
+            android:textSize="20dp"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout1"
+            app:layout_constraintBottom_toTopOf="@id/videoView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <!-- mp4파일 -->
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintHeight_percent="0.6"
+            app:layout_constraintTop_toBottomOf="@id/textView_number"
+            app:layout_constraintBottom_toBottomOf="@id/constraintLayout1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 자막 -->
+    <!-- 텍스트 삽입 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
@@ -31,16 +59,29 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textView_script"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="30dp"
+            android:textSize="20dp"
             app:layout_constraintWidth_percent="0.8"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/textView_result"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/textView_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20dp"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintTop_toBottomOf="@id/textView_script"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
@@ -52,24 +93,23 @@
         android:background="@drawable/button_change"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton_replay"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_record"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"/>
 
     <ImageButton
-        android:id="@+id/imageButton_replay"
+        android:id="@+id/imageButton_record"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginRight="30dp"
         android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
+        android:background="@drawable/button_record"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        app:srcCompat="@drawable/button_replay" />
+        app:layout_constraintVertical_bias="0.4"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

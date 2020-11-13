@@ -27,20 +27,23 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-/*
-* How to use:
-* 1. 녹음 시작/끝 버튼 (Button), 결과 띄울 (textView) 생성
-* 2. ASRmasterAPI asr = new ASRmasterAPI(Button, textView);
-* */
+
+/**
+ * How to use:
+ *
+ * 1. ImageButton - 녹음 시작/끝 버튼 (버튼 이미지 토글기능 갖춰야 함 (ex: button_record.xml))
+ * 2. TextView
+ * 3. ASRmasterAPI asr = new ASRmasterAPI(Button, textView);
+ */
+
 public class ASRmasterAPI implements View.OnClickListener {
 
     String accessKey ="508e34e6-11b3-44c1-a47d-d1a1ef4bb69f";
 
     ImageButton buttonStart;
     TextView textResult;
-    Spinner spinnerMode;
 
-    String curMode = "영어발음평가";
+    int curMode;
     String result;
 
     int maxLenSpeech = 16000 * 45;
@@ -49,9 +52,14 @@ public class ASRmasterAPI implements View.OnClickListener {
     boolean isRecording = false;
     boolean forceStop = false;
 
-    public ASRmasterAPI(View button, View text) {
+    /**
+     *
+     * @param mode 0: 한글 인식, 1: 영어 인식, 2: 영어발음평가
+     */
+    public ASRmasterAPI(View button, View text, int mode) {
         buttonStart = (ImageButton) button;
         textResult = (TextView) text;
+        curMode = mode;
 
         buttonStart.setOnClickListener(this);
     }
@@ -110,29 +118,30 @@ public class ASRmasterAPI implements View.OnClickListener {
                 // 녹음이 시작되었음(버튼)
                 case 1:
                     textResult.setText(v);
-                    //buttonStart.setText("PUSH TO STOP");
+                    buttonStart.setSelected(true);
                     break;
                 // 녹음이 정상적으로 종료되었음(버튼 또는 max time)
                 case 2:
                     textResult.setText(v);
+                    buttonStart.setSelected(false);
                     buttonStart.setEnabled(false);
                     break;
                 // 녹음이 비정상적으로 종료되었음(마이크 권한 등)
                 case 3:
                     textResult.setText(v);
-                    //buttonStart.setText("PUSH TO START");
+                    buttonStart.setSelected(false);
                     break;
                 // 인식이 비정상적으로 종료되었음(timeout 등)
                 case 4:
                     textResult.setText(v);
+                    buttonStart.setSelected(false);
                     buttonStart.setEnabled(true);
-                    //buttonStart.setText("PUSH TO START");
                     break;
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
                 case 5:
                     textResult.setText(StringEscapeUtils.unescapeJava(result));
+                    buttonStart.setSelected(false);
                     buttonStart.setEnabled(true);
-                    //buttonStart.setText("PUSH TO START");
                     break;
             }
             super.handleMessage(msg);
@@ -208,13 +217,13 @@ public class ASRmasterAPI implements View.OnClickListener {
         Gson gson = new Gson();
 
         switch (curMode) {
-            case "한국어인식":
+            case 0: // "한국어인식"
                 languageCode = "korean";
                 break;
-            case "영어인식":
+            case 1: // "영어인식"
                 languageCode = "english";
                 break;
-            case "영어발음평가":
+            case 2: // "영어발음평가"
                 languageCode = "english";
                 openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Pronunciation";
                 break;
