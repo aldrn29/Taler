@@ -1,7 +1,6 @@
 package com.example.taler;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -19,20 +18,32 @@ public class MediaActivity extends AppCompatActivity {
     MediaPlayer player;
     TextView text;
 
+    ASRmasterAPI asr;
+    ImageButton playButton;
+    ImageButton recordButton;   // 녹음 start, end
+    TextView textResult;        // 녹음 결과
+    int mode;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media);
 
+        playButton = findViewById(R.id.imageButton_play);
+        recordButton = findViewById(R.id.imageButton_record);
+        textResult = findViewById(R.id.textView_result);
+
+        asr = new ASRmasterAPI(recordButton, textResult, 1);
+
         /*
         * start(): 재생 시작/ stop(): 정지/ prepare(): 준비/ pause(): 일시 정지
         * release(): 메모리 해제/ seekTo(): 재생 위치 지정/ getCurrentPosition(): 재생 위치/ getDuration(): 재생 시간
         * getVideoHeight():영상 높이값/ getVideoWidth():영상 너비값/ setLooping():반복 설정/ setVolumn():볼륨 설정
-        * */
+        */
 
         // Button Event: play
-        final ImageButton play = findViewById(R.id.imageButton_play);
-        play.setOnClickListener(new View.OnClickListener() {
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -45,7 +56,7 @@ public class MediaActivity extends AppCompatActivity {
                     player.start();
 
                     // txt
-                    text = findViewById(R.id.textView1);
+                    text = findViewById(R.id.textView_script);
                     String s = readTxtfile(MediaActivity.this, R.raw.friends_);
                     text.setText(s);
 
@@ -53,18 +64,10 @@ public class MediaActivity extends AppCompatActivity {
                     view.setSelected(false);
                     player.pause();
                 }
-
             }
         });
 
-        // Button Event: replay
-        ImageButton replay = findViewById(R.id.imageButton_replay);
-        replay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (player != null) player.seekTo(0);
-            }
-        });
+
     }
 
     public String readTxtfile(Context context, int resId) {
