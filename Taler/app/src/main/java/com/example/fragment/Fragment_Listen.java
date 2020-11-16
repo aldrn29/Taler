@@ -1,10 +1,7 @@
 package com.example.fragment;
 
-import android.app.Activity;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,50 +11,36 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.taler.MainActivity;
-import com.example.taler.PopTestActivity;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.example.taler.R;
-import com.google.firebase.storage.UploadTask;
 
 import android.util.Log;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import android.media.PlaybackParams;
+
+import org.w3c.dom.Text;
 
 public class Fragment_Listen extends Fragment {
 
     MediaPlayer player;
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
+    //StorageReference storageRef = storage.getReference();
     private int pausePosition=0;
-
-    //재생속도--> API 23 이상,setPlaybackParams 메소드 사용 가능.
-    float speed = 1.0f;
-    //boolean changeSpd = false;
 
     //로그를 찍어보기 위한 것
     private static final String TAG = "Fragment_Listen";
+    //첫페이지 mp3 url
+    public String url_default = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-mp3%2F1.mp3?alt=media&token=file_1";
+    int position = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -85,33 +68,17 @@ public class Fragment_Listen extends Fragment {
         //------------------------------------첫페이지 default값 ------------------------------------//
         //첫 페이지의 경우 버튼 누르기 전 url 전달이 되어야 하기 때문에 직접 넣었음.
         play.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                String url_default = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-mp3%2F1.mp3?alt=media&token=file_1";
-                if(player !=null){
-                    player.release();
-                }
-                try{
-                    player = new MediaPlayer();
-                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    if (Integer.parseInt(textCounter.getText().toString()) == 1){
-
-                        player.setDataSource(url_default); //사이트 url
-                        player.prepare();
-                        player.start();
-
-                    }
-                    Toast.makeText(getActivity(),"Music player started",Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }});
+                playAudio(url_default);
+        }});
         //일시정지 버튼은 만들자. 아직 작동 안됨.----------------------------------------------//
 
         pause.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                pauseAudio();
+                /*
                 if(player != null) {
                     player.pause();
                     pausePosition= player.getCurrentPosition();
@@ -122,103 +89,38 @@ public class Fragment_Listen extends Fragment {
                     player.seekTo(pausePosition);
                     player.start();
                 }
+
+                 */
             }
         });
         slower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url_default = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-mp3%2F1.mp3?alt=media&token=file_1";
-                if (player != null) {
-                    try {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            player.setDataSource(url_default);
-                            PlaybackParams playbackParams = new PlaybackParams();
-                            player.prepare();
-
-                            speed= 0.5f;
-                            playbackParams.setSpeed(speed);
-                            player.setPlaybackParams(playbackParams);
-                            player.start();
-                        } else {
-                            Log.d("printfError", "error in the speed controller");
-                        }
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }}});
+                slow_player(0.5f, url_default);
+                Toast.makeText(getActivity(), "0.5배속", Toast.LENGTH_SHORT).show();
+            }});
         slow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url_default = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-mp3%2F1.mp3?alt=media&token=file_1";
-                if (player != null) {
-                    try {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            player.setDataSource(url_default);
-                            PlaybackParams playbackParams = new PlaybackParams();
-                            player.prepare();
-
-                            speed= 0.75f;
-                            playbackParams.setSpeed(speed);
-                            player.setPlaybackParams(playbackParams);
-                            player.start();
-                        } else {
-                            Log.d("printfError", "error in the speed controller");
-                        }
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }}});
-
+                slow_player(0.75f,url_default);
+                Toast.makeText(getActivity(), "0.75배속", Toast.LENGTH_SHORT).show();
+            }});
 
         //첫페이지 가사 default값
         kor_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Thread(new Runnable(){
-                    TextView kor_text = getActivity().findViewById(R.id.tv_translated);
-                    public void run(){
-                        final ArrayList<String> urls=new ArrayList<String>(); //to read each line
-                        try {
-                            // Create a URL for the desired page
-                            String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-kor%2F";
-                            String full_kor_common_url = kor_common_url+"kor_1.txt?alt=media&token=kor_1";
-
-                            URL url = new URL(full_kor_common_url); //My text file location
-                            //First open the connection
-                            HttpURLConnection conn=(HttpURLConnection) url.openConnection();
-                            conn.setConnectTimeout(60000); // timing out in a minute
-
-                            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                            kor_text = getActivity().findViewById(R.id.tv_translated);
-
-                            String str;
-                            while ((str = in.readLine()) != null) {
-                                urls.add(str);
-                            }
-                            in.close();
-                        } catch (Exception e) {
-                            Log.d("MyTag",e.toString());
-                        }
-                        //since we are in background thread, to post results we have to go back to ui thread. do the following for that
-                        getActivity().runOnUiThread(new Runnable(){
-                            public void run(){
-                                kor_text.setText(urls.get(0)); // My TextFile has 3 lines
-                            }
-                        });
-                    }
-                }).start();
-                Toast.makeText(getActivity(),"번역 가사",Toast.LENGTH_SHORT).show();
+                 TextView kor_text = getActivity().findViewById(R.id.tv_translated);
+                    // Create a URL for the desired page
+                    final String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-kor%2F";
+                    final String full_kor_common_url = kor_common_url+"kor_1.txt?alt=media&token=kor_1";
+                    find_kor(kor_text, full_kor_common_url);
+                    Toast.makeText(getActivity(), "번역 가사", Toast.LENGTH_LONG).show();
             }
         });
 
         //-------------------------페이지 수 증가-> 페이지번호가 url에 반영 -> 해당 번째 구절 재생-----//
         btnIncrease.setOnClickListener(new Button.OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
@@ -227,29 +129,16 @@ public class Fragment_Listen extends Fragment {
                 final String t1 = textCounter.getText().toString();
                 String fileName = t1+".mp3";
 
-                final String common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+ directoryName[0] +"%2F";
+                String common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+ directoryName[0] +"%2F";
                 final String url = common_url + fileName+"?alt=media&token=file_"+t1;
 
-                play.setOnClickListener(new View.OnClickListener() {
+                play.setOnClickListener(new View.OnClickListener(){
                     @Override
-                    public void onClick(View view) {
-                        if(player ==null){
-                            player.release();
-                        }
-                        try{
-                            player = new MediaPlayer();
-                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            player.setDataSource(url); //사이트 url
-                            player.prepare();
-                            player.start();
-
-                        }catch(Exception e)
-                        {
-                            e.printStackTrace();
-                        }
-                        Toast.makeText(getActivity(),"Music player started",Toast.LENGTH_SHORT).show();
+                    public void onClick(View v) {
+                        playAudio(url);
                     }
                 });
+
                 //일시정지 버튼은 만들자. 아직 작동 안됨.----------------------------------------------//
                 Button pause = getView().findViewById(R.id.btn_delay);
                 pause.setOnClickListener(new View.OnClickListener(){
@@ -257,13 +146,11 @@ public class Fragment_Listen extends Fragment {
                     public void onClick(View v){
                         if(player != null) {
                             player.pause();
-                            pausePosition= player.getCurrentPosition();
-                            player.pause();
+                            //player.pause();
                             Log.d("pause check",":"+pausePosition);
                         }
                         if(!player.isPlaying()){
-                            player.seekTo(pausePosition);
-                            player.start();
+                            resumeAudio();
                         }
                     }
                 });
@@ -272,49 +159,15 @@ public class Fragment_Listen extends Fragment {
                 slower.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (player != null) {
-                            try {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                    player.setDataSource(url);
-                                    PlaybackParams playbackParams = new PlaybackParams();
-                                    player.prepare();
-
-                                    speed= 0.5f;
-                                    playbackParams.setSpeed(speed);
-                                    player.setPlaybackParams(playbackParams);
-                                    player.start();
-                                } else {
-                                    Log.d("printfError", "error in the speed controller");
-                                }
-                            } catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }}});
+                        slow_player(0.5f,url);
+                        Toast.makeText(getActivity(), "0.5배속", Toast.LENGTH_SHORT).show();
+                }});
                 slow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (player != null) {
-                            try {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                    player.setDataSource(url);
-                                    PlaybackParams playbackParams = new PlaybackParams();
-                                    player.prepare();
-
-                                    speed= 0.75f;
-                                    playbackParams.setSpeed(speed);
-                                    player.setPlaybackParams(playbackParams);
-                                    player.start();
-                                } else {
-                                    Log.d("printfError", "error in the speed controller");
-                                }
-                            } catch (Exception e){
-                                e.printStackTrace();
-                            }
-                    }}});
+                        slow_player(0.75f,url);
+                        Toast.makeText(getActivity(), "0.75배속", Toast.LENGTH_SHORT).show();
+                }});
 
                 //-----------------------번역 가사-시작----------------------------------------------//
                 final String kor_fileName = "kor_"+textCounter.getText().toString();
@@ -322,52 +175,19 @@ public class Fragment_Listen extends Fragment {
                 kor_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        TextView kor_text = getActivity().findViewById(R.id.tv_translated);
+                        // Create a URL for the desired page
+                        String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-kor%2F";
+                        String full_kor_common_url = kor_common_url + kor_fileName + ".txt?alt=media&token=" + kor_fileName;
 
-                        new Thread(new Runnable() {
-                            TextView kor_text = getActivity().findViewById(R.id.tv_translated);
-                            public void run() {
-                                final ArrayList<String> urls = new ArrayList<String>(); //to read each line
-                                try {
-                                    // Create a URL for the desired page
-                                    String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-kor%2F";
-                                    String full_kor_common_url = kor_common_url + kor_fileName + ".txt?alt=media&token=" + kor_fileName;
+                        find_kor(kor_text, full_kor_common_url);
+                        Toast.makeText(getActivity(), "번역 가사", Toast.LENGTH_LONG).show();
 
-                                    URL url = new URL(full_kor_common_url); //My text file location
-                                    //First open the connection
-                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                                    conn.setConnectTimeout(60000); // timing out in a minute
-
-                                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                                    kor_text = getActivity().findViewById(R.id.tv_translated);
-
-                                    String str;
-                                    while ((str = in.readLine()) != null) {
-                                        urls.add(str);
-                                    }
-                                    in.close();
-                                } catch (Exception e) {
-                                    Log.d("MyTag", e.toString());
-                                }
-                                //since we are in background thread, to post results we have to go back to ui thread. do the following for that
-                                getActivity().runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        if(kor_text.getText()!=" "){
-                                            kor_text.setText("hint 지우기");
-                                        }
-                                        kor_text.setText(urls.get(0)); // My TextFile has 3 lines
-                                    }
-                                });
-                            }
-                        }).start();
-
-                        Toast.makeText(getActivity(), "번역 가사", Toast.LENGTH_SHORT).show();
                     }
                     //다음 페이지로 넘어가면 사라지게.
 
                 });
-                //-----------------------번역 가사--끝-----------------------------------------------//
-
+                //-----------------------번역 가사--끝----------------------------------------------//
                 if (count == 16) {
                     textCounter.setText(Integer.toString(16));
                     Toast.makeText(getActivity(), "마지막 페이지 입니다", Toast.LENGTH_LONG).show();
@@ -389,19 +209,8 @@ public class Fragment_Listen extends Fragment {
                 play.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(player !=null){
-                            player.release();
-                        }
-                        try{
-                            player = new MediaPlayer();
-                            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                            player.setDataSource(url); //사이트 url
-                            player.prepare();
-                            player.start();
-                        }catch(Exception e){e.printStackTrace();}
-                        Toast.makeText(getActivity(),"Music player started",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        playAudio(url);
+                }});
 
                 //일시정지 버튼은 만들자. 아직 작동 안됨.----------------------------------------------//
                 Button pause = getView().findViewById(R.id.btn_delay);
@@ -425,49 +234,14 @@ public class Fragment_Listen extends Fragment {
                 slower.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (player != null) {
-                            try {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                    player.setDataSource(url);
-                                    PlaybackParams playbackParams = new PlaybackParams();
-                                    player.prepare();
-
-                                    speed= 0.5f;
-                                    playbackParams.setSpeed(speed);
-                                    player.setPlaybackParams(playbackParams);
-                                    player.start();
-                                } else {
-                                    Log.d("printfError", "error in the speed controller");
-                                }
-                            } catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }}});
+                        slow_player(0.5f,url);
+                }});
                 slow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (player != null) {
-                            try {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                                    player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                    player.setDataSource(url);
-                                    PlaybackParams playbackParams = new PlaybackParams();
-                                    player.prepare();
-
-                                    speed= 0.75f;
-                                    playbackParams.setSpeed(speed);
-                                    player.setPlaybackParams(playbackParams);
-                                    player.start();
-                                } else {
-                                    Log.d("printfError", "error in the speed controller");
-                                }
-                            } catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }}});
+                        slow_player(0.75f,url);
+                    }
+                });
 
                 //-----------------------번역 가사-시작----------------------------------------------//
                 final String kor_fileName = "kor_"+textCounter.getText().toString();
@@ -475,46 +249,13 @@ public class Fragment_Listen extends Fragment {
                 kor_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        TextView kor_text = getActivity().findViewById(R.id.tv_translated);
+                        // Create a URL for the desired page
+                        String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-kor%2F";
+                        String full_kor_common_url = kor_common_url + kor_fileName + ".txt?alt=media&token=" + kor_fileName;
 
-                        new Thread(new Runnable(){
-                            TextView kor_text = getActivity().findViewById(R.id.tv_translated);
-
-                            public void run(){
-                                final ArrayList<String> urls=new ArrayList<String>(); //to read each line
-                                try {
-                                    // Create a URL for the desired page
-                                    String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/love-yourself-kor%2F";
-                                    String full_kor_common_url = kor_common_url+kor_fileName+".txt?alt=media&token="+kor_fileName;
-
-                                    URL url = new URL(full_kor_common_url); //My text file location
-                                    //First open the connection
-                                    HttpURLConnection conn=(HttpURLConnection) url.openConnection();
-                                    conn.setConnectTimeout(60000); // timing out in a minute
-
-                                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                                    kor_text = getActivity().findViewById(R.id.tv_translated);
-
-                                    String str;
-                                    while ((str = in.readLine()) != null) {
-                                        urls.add(str);
-                                    }
-                                    in.close();
-                                } catch (Exception e) {
-                                    Log.d("MyTag",e.toString());
-                                }
-                                //since we are in background thread, to post results we have to go back to ui thread. do the following for that
-                                getActivity().runOnUiThread(new Runnable(){
-                                    public void run(){
-                                        if(kor_text.getText()!=" "){
-                                            kor_text.setText("hint 지우기");
-                                        }
-                                        kor_text.setText(urls.get(0)); // My TextFile has 3 lines
-                                    }
-                                });
-                            }
-                        }).start();
-                        Toast.makeText(getActivity(),"번역 가사",Toast.LENGTH_SHORT).show();
+                        find_kor(kor_text, full_kor_common_url);
+                        Toast.makeText(getActivity(), "번역 가사", Toast.LENGTH_LONG).show();
                     }
                 });
                 //-----------------------번역 가사--끝-----------------------------------------------//
@@ -527,6 +268,100 @@ public class Fragment_Listen extends Fragment {
         // Inflate the layout for this fragment
         return root;
     }
+    private void playAudio(String url) {
+        try {
+            closePlayer();
+
+            player = new MediaPlayer();
+            player.setDataSource(url);
+            player.prepare();
+            player.start();
+
+            Toast.makeText(getActivity(), "재생 시작됨.", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //
+    private void pauseAudio() {
+        if (player != null) {
+            position = player.getCurrentPosition();
+            player.pause();
+
+            Toast.makeText(getActivity(), "일시정지됨.", Toast.LENGTH_SHORT).show();
+         }
+    }
+
+    private void resumeAudio() {
+        if (player != null && !player.isPlaying()) {
+            player.seekTo(position);
+            player.start();
+            Toast.makeText(getActivity(), "재시작됨.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void stopAudio() {
+        if(player != null && player.isPlaying()){
+            player.stop();
+            Toast.makeText(getActivity(), "중지됨.", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void closePlayer() {
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+    }
+    public void slow_player(float speed, String url){
+        if (player != null) {
+            try {
+                closePlayer();
+                player = new MediaPlayer();
+                player.setDataSource(url);
+                PlaybackParams playbackParams = new PlaybackParams();   //재생속도--> API 23 이상,setPlaybackParams 메소드 사용 가능.
+                playbackParams.setSpeed(speed);
+                player.setPlaybackParams(playbackParams);
+                player.prepare();
+                player.start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void find_kor(final TextView text, final String url_input){
+        new Thread(new Runnable() {
+            public void run() {
+                final ArrayList<String> urls = new ArrayList<String>(); //to read each line
+                try {
+
+                    URL url = new URL(url_input); //My text file location
+                    //First open the connection
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setConnectTimeout(60000); // timing out in a minute
+
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String str;
+                    while ((str = in.readLine()) != null) {
+                        urls.add(str);
+                    }
+                    in.close();
+                } catch (Exception e) {
+                    Log.d("MyTag", e.toString());
+                }
+                //since we are in background thread, to post results we have to go back to ui thread. do the following for that
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        text.setText(urls.get(0)); // My TextFile has 3 lines
+                    }
+                });
+            }
+        }).start();
+    }
 }
+
+
+
 
 
