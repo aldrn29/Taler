@@ -9,10 +9,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"/>
 
+    <!-- 삭제될 버튼-->
     <Button
-        android:id="@+id/btn_select"
+        android:id="@+id/btn_generate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select"
