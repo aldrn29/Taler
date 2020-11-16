@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme">
 
+        <activity android:name=".MediaMenuActivity"></activity>
         <activity android:name=".PopTestActivity"></activity>
         <!-- Activity -->
         <activity android:name=".MainActivity"></activity>
