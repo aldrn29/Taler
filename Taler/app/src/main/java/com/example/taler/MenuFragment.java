@@ -22,7 +22,7 @@ public class MenuFragment extends Fragment {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MediaActivity.class);
+                Intent intent = new Intent(getActivity(), MediaMenuActivity.class);
                 startActivity(intent);
             }
         });

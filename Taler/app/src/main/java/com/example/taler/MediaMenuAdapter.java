@@ -81,7 +81,6 @@ public class MediaMenuAdapter extends RecyclerView.Adapter<MediaMenuAdapter.View
             layout = itemView.findViewById(R.id.recyclerView_media_menu);
 
             // Genre로 값 받아오게 수정
-            /*
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -102,7 +101,7 @@ public class MediaMenuAdapter extends RecyclerView.Adapter<MediaMenuAdapter.View
                         default: break;
                     }
                 }
-            });*/
+            });
         }
     }
 }
