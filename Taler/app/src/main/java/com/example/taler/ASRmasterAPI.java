@@ -235,7 +235,7 @@ public class ASRmasterAPI implements View.OnClickListener {
         Map<String, String> argument = new HashMap<>();
 
         audioContents = Base64.encodeToString(
-                speechData, 0, lenSpeech*2, Base64.NO_WRAP);
+                speechData, 0, lenSpeech * 2, Base64.NO_WRAP);
 
         argument.put("language_code", languageCode);
         argument.put("audio", audioContents);
@@ -248,7 +248,7 @@ public class ASRmasterAPI implements View.OnClickListener {
         String responBody;
         try {
             url = new URL(openApiURL);
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true);
 
@@ -258,16 +258,22 @@ public class ASRmasterAPI implements View.OnClickListener {
             wr.close();
 
             responseCode = con.getResponseCode();
-            if ( responseCode == 200 ) {
+            if (responseCode == 200) {
                 InputStream is = new BufferedInputStream(con.getInputStream());
                 responBody = readStream(is);
-                return responBody;
-            }
-            else
+                return subString(responBody);
+            } else
                 return "ERROR: " + Integer.toString(responseCode);
         } catch (Throwable t) {
             return "ERROR: " + t.toString();
         }
     }
-}
 
+    public String subString(String str) {
+        int index = str.indexOf("recognized");
+        int startIndex = index + 14;
+        int endIndex = str.indexOf("}", startIndex) - 1;
+
+        return str.substring(startIndex, endIndex);
+    }
+}
