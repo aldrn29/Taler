@@ -1,17 +1,19 @@
-package com.example.taler;
+package com.example.taler.Story;
 
 public class CardDictionary {
     //Todo 이미지 정보 타입
-    private String id;
+    private int id;
     private String title;
-//    private im
+    //    private im
+
+    final String[] title_data = {"Alice", "Harry_potter"};
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -23,8 +25,8 @@ public class CardDictionary {
         this.title = title;
     }
 
-    public CardDictionary(String id, String title) {
-        this.id = id;
-        this.title = title;
+    public CardDictionary(int num) {
+        this.id = num;
+        this.title = title_data[num];
     }
 }

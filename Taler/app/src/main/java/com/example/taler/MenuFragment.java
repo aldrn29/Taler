@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.taler.Story.CardListActivity;
+
 public class MenuFragment extends Fragment {
 
     @Override

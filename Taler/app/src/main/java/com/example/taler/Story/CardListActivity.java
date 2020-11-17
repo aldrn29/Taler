@@ -1,4 +1,4 @@
-package com.example.taler;
+package com.example.taler.Story;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,7 +10,8 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+
+import com.example.taler.R;
 
 import java.util.ArrayList;
 
@@ -36,6 +37,12 @@ public class CardListActivity extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
 
+        int num_of_title = 2;
+        for(int i = 0; i < num_of_title; i++){
+            CardDictionary data = new CardDictionary(i);
+            arrayList.add(data); //리사이클러뷰 마지막줄에 삽입 첫줄에 삽입은 (0, data)
+        }
+
         adapter = new CardListRecyclerViewAdapter(arrayList); // 객체생성
         recyclerView.setAdapter(adapter);
 
@@ -59,20 +66,21 @@ public class CardListActivity extends AppCompatActivity {
             }
         }));
 
-        //현재는 임의 리스트 생성
-        Button insertButton = findViewById(R.id.btn_generate);
-        insertButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                count++;
 
-                CardDictionary data = new CardDictionary(count + "", "Test" + count);
-
-                arrayList.add(data); //리사이클러뷰 마지막줄에 삽입 첫줄에 삽입은 (0, data)
-
-                adapter.notifyDataSetChanged();
-            }
-        });
+//        //현재는 임의 리스트 생성
+//        Button insertButton = findViewById(R.id.btn_generate);
+//        insertButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                count++;
+//
+//                CardDictionary data = new CardDictionary(count + "", "Test" + count);
+//
+//                arrayList.add(data); //리사이클러뷰 마지막줄에 삽입 첫줄에 삽입은 (0, data)
+//
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
     }
 
     //터치
