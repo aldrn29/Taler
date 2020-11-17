@@ -31,6 +31,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.example.taler.R;
 import android.os.Handler;
@@ -38,10 +39,9 @@ import android.os.Message;
 
 public class Fragment_Speaker extends Fragment {
 
-    Button btn_speak;
-    TextView user_speaking;
-    TextView access_key;
-
+    Button btn_speak;   //누르고 말하기
+    TextView user_speaking; //유저 말한 문장
+    TextView access_key;    //엑세스 키
     String result;
     int maxLenSpeech = 16000 * 45;
     byte [] speechData = new byte [maxLenSpeech * 2];
@@ -51,13 +51,20 @@ public class Fragment_Speaker extends Fragment {
 
     public static final String PREFS_NAME = "prefs";
     private static final String MSG_KEY = "status";
-    //private static final String accessKey = "363703ed-f93e-4ade-9422-cfff23a396fd";    // 발급받은 API Key
 
     @Override
     public void onCreate(Bundle savedInstanceState){
+
         super.onCreate(savedInstanceState);
+
     }
-    //
+
+
+
+
+
+
+
     @SuppressLint("HandlerLeak")
     final Handler handler = new Handler() {
         @Override
@@ -115,9 +122,9 @@ public class Fragment_Speaker extends Fragment {
         access_key = view.findViewById(R.id.editText_access);
 
         SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
-        //access_key.setText(settings.getString("client-id", "YOUR_CLIENT_ID"));
+
         access_key.setText("363703ed-f93e-4ade-9422-cfff23a396fd");
-        //accesskey editText.
+
         access_key.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -176,10 +183,8 @@ public class Fragment_Speaker extends Fragment {
                 }
             }
         });
-
         return view;
     }
-
 
     public static String readStream(InputStream in) throws IOException {
         StringBuilder sb = new StringBuilder();
@@ -231,6 +236,15 @@ public class Fragment_Speaker extends Fragment {
             throw new RuntimeException(t.toString());
         }
     }
+    //결과 자르기 함수
+    public String subString(String str) {
+        int index = str.indexOf("recognized");
+        int startIndex = index + 14;
+        int endIndex = str.indexOf("}", startIndex) - 1;
+
+        return str.substring(startIndex, endIndex);
+    }
+
     public String sendDataAndGetResult () {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";
         String accessKey = access_key.getText().toString().trim();
@@ -269,11 +283,20 @@ public class Fragment_Speaker extends Fragment {
             if ( responseCode == 200 ) {
                 InputStream is = new BufferedInputStream(con.getInputStream());
                 responBody = readStream(is);
-                return responBody;
+                //return responBody;
+                return subString(responBody);
+
+                //Bundle result = new Bundle();
+                //result.putString("bundleKey", "result");
+               // getParentFragmentManager().setFragmentResult("requestKey", result);
+
+
             }
             else
                 return "ERROR: " + Integer.toString(responseCode);
-        } catch (Throwable t) {
+        }
+        catch (Throwable t) {
+
             return "ERROR: " + t.toString();
         }
     }

@@ -66,8 +66,6 @@ public class MediaActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     public String readTxtfile(Context context, int resId) {
