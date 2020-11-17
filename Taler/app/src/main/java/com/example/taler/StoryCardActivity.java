@@ -10,10 +10,20 @@ import android.widget.TextView;
 public class StoryCardActivity extends AppCompatActivity {
     int CHECK_NUM = 0; // 스위치 변경확인
 
+    ASRmasterAPI asr;
+    ImageButton toggleButton;
+    ImageButton speechButton;
+    TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+
+        textView = findViewById(R.id.test_text);
+        toggleButton = findViewById(R.id.toggle_button_play);
+        speechButton = findViewById(R.id.speech_button);
+        asr = new ASRmasterAPI(speechButton, textView, 1);
 
         String id = "";
         String title = "";
@@ -24,24 +34,23 @@ public class StoryCardActivity extends AppCompatActivity {
         id = extras.getString("id");
         title = extras.getString("title");
 
-        TextView textView = findViewById(R.id.test_text);
-
         String str = id + '\n' + title;
         textView.setText(str);
 
         //Button Event: play and replay
-        final ImageButton toggle = findViewById(R.id.toggle_button_play);
-        toggle.setOnClickListener(new View.OnClickListener() {
+        toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(CHECK_NUM == 0) {
-                    toggle.setSelected(true);
+                    toggleButton.setSelected(true);
                     CHECK_NUM = 1;
                 } else{
-                    toggle.setSelected(false);
+                    toggleButton.setSelected(false);
                     CHECK_NUM = 0;
                 }
             }
         });
+
+
     }
 }
