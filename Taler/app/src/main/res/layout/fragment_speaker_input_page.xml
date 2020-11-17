@@ -27,8 +27,8 @@
         android:layout_height="201dp"
         android:layout_marginTop="30dp"
         android:background="#FFFFFF"
-        android:text="TextView"
         android:inputType="textMultiLine"
+        android:text='""'
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintLeft_toLeftOf="parent"
