@@ -64,6 +64,13 @@ public class ASRmasterAPI implements View.OnClickListener {
         buttonStart.setOnClickListener(this);
     }
 
+    public ASRmasterAPI(View button, int mode) {
+        buttonStart = (ImageButton) button;
+        curMode = mode;
+
+        buttonStart.setOnClickListener(this);
+    }
+
     @Override
     public void onClick(View view) {
         if (isRecording) {
@@ -101,7 +108,7 @@ public class ASRmasterAPI implements View.OnClickListener {
                     }
                 }).start();
             } catch (Throwable t) {
-                textResult.setText("ERROR: " + t.toString());
+                if (textResult != null) textResult.setText("ERROR: " + t.toString());
                 forceStop = false;
                 isRecording = false;
             }
@@ -117,29 +124,29 @@ public class ASRmasterAPI implements View.OnClickListener {
             switch (msg.what) {
                 // 녹음이 시작되었음(버튼)
                 case 1:
-                    textResult.setText(v);
+                    if (textResult != null) textResult.setText(v);
                     buttonStart.setSelected(true);
                     break;
                 // 녹음이 정상적으로 종료되었음(버튼 또는 max time)
                 case 2:
-                    textResult.setText(v);
+                    if (textResult != null) textResult.setText(v);
                     buttonStart.setSelected(false);
                     buttonStart.setEnabled(false);
                     break;
                 // 녹음이 비정상적으로 종료되었음(마이크 권한 등)
                 case 3:
-                    textResult.setText(v);
+                    if (textResult != null) textResult.setText(v);
                     buttonStart.setSelected(false);
                     break;
                 // 인식이 비정상적으로 종료되었음(timeout 등)
                 case 4:
-                    textResult.setText(v);
+                    if (textResult != null) textResult.setText(v);
                     buttonStart.setSelected(false);
                     buttonStart.setEnabled(true);
                     break;
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
                 case 5:
-                    textResult.setText(StringEscapeUtils.unescapeJava(result));
+                    if (textResult != null) textResult.setText(StringEscapeUtils.unescapeJava(result));
                     buttonStart.setSelected(false);
                     buttonStart.setEnabled(true);
                     break;
