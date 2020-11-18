@@ -51,6 +51,18 @@ public class Fragment_Listen extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        //Fragment_Speaker로 값 전달
+        /*
+        getParentFragmentManager().setFragmentResultListener("key", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                // We use a String here, but any type that can be put in a Bundle is supported
+                String result = bundle.getString("bundleKey");
+                // Do something with the result...
+            }
+        });
+
+         */
     }
 
     @Override
