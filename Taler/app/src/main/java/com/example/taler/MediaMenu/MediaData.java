@@ -1,4 +1,4 @@
-package com.example.taler;
+package com.example.taler.MediaMenu;
 
 public class MediaData {
 
