@@ -1,11 +1,13 @@
 package com.example.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,9 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.taler.SharedViewModel;
 import com.google.gson.Gson;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -28,11 +32,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.taler.R;
 import android.os.Handler;
 import android.os.Message;
@@ -40,6 +47,7 @@ import android.os.Message;
 public class Fragment_Speaker extends Fragment {
 
     Button btn_speak;   //누르고 말하기
+    Button btn_check;  //결과 값 전송
     TextView user_speaking; //유저 말한 문장
     TextView access_key;    //엑세스 키
     String result;
@@ -51,6 +59,33 @@ public class Fragment_Speaker extends Fragment {
 
     public static final String PREFS_NAME = "prefs";
     private static final String MSG_KEY = "status";
+    //final String value;
+    //private SharedViewModel sharedViewModel;
+
+   // private static final String ARG_PARAM1 = "param1";      //listen에 전달할 변수.
+    /*
+    DataPassListener mCallback;
+
+    public interface DataPassListener{
+        void passData(String data);
+    }
+    @Override
+    public void onAttach(@NotNull Context context)
+    {
+        super.onAttach(context);
+        // This makes sure that the host activity has implemented the callback interface
+        // If not, it throws an exception
+        try{
+            mCallback = (DataPassListener) context;
+        }
+        catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+ " must implement OnImageClickListener");
+        }
+    }
+    */
+
+    public Fragment_Speaker() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -58,12 +93,6 @@ public class Fragment_Speaker extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
-
-
-
-
-
 
     @SuppressLint("HandlerLeak")
     final Handler handler = new Handler() {
@@ -96,6 +125,7 @@ public class Fragment_Speaker extends Fragment {
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
                 case 5:
                     user_speaking.setText(StringEscapeUtils.unescapeJava(result));
+                    //mCallback.passData(result); // 되어라 쫌.!
                     btn_speak.setEnabled(true);
                     btn_speak.setText("PUSH TO START");
                     break;
@@ -122,6 +152,7 @@ public class Fragment_Speaker extends Fragment {
         access_key = view.findViewById(R.id.editText_access);
 
         SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+
 
         access_key.setText("363703ed-f93e-4ade-9422-cfff23a396fd");
 
@@ -181,8 +212,31 @@ public class Fragment_Speaker extends Fragment {
                         isRecording = false;
                     }
                 }
+                /*
+                btn_check.setOnClickListener(new  View.OnClickListener() {
+                    public void onClick(View v) {
+                        String result = sendDataAndGetResult ();
+                        if(getView().getId()== R.id.btn_check){
+                            mCallback.passData(result);
+                        }
+                    }
+                });
+                */
+
             }
         });
+        //결과 전송 버튼
+        /*
+        btn_check.setOnClickListener(new  View.OnClickListener() {
+            public void onClick(View v) {
+                String result = sendDataAndGetResult ();
+                if(getView().getId()== R.id.btn_check){
+                    mCallback.passData(result);
+                }
+            }
+        });
+*/
+
         return view;
     }
 
@@ -283,14 +337,8 @@ public class Fragment_Speaker extends Fragment {
             if ( responseCode == 200 ) {
                 InputStream is = new BufferedInputStream(con.getInputStream());
                 responBody = readStream(is);
-                //return responBody;
+
                 return subString(responBody);
-
-                //Bundle result = new Bundle();
-                //result.putString("bundleKey", "result");
-               // getParentFragmentManager().setFragmentResult("requestKey", result);
-
-
             }
             else
                 return "ERROR: " + Integer.toString(responseCode);
