@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.taler.ASRmasterAPI;
 import com.example.taler.R;
@@ -27,7 +29,8 @@ public class StoryCardActivity extends AppCompatActivity {
     ImageButton speechButton;
     TextView script, choice1, choice2, recorded;
     String front_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2F";
-    String title, choiceStr1, choiceStr2, recordedStr= "";
+    String title, choice1Str, choice2Str, recordedStr= "";
+    Integer num = 1;
 
 
     @Override
@@ -52,8 +55,47 @@ public class StoryCardActivity extends AppCompatActivity {
 
         //Todo FB를 여기서 읽어온다. title id에 해당하는 사진들을 1번부터 차례로
         //우선 선지는 "number one", "number two"로 통일하자. 테스트를 위해
-        showCard(1);
-        //recorded가 choice.toString()
+        showCard(num);
+        choice1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.print("start");
+                System.out.print("recordedText:");
+                System.out.print(recorded.getText().toString());
+                System.out.println("end");
+                System.out.print("start");
+                System.out.print("choiceText:");
+                System.out.print(choice1.getText().toString());
+                System.out.println("end");
+                choice1Str = " " + choice1.getText().toString()+ " \n";
+                System.out.println(choice1Str);
+                if(num < 8 && choice1Str.equals(recorded.getText().toString())) {
+                    num = num*2;
+                    showCard(num);
+                }
+//                else Toast.makeText(StoryCardActivity.this, "Story End", Toast.LENGTH_SHORT).show();
+            }
+        });
+        choice2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.print("start");
+                System.out.print("recordedText:");
+                System.out.print(recorded.getText().toString());
+                System.out.println("end");
+                System.out.print("start");
+                System.out.print("choiceText:");
+                System.out.print(choice2.getText().toString());
+                System.out.println("end");
+                choice2Str = " " + choice2.getText().toString()+ " \n";
+                System.out.println(choice2Str);
+                if(num < 8 && choice2Str.equals(recorded.getText().toString())) {
+                    num = num*2 + 1;
+                    showCard(num);
+                }
+//                else Toast.makeText(StoryCardActivity.this, "Story End", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
