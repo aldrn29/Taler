@@ -2,7 +2,6 @@ package com.example.taler.Story;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
@@ -28,6 +27,7 @@ public class StoryCardActivity extends AppCompatActivity {
     ImageButton speechButton;
     TextView script, choice1, choice2, recorded;
     String front_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2F";
+    String title, choiceStr1, choiceStr2, recordedStr= "";
 
 
     @Override
@@ -36,28 +36,24 @@ public class StoryCardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_story);
         cardImg = findViewById(R.id.card_image);
         script = findViewById(R.id.script);
+        choice1 = findViewById(R.id.choice1);
+        choice2 = findViewById(R.id.choice2);
 //        toggleButton = findViewById(R.id.toggle_button_play);
         speechButton = findViewById(R.id.speech_button);
         recorded = findViewById(R.id.recorded_text);
         asr = new ASRmasterAPI(speechButton, recorded, 1);
+        recordedStr= asr.result;
 
-//        int id = 0;
-        String title = "";
-//        img = thumbnail
 
         Bundle extras = getIntent().getExtras();
 
-//        id = extras.getInt("id");
         title = extras.getString("title");
-        //Test
-//        String str = Integer.toString(id) + '\n' + title;
-//        script.setText(str);
+
 
         //Todo FB를 여기서 읽어온다. title id에 해당하는 사진들을 1번부터 차례로
         //우선 선지는 "number one", "number two"로 통일하자. 테스트를 위해
-        int num = 2; // 카드번호 choice1는 이전번호*2, choice2는 이전번호*2 +1
-        getCardTxtData(script, front_url + title + "%2F" + "script" + "%2F"+ num + ".txt?alt=media&token=" + num);
-        Picasso.get().load(front_url + title + "%2F" + "image" + "%2F"+ num + ".jpeg?alt=media&token=" + num).fit().into(cardImg);
+        showCard(1);
+        //recorded가 choice.toString()
 
 
 
@@ -78,7 +74,7 @@ public class StoryCardActivity extends AppCompatActivity {
 
     }
 
-    public void getCardTxtData(final TextView text, final String url_input) {
+    public void setTextFromUrl(final TextView text, final String url_input) {
         new Thread(new Runnable() {
             public void run() {
                 final ArrayList<String> urls = new ArrayList<String>(); //to read each line
@@ -107,4 +103,11 @@ public class StoryCardActivity extends AppCompatActivity {
         }).start();
     }
 
+    public void showCard(int num){
+        Picasso.get().load(front_url + title + "%2F" + "image" + "%2F"+ num + ".jpeg?alt=media&token=" + num).fit().into(cardImg);
+        setTextFromUrl(script, front_url + title + "%2F" + "script" + "%2F"+ num + ".txt?alt=media&token=" + num);
+        setTextFromUrl(choice1, front_url + title + "%2F" + "choice1" + "%2F"+ num + ".txt?alt=media&token=" + num);
+        setTextFromUrl(choice2, front_url + title + "%2F" + "choice2" + "%2F"+ num + ".txt?alt=media&token=" + num);
+    }
+//    https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2FAlice%2Fchoice1%2F1.txt?alt=media&token=1
 }
