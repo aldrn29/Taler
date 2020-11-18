@@ -15,13 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/NoTitleTheme">
 
-        <activity android:name=".MediaMenuActivity"></activity>
-        <activity android:name=".PopTestActivity"></activity>
         <!-- Activity -->
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".Story.CardListActivity"></activity>
-        <activity android:name=".Story.StoryCardActivity" />
+        <activity android:name=".MainActivity"/>
         <activity android:name=".MediaActivity" />
+        <activity android:name=".PopTestActivity"/>
+        <activity android:name=".Story.CardListActivity"/>
+        <activity android:name=".Story.StoryCardActivity" />
         <activity android:name=".LoginActivity">
             <meta-data
                 android:name="com.google.android.actions"
@@ -30,9 +29,9 @@
             <!-- Start Activity 설정부분 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".RegisterActivity" />
     </application>

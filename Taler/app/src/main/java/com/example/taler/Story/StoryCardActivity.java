@@ -42,7 +42,7 @@ public class StoryCardActivity extends AppCompatActivity {
         speechButton = findViewById(R.id.speech_button);
         recorded = findViewById(R.id.recorded_text);
         asr = new ASRmasterAPI(speechButton, recorded, 1);
-        recordedStr= asr.result;
+        recordedStr= asr.getResult();
 
 
         Bundle extras = getIntent().getExtras();
