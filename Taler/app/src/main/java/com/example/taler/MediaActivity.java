@@ -2,16 +2,22 @@ package com.example.taler;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MediaActivity extends AppCompatActivity {
 
@@ -19,28 +25,44 @@ public class MediaActivity extends AppCompatActivity {
     TextView text;
 
     ASRmasterAPI asr;
+    VideoView videoView;
     ImageButton playButton;
     ImageButton recordButton;   // 녹음 start, end
     TextView textResult;        // 녹음 결과
     int mode;
 
+    ArrayList<String> files = new ArrayList<>();
+    int fileNum = 0;
+
+    final String root = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/";
+    final String[] directoryName = {"Modern.Family.S01E01.mp4","Modern.Family.S01E01.kor","Modern.Family.S01E01.eng"};
+    FirebaseStorage storage = FirebaseStorage.getInstance("gs://taler-db.appspot.com");
+    StorageReference storageRef = storage.getReference();
+    StorageReference pathReference = storageRef.child("Modern.Family.S01E01.mp4/Modern.Family.01."+ fileNum +".mp4");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media);
 
+        String temp = root + directoryName[0] + "%2F";
+
+        videoView = findViewById(R.id.videoView);
         playButton = findViewById(R.id.imageButton_play);
         recordButton = findViewById(R.id.imageButton_record);
         textResult = findViewById(R.id.textView_result);
 
+        // 음성인식 API 연결
         asr = new ASRmasterAPI(recordButton, textResult, 1);
 
-        /*
-        * start(): 재생 시작/ stop(): 정지/ prepare(): 준비/ pause(): 일시 정지
-        * release(): 메모리 해제/ seekTo(): 재생 위치 지정/ getCurrentPosition(): 재생 위치/ getDuration(): 재생 시간
-        * getVideoHeight():영상 높이값/ getVideoWidth():영상 너비값/ setLooping():반복 설정/ setVolumn():볼륨 설정
-        */
+        setFiles();
+        videoView.setVideoURI(Uri.parse(files.get(fileNum)));
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                // To do: 준비 완료되면 비디오 첫 화면 띄우기
+            }
+        });
 
         // Button Event: play
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -50,19 +72,16 @@ public class MediaActivity extends AppCompatActivity {
                 // button image change
                 if (!view.isSelected()) {
                     view.setSelected(true);
-
-                    // mp3 file create
-                    player = MediaPlayer.create(MediaActivity.this, R.raw.friends_101);
-                    player.start();
+                    videoView.start();
 
                     // txt
                     text = findViewById(R.id.textView_script);
-                    String s = readTxtfile(MediaActivity.this, R.raw.friends_);
-                    text.setText(s);
+                    String s = "";//"https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/Modern.Family.S01E01.eng%2FModern.Family.01.1.txt?alt=media&token=1275cdc7-f1eb-4934-b94b-8ff4ca42cf6a"
+                    //text.setText(s);
 
                 } else {
                     view.setSelected(false);
-                    player.pause();
+                    videoView.pause();
                 }
             }
         });
@@ -85,5 +104,12 @@ public class MediaActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return result.trim();
+    }
+
+    public void setFiles() {
+
+        files.add("https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/Modern.Family.S01E01.mp4%2FModern.Family.01.1.mp4?alt=media&token=ca7d2326-dd4f-4452-98fa-2aee3811c84a");
+        files.add("https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/Modern.Family.S01E01.mp4%2FModern.Family.01.2.mp4?alt=media&token=851f5403-f109-4e10-ad3d-316bc46af344");
+        files.add("https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/Modern.Family.S01E01.mp4%2FModern.Family.01.3.mp4?alt=media&token=56e6d425-ea54-4b12-ae11-442ed62244f9");
     }
 }

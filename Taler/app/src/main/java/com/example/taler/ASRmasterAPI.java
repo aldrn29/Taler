@@ -44,7 +44,7 @@ public class ASRmasterAPI implements View.OnClickListener {
     TextView textResult;
 
     int curMode;
-    String result;
+    public String result;
 
     int maxLenSpeech = 16000 * 45;
     byte [] speechData = new byte [maxLenSpeech * 2];
