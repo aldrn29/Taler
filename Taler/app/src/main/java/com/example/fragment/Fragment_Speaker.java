@@ -40,6 +40,7 @@ import android.os.Message;
 public class Fragment_Speaker extends Fragment {
 
     Button btn_speak;   //누르고 말하기
+    Button btn_clear;
     TextView user_speaking; //유저 말한 문장
     TextView access_key;    //엑세스 키
     String result;
@@ -54,9 +55,7 @@ public class Fragment_Speaker extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-
         super.onCreate(savedInstanceState);
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -68,30 +67,31 @@ public class Fragment_Speaker extends Fragment {
             switch (msg.what) {
                 // 녹음이 시작되었음(버튼)
                 case 1:
-                    user_speaking.setText(v);
-                    btn_speak.setText("PUSH TO STOP");
+                    if (user_speaking != null)user_speaking.setText(v);
+                        btn_speak.setSelected(true);
                     break;
                 // 녹음이 정상적으로 종료되었음(버튼 또는 max time)
                 case 2:
-                    user_speaking.setText(v);
+                    if (user_speaking != null)user_speaking.setText(v);
+                    btn_speak.setSelected(false);
                     btn_speak.setEnabled(false);
                     break;
                 // 녹음이 비정상적으로 종료되었음(마이크 권한 등)
                 case 3:
-                    user_speaking.setText(v);
-                    btn_speak.setText("PUSH TO START");
+                    if (user_speaking != null)user_speaking.setText(v);
+                    btn_speak.setSelected(false);
                     break;
                 // 인식이 비정상적으로 종료되었음(timeout 등)
                 case 4:
-                    user_speaking.setText(v);
+                    if (user_speaking != null)user_speaking.setText(v);
+                    btn_speak.setSelected(false);
                     btn_speak.setEnabled(true);
-                    btn_speak.setText("PUSH TO START");
                     break;
                 // 인식이 정상적으로 종료되었음 (thread내에서 exception포함)
                 case 5:
-                    user_speaking.setText(StringEscapeUtils.unescapeJava(result));
+                    if (user_speaking != null)user_speaking.setText(StringEscapeUtils.unescapeJava(result));
+                    btn_speak.setSelected(false);
                     btn_speak.setEnabled(true);
-                    btn_speak.setText("PUSH TO START");
                     break;
             }
             super.handleMessage(msg);
@@ -100,7 +100,7 @@ public class Fragment_Speaker extends Fragment {
     public void SendMessage(String str, int id) {
         Message msg = handler.obtainMessage();
         Bundle bd = new Bundle();
-        bd.putString(MSG_KEY, str);
+        bd.putString("status", str);
         msg.what = id;
         msg.setData(bd);
         handler.sendMessage(msg);
@@ -112,6 +112,7 @@ public class Fragment_Speaker extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_speaker_input_page, container, false);
         btn_speak = view.findViewById(R.id.btn_speak);
+        btn_clear = view.findViewById(R.id.btn_check);
         user_speaking = view.findViewById(R.id.tv_user_speaking);
         access_key = view.findViewById(R.id.editText_access);
 
@@ -170,13 +171,18 @@ public class Fragment_Speaker extends Fragment {
                             }
                         }).start();
                     } catch (Throwable t) {
-                        user_speaking.setText("ERROR: " + t.toString());
+                        if(user_speaking!=null)user_speaking.setText("ERROR: " + t.toString());
                         forceStop = false;
                         isRecording = false;
                     }
                 }
             }
         });
+
+        btn_clear.setOnClickListener(new  View.OnClickListener() {
+            public void onClick(View v) {
+                user_speaking.setText("");
+            }});
         return view;
     }
 
@@ -230,14 +236,6 @@ public class Fragment_Speaker extends Fragment {
             throw new RuntimeException(t.toString());
         }
     }
-    //결과 자르기 함수
-    public String subString(String str) {
-        int index = str.indexOf("recognized");
-        int startIndex = index + 14;
-        int endIndex = str.indexOf("}", startIndex) - 1;
-
-        return str.substring(startIndex, endIndex);
-    }
 
     public String sendDataAndGetResult () {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";
@@ -277,21 +275,24 @@ public class Fragment_Speaker extends Fragment {
             if ( responseCode == 200 ) {
                 InputStream is = new BufferedInputStream(con.getInputStream());
                 responBody = readStream(is);
-                //return responBody;
                 return subString(responBody);
-
-                //Bundle result = new Bundle();
-                //result.putString("bundleKey", "result");
-                // getParentFragmentManager().setFragmentResult("requestKey", result);
-
-
             }
             else
                 return "ERROR: " + Integer.toString(responseCode);
         }
         catch (Throwable t) {
-
             return "ERROR: " + t.toString();
         }
+    }
+    //결과 자르기 함수
+    public String subString(String str) {
+        int index = str.indexOf("recognized");
+        int startIndex = index + 14;
+        int endIndex = str.indexOf("}", startIndex) - 1;
+
+        return str.substring(startIndex, endIndex);
+    }
+    public String getResult() {
+        return result;
     }
 }

@@ -151,9 +151,6 @@ public class Fragment_Listen extends Fragment {
         //가능하다면 화면에 점수도 넣기. text뷰로. 아님 floating 버튼 .
 
 
-
-
-
         //-------------------------페이지 수 증가-> 페이지번호가 url에 반영 -> 해당 번째 구절 재생------//
         btnIncrease.setOnClickListener(new Button.OnClickListener() {
 
