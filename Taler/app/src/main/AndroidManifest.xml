@@ -17,7 +17,8 @@
 
         <!-- Activity -->
         <activity android:name=".MainActivity"/>
-        <activity android:name=".MediaActivity" />
+        <activity android:name=".MediaMenu.MediaMenuActivity"/>
+        <activity android:name=".MediaActivity"/>
         <activity android:name=".PopTestActivity"/>
         <activity android:name=".Story.CardListActivity"/>
         <activity android:name=".Story.StoryCardActivity" />
