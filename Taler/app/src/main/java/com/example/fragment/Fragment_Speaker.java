@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.taler.PopTestActivity;
+import com.example.taler.SharedViewModel;
 import com.google.gson.Gson;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -32,12 +34,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.taler.R;
 import android.os.Handler;
 import android.os.Message;
 
+
 public class Fragment_Speaker extends Fragment {
+
+
+    private SharedViewModel sharedViewModel;        //fragment 간 데이터 전송을 위한 것.
 
     Button btn_speak;   //누르고 말하기
     Button btn_clear;
@@ -58,6 +67,7 @@ public class Fragment_Speaker extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    //사용자 음성 입력. 녹음 핸들러
     @SuppressLint("HandlerLeak")
     final Handler handler = new Handler() {
         @Override
@@ -100,12 +110,12 @@ public class Fragment_Speaker extends Fragment {
     public void SendMessage(String str, int id) {
         Message msg = handler.obtainMessage();
         Bundle bd = new Bundle();
-        bd.putString("status", str);
+        bd.putString(MSG_KEY, str);
         msg.what = id;
         msg.setData(bd);
         handler.sendMessage(msg);
     }
-    //
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -116,14 +126,16 @@ public class Fragment_Speaker extends Fragment {
         user_speaking = view.findViewById(R.id.tv_user_speaking);
         access_key = view.findViewById(R.id.editText_access);
 
+
         SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
 
+        //액세스 키 검증
         access_key.setText("363703ed-f93e-4ade-9422-cfff23a396fd");
 
         access_key.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId== EditorInfo.IME_ACTION_DONE){
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("client-id", v.getText().toString());
@@ -133,7 +145,8 @@ public class Fragment_Speaker extends Fragment {
             }
         });
 
-        btn_speak.setOnClickListener(new  View.OnClickListener() {
+        //유저가 말한 것을 녹음하는 작업. 응답이 없으면 에러 메세지.
+        btn_speak.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 if (isRecording) {
@@ -144,7 +157,7 @@ public class Fragment_Speaker extends Fragment {
                             public void run() {
                                 SendMessage("Recording...", 1);
                                 try {
-                                    recordSpeech();
+                                    recordSpeech();     //녹음 처리 함수 호출
                                     SendMessage("Recognizing...", 2);
                                 } catch (RuntimeException e) {
                                     SendMessage(e.getMessage(), 3);
@@ -154,6 +167,13 @@ public class Fragment_Speaker extends Fragment {
                                 Thread threadRecog = new Thread(new Runnable() {
                                     public void run() {
                                         result = sendDataAndGetResult();
+                                        //결과 반환 줄
+                                        btn_clear.setOnClickListener(new View.OnClickListener() {
+                                            public void onClick(View v) {
+                                                result = result.replaceAll(" \n", "");
+                                                sharedViewModel.setData(result);
+                                            }
+                                        });
                                     }
                                 });
                                 threadRecog.start();
@@ -171,21 +191,28 @@ public class Fragment_Speaker extends Fragment {
                             }
                         }).start();
                     } catch (Throwable t) {
-                        if(user_speaking!=null)user_speaking.setText("ERROR: " + t.toString());
+                        if (user_speaking != null) user_speaking.setText("ERROR: " + t.toString());
                         forceStop = false;
                         isRecording = false;
                     }
                 }
             }
+
         });
 
-        btn_clear.setOnClickListener(new  View.OnClickListener() {
-            public void onClick(View v) {
-                user_speaking.setText("");
-            }});
         return view;
+
+
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class); // 뭔가 이상한 부분
+    }
+
+
+    //읽은 값을 스트링으로 반환.
     public static String readStream(InputStream in) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(in),1000);
@@ -195,6 +222,7 @@ public class Fragment_Speaker extends Fragment {
         in.close();
         return sb.toString();
     }
+    //녹음의 길이. 예외처리.
     public void recordSpeech() throws RuntimeException {
         try {
             int bufferSize = AudioRecord.getMinBufferSize(
@@ -237,6 +265,7 @@ public class Fragment_Speaker extends Fragment {
         }
     }
 
+    //결과 반환 함수
     public String sendDataAndGetResult () {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/Recognition";
         String accessKey = access_key.getText().toString().trim();
@@ -287,12 +316,10 @@ public class Fragment_Speaker extends Fragment {
     //결과 자르기 함수
     public String subString(String str) {
         int index = str.indexOf("recognized");
-        int startIndex = index + 14;
-        int endIndex = str.indexOf("}", startIndex) - 1;
+        int startIndex = index + 15;
+        int endIndex = str.indexOf("}", startIndex) - 4;
 
         return str.substring(startIndex, endIndex);
     }
-    public String getResult() {
-        return result;
-    }
+
 }

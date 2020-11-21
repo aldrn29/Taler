@@ -15,11 +15,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taler.SharedViewModel;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.taler.R;
 
 import android.util.Log;
@@ -40,6 +45,7 @@ public class Fragment_Listen extends Fragment {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     //StorageReference storageRef = storage.getReference();
     final int pausePosition=0;
+    private SharedViewModel sharedViewModel;
 
     //로그를 찍어보기 위한 것
     private static final String TAG = "Fragment_Listen";
@@ -50,25 +56,15 @@ public class Fragment_Listen extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        //Fragment_Speaker로 값 전달
-        /*
-        getParentFragmentManager().setFragmentResultListener("key", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
-                // We use a String here, but any type that can be put in a Bundle is supported
-                String result = bundle.getString("bundleKey");
-                // Do something with the result...
-            }
-        });
-
-         */
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+
+        //send 버튼이 따로 없는 버전
+        final TextView eng_text = root.findViewById(R.id.tv_answer);
 
         //버튼
         Button btnIncrease = root.findViewById(R.id.btn_next);  //페이지 증가 버튼
@@ -85,7 +81,7 @@ public class Fragment_Listen extends Fragment {
         TextView songName = root.findViewById(R.id.tv_songName); //페이지 상단에 나타날 곡제목. --> 메뉴에서 선택 시 값 들어가도록. Intent 전달.
 
         final TextView kor_text = root.findViewById(R.id.tv_translated);
-        final TextView eng_text = root.findViewById(R.id.tv_answer);
+
 
         final String sendData = eng_text.getText().toString().toLowerCase(); //현재 영문 가사를 소문자로 다 바꾼다.
 
@@ -130,13 +126,24 @@ public class Fragment_Listen extends Fragment {
             });
             //---------------첫페이지의-영어 가사 텍스트 가져오기. ----------------------------------------//
             //final String eng_fileName = "eng_"+textCounter.getText().toString();
-            //버튼. 말하는 값과 같을 경우에만 텍스트 가져오도록.
+            //말하는 값과 같을 경우에만 텍스트 가져오도록.
+            //위치상 여기에 작성해야 함.
+            String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/" + directoryName[2] + "%2F";
+            String full_eng_common_url = eng_common_url + "1.txt?alt=media&token=eng_1";
+
+            //result=  result.replaceAll("'", "");
+            find_kor(eng_text, full_eng_common_url);
+            eng_text.setTextColor(Color.WHITE);
+
+
+            //버튼.
             answer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/" + directoryName[2] + "%2F";
                     String full_eng_common_url = eng_common_url + "1.txt?alt=media&token=eng_1";
                     find_kor(eng_text, full_eng_common_url);
+                    eng_text.setTextColor(Color.BLACK);
                     Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
                 }
             });
@@ -223,6 +230,13 @@ public class Fragment_Listen extends Fragment {
                 //-----------------------번역 가사--끝----------------------------------------------//
                 //-----------------------영문 가사--------------------------------------------------//
 
+                final String eng_fileName = "eng_"+textCounter.getText().toString();
+                String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[2]+"%2F";
+                String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
+                find_kor(eng_text, full_eng_common_url);
+                eng_text.setTextColor(Color.WHITE);
+
+
                 //버튼 사용시
                 answer.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -230,8 +244,9 @@ public class Fragment_Listen extends Fragment {
                         final String eng_fileName = "eng_"+textCounter.getText().toString();
                         String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[2]+"%2F";
                         String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
-
                         find_kor(eng_text, full_eng_common_url);
+
+                        eng_text.setTextColor(Color.BLACK);
                         Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -303,15 +318,22 @@ public class Fragment_Listen extends Fragment {
                 });
                 //-----------------------번역 가사--끝-----------------------------------------------//
                 //-----------------------영문 가사--------------------------------------------------//
-                            //버튼 사용시
+
+                final String eng_fileName = "eng_"+textCounter.getText().toString();
+                String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[2]+"%2F";
+                String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
+                find_kor(eng_text, full_eng_common_url);
+                eng_text.setTextColor(Color.WHITE);
+
+                //버튼 사용시
                 answer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         final String eng_fileName = "eng_"+textCounter.getText().toString();
                         String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[2]+"%2F";
                         String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
-
                         find_kor(eng_text, full_eng_common_url);
+                        eng_text.setTextColor(Color.BLACK);
                         Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -326,6 +348,38 @@ public class Fragment_Listen extends Fragment {
         // Inflate the layout for this fragment
         return root;
     }
+
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.getData().observe(getViewLifecycleOwner(), new Observer<String>(){
+        String temp2;
+
+         @Override
+         public void onChanged(String s){
+             TextView temp = getView().findViewById(R.id.tv_answer);
+             String answer2 = temp.getText().toString().toLowerCase();
+             //answer2 = answer2.replaceAll("\\p{Punct}", "");
+             answer2 = answer2.replaceAll(" \n", "");
+
+             temp2 = s;
+             //s = s.replaceAll(" ", "");
+             //s = s.replaceAll("'", "");
+             //answer2 = answer2.replaceAll(",", "");
+             //temp2 = temp2.replaceAll("'", "\\u0027");
+             if(temp2.equals(answer2)){
+                 temp.setTextColor(Color.BLUE);
+                 Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
+             }
+             else{
+                 //temp.setTextColor(Color.GREEN);
+                 Toast.makeText(getActivity(), "다시 시도해보세요"+temp2 + answer2, Toast.LENGTH_LONG).show();
+             }
+         }});
+	}
+
 
     //--------------위의 버튼 리스너 안에 들어가는 함수들----------------------------------------------//
     private void playAudio(String url) {        //play
@@ -417,4 +471,5 @@ public class Fragment_Listen extends Fragment {
             }
         }).start();
     }
+
 }

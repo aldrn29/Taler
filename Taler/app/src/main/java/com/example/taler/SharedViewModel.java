@@ -8,11 +8,13 @@ public class SharedViewModel extends ViewModel {
 
     private MutableLiveData<String> liveText = new MutableLiveData<>();
 
-    public LiveData<String> getText(){
+    public LiveData<String> getData(){
+
         return liveText;
     }
 
-    public void setText(String text){
+    public void setData(String text){
+
         liveText.setValue(text);
     }
 

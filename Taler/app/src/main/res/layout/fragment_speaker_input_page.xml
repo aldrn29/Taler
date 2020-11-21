@@ -49,9 +49,10 @@
 
     <Button
         android:id="@+id/btn_check"
-        android:layout_width="37dp"
-        android:layout_height="35dp"
-        android:text="c"
+        android:layout_width="67dp"
+        android:layout_height="33dp"
+        android:text="Check"
+        android:textSize="7sp"
         app:layout_constraintBaseline_toBaselineOf="@id/btn_speak"
         app:layout_constraintLeft_toRightOf="@id/btn_speak" />
 

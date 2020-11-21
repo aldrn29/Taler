@@ -59,4 +59,7 @@ dependencies {
     //viewpager2
     //implementation 'androidx.viewpager2:viewpager2'
     implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
+
+    //viewmodel for transcation between fragments.
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 }
