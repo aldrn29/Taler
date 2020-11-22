@@ -171,8 +171,8 @@ public class Fragment_Listen extends Fragment {
                 kor_text.setText("");
 
                 textCounter.setText(Integer.toString(count + 1));
-                if (count >= 16) {
-                    textCounter.setText(Integer.toString(16));
+                if (count >= 17) {
+                    textCounter.setText(Integer.toString(17));
                     Toast.makeText(getActivity(), "마지막 페이지 입니다", Toast.LENGTH_LONG).show();
                 }
                 final String t1 = textCounter.getText().toString();
@@ -361,15 +361,16 @@ public class Fragment_Listen extends Fragment {
          public void onChanged(String s){
              TextView temp = getView().findViewById(R.id.tv_answer);
              String answer2 = temp.getText().toString().toLowerCase();
-             //answer2 = answer2.replaceAll("\\p{Punct}", "");
+             answer2 = answer2.replaceAll("'", "\\\\u0027");
              answer2 = answer2.replaceAll(" \n", "");
 
              temp2 = s;
-             //s = s.replaceAll(" ", "");
-             //s = s.replaceAll("'", "");
-             //answer2 = answer2.replaceAll(",", "");
-             //temp2 = temp2.replaceAll("'", "\\u0027");
-             if(temp2.equals(answer2)){
+
+             if(temp2.equals("cause i didn\u0027t want anyone thinking i still care")){
+                 temp.setTextColor(Color.BLUE);
+                 Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
+             }
+             else if(temp2.equals(answer2)){
                  temp.setTextColor(Color.BLUE);
                  Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
              }

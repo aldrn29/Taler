@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -20,6 +21,56 @@
         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="0dip"  />
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15sp"
+        android:visibility="invisible"
+        android:backgroundTint="#FFC400"
+        android:src="@drawable/whiteboard"
+        app:backgroundTint="#FFC400"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15sp"
+        android:visibility="invisible"
+        android:backgroundTint="#FFC400"
+        android:src="@drawable/home"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="15sp"
+        android:visibility="invisible"
+        android:backgroundTint="#FFC400"
+        android:src="@drawable/calendar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_weight="1"
+        android:layout_margin="15sp"
+        android:clickable="true"
+        app:backgroundTint="#FFC400"
+        app:srcCompat="@drawable/float_menu" />
+
 
 </LinearLayout>
 
