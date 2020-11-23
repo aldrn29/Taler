@@ -21,8 +21,6 @@ android {
     }
 }
 
-
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleDependency
@@ -61,4 +59,13 @@ dependencies {
     //viewpager2
     //implementation 'androidx.viewpager2:viewpager2'
     implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
+
+    //viewmodel for transcation between fragments.
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    //floating button
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0'
+
+    implementation "androidx.preference:preference:1.1.1"
 }

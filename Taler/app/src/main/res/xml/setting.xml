@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!-- 계정관리 (닉네임수정, 비밀번호, 계정 삭제)/ 캐시메모리 삭제/ 로그아웃-->
+
+    <PreferenceCategory android:title="계정 관리">
+
+        <EditTextPreference
+            android:key="nickName"
+            android:title="닉네임"
+            android:summary="닉네임을 설정하세요."/>
+        <Preference
+            android:key="password"
+            android:title="비밀번호"/>
+        <Preference
+            android:key="logout"
+            android:title="로그아웃"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="알림">
+
+        <SwitchPreference
+            android:key="message"
+            android:title="소리알림"
+            android:summary="소리로 알림을 받으려면 체크하세요."
+            android:defaultValue="false"
+            android:switchTextOn="Yes"
+            android:switchTextOff="No"/>
+
+        <!-- CheckBoxPreference
+            android:key="message"
+            android:title="소리알림"
+            android:summary="소리로 알림을 받으려면 체크하세요."
+            android:defaultValue="false"/-->
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="정보" >
+
+        <Preference
+            android:title="버전"/>
+        <Preference
+            android:title="메일 보내기"
+            android:summary="개발자에게 메일을 보냅니다.">
+            <intent
+                android:action="android.intent.action.SENDTO"
+                android:data="abc@gmail.com" />
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

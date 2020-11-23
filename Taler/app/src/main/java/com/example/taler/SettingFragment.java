@@ -1,20 +1,39 @@
 package com.example.taler;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.preference.PreferenceFragmentCompat;
 
-public class SettingFragment extends Fragment {
+public class SettingFragment extends PreferenceFragmentCompat {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.setting);
 
-        return view;
+        SharedPreferences prefs;
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+                    public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
+                        Log.d("tag","클릭된 Preference의 key는 "+key);
+                    }
+                });
+
     }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+    }
+
+//    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+//        String key = preference.getKey();
+//        Log.d("tag","클릭된 Preference의 key는 "+key);
+//        return false;
+//    }
+
 }
