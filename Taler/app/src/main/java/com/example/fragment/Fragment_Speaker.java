@@ -23,6 +23,8 @@ import android.widget.TextView;
 
 import com.example.taler.FloatingActivity;
 import com.example.taler.MainActivity;
+import com.example.taler.MediaActivity;
+import com.example.taler.MediaMenu.MediaMenuActivity;
 import com.example.taler.PopTestActivity;
 import com.example.taler.SharedViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -222,8 +224,8 @@ public class Fragment_Speaker extends Fragment {
             }
         });
 
-
         //floating 버튼-----------------------------------------------------------------------------//
+        //main 버튼, menu
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -244,10 +246,9 @@ public class Fragment_Speaker extends Fragment {
                     fab3.setClickable(true);
                     isFabOpen = true;
                 }
-                //Toast.makeText(getActivity(), "Floating Action Button", Toast.LENGTH_SHORT).show();
             }
         });
-
+        //home 버튼. mediamenuActivity로 간다. -----------------------------------------------------//
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -268,11 +269,11 @@ public class Fragment_Speaker extends Fragment {
                     fab3.setClickable(true);
                     isFabOpen = true;
                 }
-                Intent intent = new Intent(getActivity(), FloatingActivity.class);
+                Intent intent = new Intent(getActivity(), MediaMenuActivity.class);
                 startActivity(intent);
-                //Toast.makeText(getActivity(), "Floating Action Button", Toast.LENGTH_SHORT).show();
             }
         });
+        //단어장 버튼 ------------------------------------------------------------------------------//
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -293,9 +294,9 @@ public class Fragment_Speaker extends Fragment {
                     fab3.setClickable(true);
                     isFabOpen = true;
                 }
-               //Toast.makeText(getActivity(), "Floating Action Button", Toast.LENGTH_SHORT).show();
             }
         });
+        //user의 점수 정보, 프로필 정보 -------------------------------------------------------------//
         fab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -316,7 +317,6 @@ public class Fragment_Speaker extends Fragment {
                     fab3.setClickable(true);
                     isFabOpen = true;
                 }
-                //Toast.makeText(getActivity(), "Floating Action Button", Toast.LENGTH_SHORT).show();
             }
         });
         //-----------------------------------------------------------------------------------------//

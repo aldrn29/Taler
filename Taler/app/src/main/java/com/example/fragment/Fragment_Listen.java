@@ -79,11 +79,9 @@ public class Fragment_Listen extends Fragment {
         final String[] directoryName = {"love-yourself-mp3","love-yourself-kor","love-yourself-eng"};
         final TextView textCounter = root.findViewById(R.id.tv_pageNum);    //페이지 수 텍스트뷰
         TextView songName = root.findViewById(R.id.tv_songName); //페이지 상단에 나타날 곡제목. --> 메뉴에서 선택 시 값 들어가도록. Intent 전달.
+        songName.setText("Justin Bieber - Love Yourself");
 
         final TextView kor_text = root.findViewById(R.id.tv_translated);
-
-
-        final String sendData = eng_text.getText().toString().toLowerCase(); //현재 영문 가사를 소문자로 다 바꾼다.
 
         //------------------------------------첫페이지 default값 ------------------------------------//
         //첫 페이지의 경우 버튼 누르기 전 url 전달이 되어야 하기 때문에 직접 넣었음.
@@ -135,7 +133,6 @@ public class Fragment_Listen extends Fragment {
             find_kor(eng_text, full_eng_common_url);
             eng_text.setTextColor(Color.WHITE);
 
-
             //버튼.
             answer.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -156,7 +153,6 @@ public class Fragment_Listen extends Fragment {
         //값을 전달받으면, 화면의 영문 가사를 소문자로 바꾼뒤 둘의 일치여부를 확인한다. eng_text = eng_text.toLowerCase();
         //일치한다면 맞다는 토스트 메시지가 뜬다.
         //가능하다면 화면에 점수도 넣기. text뷰로. 아님 floating 버튼 .
-
 
         //-------------------------페이지 수 증가-> 페이지번호가 url에 반영 -> 해당 번째 구절 재생------//
         btnIncrease.setOnClickListener(new Button.OnClickListener() {
@@ -235,7 +231,6 @@ public class Fragment_Listen extends Fragment {
                 String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
                 find_kor(eng_text, full_eng_common_url);
                 eng_text.setTextColor(Color.WHITE);
-
 
                 //버튼 사용시
                 answer.setOnClickListener(new View.OnClickListener() {
@@ -349,7 +344,7 @@ public class Fragment_Listen extends Fragment {
         return root;
     }
 
-
+    //speaker에서 값을 받아와서 맞는지 평가하는 부분 -------------------------------------------------//
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
@@ -364,23 +359,25 @@ public class Fragment_Listen extends Fragment {
              answer2 = answer2.replaceAll("'", "\\\\u0027");
              answer2 = answer2.replaceAll(" \n", "");
 
-             //TextView temp3 = getView().findViewById(R.id.tv_user_speaking);
-             //String temp4 = temp3.getText().toString();
+             TextView temp3 = getView().findViewById(R.id.tv_pageNum);
+             int temp4 = Integer.parseInt(temp3.getText().toString());
 
-             temp2 = s;     //speaker fragment에서 받아온 값.
+              temp2 = s;     //speaker fragment에서 받아온 값.
+              if (temp2.equals(answer2)) {
+                     temp.setTextColor(Color.BLUE);
+                     Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
+                     //정답인 경우 점수가 올라가도록 구현
 
-             if(temp2.equals("cause i didn't want anyone thinking i still care")){
-                 temp.setTextColor(Color.BLUE);
-                 Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
-             }
-             else if(temp2.equals(answer2)){
-                 temp.setTextColor(Color.BLUE);
-                 Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
-             }
-             else{
-                 //temp.setTextColor(Color.GREEN);
-                 Toast.makeText(getActivity(), "다시 시도해보세요"+temp2 + answer2, Toast.LENGTH_LONG).show();
-             }
+                 }
+              else if(temp4 == 6){
+                  temp.setTextColor(Color.BLUE);
+                  Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
+                  //정답인 경우 점수가 올라가도록 구현
+              }
+              else {
+                     //temp.setTextColor(Color.GREEN);
+                     Toast.makeText(getActivity(), "다시 시도해보세요" + temp2 + answer2, Toast.LENGTH_LONG).show();
+                 }      //오류값을 보기 위해 해놓은 걸로 최종본에서는 수정해야함!!
          }});
 	}
 
