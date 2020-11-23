@@ -32,6 +32,9 @@ public class LoginActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // 기존 테마로 되돌림
+        setTheme(R.style.NoTitleTheme);
+
         Button join;
         Button login;
         super.onCreate(savedInstanceState);
