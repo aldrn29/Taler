@@ -22,7 +22,7 @@
         <activity android:name=".PopTestActivity" />
         <activity android:name=".Story.CardListActivity" />
         <activity android:name=".Story.StoryCardActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" android:theme="@style/SplashTheme">
             <meta-data
                 android:name="com.google.android.actions"
                 android:resource="@drawable/toggle_btn_play" />
