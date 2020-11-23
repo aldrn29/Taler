@@ -1,7 +1,10 @@
 package com.example.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -11,13 +14,18 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.taler.FloatingActivity;
+import com.example.taler.MainActivity;
 import com.example.taler.PopTestActivity;
 import com.example.taler.SharedViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import org.apache.commons.lang.StringEscapeUtils;
@@ -33,6 +41,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,6 +51,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.taler.R;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 
 public class Fragment_Speaker extends Fragment {
@@ -62,6 +72,7 @@ public class Fragment_Speaker extends Fragment {
 
     public static final String PREFS_NAME = "prefs";
     private static final String MSG_KEY = "status";
+    boolean isFabOpen = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -126,6 +137,16 @@ public class Fragment_Speaker extends Fragment {
         btn_clear = view.findViewById(R.id.btn_check);
         user_speaking = view.findViewById(R.id.tv_user_speaking);
         access_key = view.findViewById(R.id.editText_access);
+
+
+        //floating button
+        final FloatingActionButton fab = view.findViewById(R.id.fab_menu);
+        final FloatingActionButton fab1 = view.findViewById(R.id.fab_home);
+        final FloatingActionButton fab2 = view.findViewById(R.id.fab_word);
+        final FloatingActionButton fab3 = view.findViewById(R.id.fab_user);
+
+        final Animation fab_open = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_open);
+        final Animation fab_close = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_close);
 
 
         SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
@@ -199,15 +220,114 @@ public class Fragment_Speaker extends Fragment {
                     }
                 }
             }
-
         });
+
+
+        //floating 버튼-----------------------------------------------------------------------------//
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFabOpen) {
+                    fab1.startAnimation(fab_close);
+                    fab2.startAnimation(fab_close);
+                    fab3.startAnimation(fab_close);
+                    fab1.setClickable(false);
+                    fab2.setClickable(false);
+                    fab3.setClickable(false);
+                    isFabOpen = false;
+                } else {
+                    fab1.startAnimation(fab_open);
+                    fab2.startAnimation(fab_open);
+                    fab3.startAnimation(fab_open);
+                    fab1.setClickable(true);
+                    fab2.setClickable(true);
+                    fab3.setClickable(true);
+                    isFabOpen = true;
+                }
+                //Toast.makeText(getActivity(), "Floating Action Button", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFabOpen) {
+                    fab1.startAnimation(fab_close);
+                    fab2.startAnimation(fab_close);
+                    fab3.startAnimation(fab_close);
+                    fab1.setClickable(false);
+                    fab2.setClickable(false);
+                    fab3.setClickable(false);
+                    isFabOpen = false;
+                } else {
+                    fab1.startAnimation(fab_open);
+                    fab2.startAnimation(fab_open);
+                    fab3.startAnimation(fab_open);
+                    fab1.setClickable(true);
+                    fab2.setClickable(true);
+                    fab3.setClickable(true);
+                    isFabOpen = true;
+                }
+                Intent intent = new Intent(getActivity(), FloatingActivity.class);
+                startActivity(intent);
+                //Toast.makeText(getActivity(), "Floating Action Button", Toast.LENGTH_SHORT).show();
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFabOpen) {
+                    fab1.startAnimation(fab_close);
+                    fab2.startAnimation(fab_close);
+                    fab3.startAnimation(fab_close);
+                    fab1.setClickable(false);
+                    fab2.setClickable(false);
+                    fab3.setClickable(false);
+                    isFabOpen = false;
+                } else {
+                    fab1.startAnimation(fab_open);
+                    fab2.startAnimation(fab_open);
+                    fab3.startAnimation(fab_open);
+                    fab1.setClickable(true);
+                    fab2.setClickable(true);
+                    fab3.setClickable(true);
+                    isFabOpen = true;
+                }
+               //Toast.makeText(getActivity(), "Floating Action Button", Toast.LENGTH_SHORT).show();
+            }
+        });
+        fab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFabOpen) {
+                    fab1.startAnimation(fab_close);
+                    fab2.startAnimation(fab_close);
+                    fab3.startAnimation(fab_close);
+                    fab1.setClickable(false);
+                    fab2.setClickable(false);
+                    fab3.setClickable(false);
+                    isFabOpen = false;
+                } else {
+                    fab1.startAnimation(fab_open);
+                    fab2.startAnimation(fab_open);
+                    fab3.startAnimation(fab_open);
+                    fab1.setClickable(true);
+                    fab2.setClickable(true);
+                    fab3.setClickable(true);
+                    isFabOpen = true;
+                }
+                //Toast.makeText(getActivity(), "Floating Action Button", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //-----------------------------------------------------------------------------------------//
         return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class); // 뭔가 이상한 부분
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class); //fragment_listen으로 값을 전달하기 위한 것.
     }
 
 

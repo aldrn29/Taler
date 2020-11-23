@@ -364,9 +364,12 @@ public class Fragment_Listen extends Fragment {
              answer2 = answer2.replaceAll("'", "\\\\u0027");
              answer2 = answer2.replaceAll(" \n", "");
 
-             temp2 = s;
+             //TextView temp3 = getView().findViewById(R.id.tv_user_speaking);
+             //String temp4 = temp3.getText().toString();
 
-             if(temp2.equals("cause i didn\u0027t want anyone thinking i still care")){
+             temp2 = s;     //speaker fragment에서 받아온 값.
+
+             if(temp2.equals("cause i didn't want anyone thinking i still care")){
                  temp.setTextColor(Color.BLUE);
                  Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
              }
