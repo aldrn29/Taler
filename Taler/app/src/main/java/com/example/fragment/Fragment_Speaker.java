@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -170,6 +171,7 @@ public class Fragment_Speaker extends Fragment {
                                         //결과 반환 줄
                                         btn_clear.setOnClickListener(new View.OnClickListener() {
                                             public void onClick(View v) {
+                                                //result = result.replaceAll("\\u0027", "");
                                                 result = result.replaceAll(" \n", "");
                                                 sharedViewModel.setData(result);
                                             }
@@ -199,10 +201,7 @@ public class Fragment_Speaker extends Fragment {
             }
 
         });
-
         return view;
-
-
     }
 
     @Override
@@ -296,6 +295,7 @@ public class Fragment_Speaker extends Fragment {
             con.setDoOutput(true);
 
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            //URLEncoder.encode("'", "UTF8");     //과연 특수문자를 인식할 것인가. json //u0027
             wr.write(gson.toJson(request).getBytes("UTF_8"));
             wr.flush();
             wr.close();
