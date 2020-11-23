@@ -3,7 +3,7 @@ package com.example.taler;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class PreferenceManager {
+public class PreferencesManager {
     public static final String PREFERENCES_NAME = "rebuild_preference";
     private static final String DEFAULT_VALUE_STRING = "";
     private static final boolean DEFAULT_VALUE_BOOLEAN = false;
