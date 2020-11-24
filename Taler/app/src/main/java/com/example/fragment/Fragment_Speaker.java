@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.taler.FloatingActivity;
@@ -61,8 +62,8 @@ public class Fragment_Speaker extends Fragment {
 
     private SharedViewModel sharedViewModel;        //fragment 간 데이터 전송을 위한 것.
 
-    Button btn_speak;   //누르고 말하기
-    Button btn_clear;
+    ImageButton btn_speak;   //누르고 말하기
+    ImageButton btn_clear;
     TextView user_speaking; //유저 말한 문장
     TextView access_key;    //엑세스 키
     String result;
