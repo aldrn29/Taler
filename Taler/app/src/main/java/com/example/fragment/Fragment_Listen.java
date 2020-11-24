@@ -4,20 +4,18 @@
 package com.example.fragment;
 
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taler.SharedViewModel;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,11 +35,22 @@ import java.net.URL;
 import java.util.ArrayList;
 import android.media.PlaybackParams;
 
-import org.w3c.dom.Text;
-
 public class Fragment_Listen extends Fragment {
 
     MediaPlayer player;
+
+    //send 버튼이 따로 없는 버전
+    TextView eng_text;
+
+    //버튼
+    ImageButton btnIncrease;
+    ImageButton btnDecrease;
+    ImageButton play;
+    Button slow;
+    Button slower;
+    Button kor_button;
+    Button answer;
+
     FirebaseStorage storage = FirebaseStorage.getInstance();
     //StorageReference storageRef = storage.getReference();
     final int pausePosition=0;
@@ -64,17 +73,16 @@ public class Fragment_Listen extends Fragment {
         View root = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
 
         //send 버튼이 따로 없는 버전
-        final TextView eng_text = root.findViewById(R.id.tv_answer);
+        eng_text = root.findViewById(R.id.tv_answer);
 
         //버튼
-        Button btnIncrease = root.findViewById(R.id.btn_next);  //페이지 증가 버튼
-        Button btnDecrease = root.findViewById(R.id.btn_prev);  //페이지 감소 버튼
-        final Button play = root.findViewById(R.id.btn_play);   //음악 play
-        final Button slow  = root.findViewById(R.id.btn_quarters_speed);    //0.75배속
-        final Button slower = root.findViewById(R.id.btn_half_speed);       //0.5배속
-        final Button kor_button = root.findViewById(R.id.btn_watch_kor);    //번역 가사 버튼
-        final Button pause = root.findViewById(R.id.btn_delay);        //일시정지 버튼
-        final Button answer = root.findViewById(R.id.btn_answer);       //정답보기 버튼
+        btnIncrease = root.findViewById(R.id.btn_next);  //페이지 증가 버튼
+        btnDecrease = root.findViewById(R.id.btn_prev);  //페이지 감소 버튼
+        play = root.findViewById(R.id.btn_play);   //음악 play
+        slow  = root.findViewById(R.id.btn_quarters_speed);    //0.75배속
+        slower = root.findViewById(R.id.btn_half_speed);       //0.5배속
+        kor_button = root.findViewById(R.id.btn_watch_kor);    //번역 가사 버튼
+        answer = root.findViewById(R.id.btn_answer);       //정답보기 버튼
 
         final String[] directoryName = {"love-yourself-mp3","love-yourself-kor","love-yourself-eng"};
         final TextView textCounter = root.findViewById(R.id.tv_pageNum);    //페이지 수 텍스트뷰
@@ -91,12 +99,13 @@ public class Fragment_Listen extends Fragment {
                 playAudio(url_default);
             }});
         //일시정지 버튼은 만들자. 정지만 됨.----------------------------------------------------------//
+        /*
         pause.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 pauseAudio();
             }
-        });
+        });*/
         slower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,6 +194,7 @@ public class Fragment_Listen extends Fragment {
                 });
 
                 //일시정지 버튼은 만들자. 아직 작동 안됨(정지된 뒤 바로 이어서 재생함)--------------------//
+                /*
                 Button pause = getView().findViewById(R.id.btn_delay);
                 pause.setOnClickListener(new View.OnClickListener(){
                     @Override
@@ -194,7 +204,7 @@ public class Fragment_Listen extends Fragment {
                             resumeAudio();
                         }
                     }
-                });
+                });*/
 
                 //------------------------재생속도 기능---------------------------------------------//
                 slower.setOnClickListener(new View.OnClickListener() {
@@ -275,6 +285,7 @@ public class Fragment_Listen extends Fragment {
                     }});
 
                 //일시정지 버튼은 만들자. 아직 작동 안됨.----------------------------------------------//
+                /*
                 Button pause = getView().findViewById(R.id.btn_delay);
                 pause.setOnClickListener(new View.OnClickListener(){
                     @Override
@@ -284,7 +295,7 @@ public class Fragment_Listen extends Fragment {
                             resumeAudio();
                         }
                     }
-                });
+                });*/
                 //------------------------재생속도 기능--- 아직 하는 중 ...--------------------------//
                 slower.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -390,7 +401,23 @@ public class Fragment_Listen extends Fragment {
             player = new MediaPlayer();
             player.setDataSource(url);
             player.prepare();
-            player.start();
+
+            // 노래 끝났을 때 버튼 이미지 변경
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    play.setSelected(false);
+                }
+            });
+
+            // play 버튼 토글
+            if (!play.isSelected()) {
+                play.setSelected(true);
+                player.start();
+            } else {
+                play.setSelected(false);
+                player.pause();
+            }
 
             Toast.makeText(getActivity(), "재생 시작됨.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
