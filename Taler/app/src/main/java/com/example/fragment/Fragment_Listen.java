@@ -79,7 +79,7 @@ public class Fragment_Listen extends Fragment {
         final String[] directoryName = {"love-yourself-mp3","love-yourself-kor","love-yourself-eng"};
         final TextView textCounter = root.findViewById(R.id.tv_pageNum);    //페이지 수 텍스트뷰
         TextView songName = root.findViewById(R.id.tv_songName); //페이지 상단에 나타날 곡제목. --> 메뉴에서 선택 시 값 들어가도록. Intent 전달.
-        songName.setText("Justin Bieber - Love Yourself");
+        songName.setText("Justin Bieber - Love Yourself"); //폰트가 너무 밋밋해서 바꿀 예정. 
 
         final TextView kor_text = root.findViewById(R.id.tv_translated);
 
