@@ -71,6 +71,8 @@ public class StoryCardActivity extends AppCompatActivity {
                     if(num > 3){
                         leafNode = true;
                     }
+                    script.setVisibility(View.GONE);
+                    toggle_script = false;
                     showCard(num);
                 }
 //                else Toast.makeText(StoryCardActivity.this, "Story End", Toast.LENGTH_SHORT).show();
@@ -87,6 +89,8 @@ public class StoryCardActivity extends AppCompatActivity {
                     if(num > 3){
                         leafNode = true;
                     }
+                    script.setVisibility(View.GONE);
+                    toggle_script = false;
                     showCard(num);
                 }
 //                else Toast.makeText(StoryCardActivity.this, "Story End", Toast.LENGTH_SHORT).show();
@@ -94,12 +98,6 @@ public class StoryCardActivity extends AppCompatActivity {
         });
 
         // 스크립트 visibility Button
-        if(toggle_script){
-            script.setVisibility(View.INVISIBLE);
-        }
-        else{
-            script.setVisibility(View.GONE);
-        }
 
 
 
@@ -122,10 +120,16 @@ public class StoryCardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!toggle_script){
                     // 이미지 뷰 불투명, 텍스트 보이기
+                    cardImg.setAlpha((float) 0.3);
+                    script.setVisibility(View.VISIBLE);
                     toggle_script = true;
+                    System.out.println("Visible");
                 }
                 else{
+                    cardImg.setAlpha((float) 1.0);
                     toggle_script = false;
+                    script.setVisibility(View.GONE);
+                    System.out.println("Gone");
                 }
             }
         });
@@ -174,7 +178,9 @@ public class StoryCardActivity extends AppCompatActivity {
             choice2.setText("  ");
         }
         recorded.setText("");
+        script.setVisibility(View.GONE);
         toggle_script = false;
+        cardImg.setAlpha((float) 1.0);
 
     }
 //    https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2FAlice%2Fchoice1%2F1.txt?alt=media&token=1
