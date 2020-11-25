@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.taler.ASRmasterAPI;
 import com.example.taler.R;
@@ -30,7 +29,10 @@ public class StoryCardActivity extends AppCompatActivity {
     TextView script, choice1, choice2, recorded;
     String front_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2F";
     String title, choice1Str, choice2Str, recordedStr= "";
+    Integer depth = 2;
     Integer num = 1;
+    boolean leafNode = false;
+    boolean toggle_script = false;
 
 
     @Override
@@ -47,55 +49,55 @@ public class StoryCardActivity extends AppCompatActivity {
         asr = new ASRmasterAPI(speechButton, recorded, 1);
         recordedStr= asr.getResult();
 
-
         Bundle extras = getIntent().getExtras();
 
         title = extras.getString("title");
 
+        //leafnode 판단을 하고 아니라면 정상작동을하고 맞다면 false로 바꾸고 마지막 엔딩 동작을 한다.
+        leafNode = false;
+        if(leafNode){
+            choice1.setEnabled(false);
+            choice2.setEnabled(false);
+        }
 
-        //Todo FB를 여기서 읽어온다. title id에 해당하는 사진들을 1번부터 차례로
-        //우선 선지는 "number one", "number two"로 통일하자. 테스트를 위해
         showCard(num);
         choice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.print("start");
-                System.out.print("recordedText:");
-                System.out.print(recorded.getText().toString());
-                System.out.println("end");
-                System.out.print("start");
-                System.out.print("choiceText:");
-                System.out.print(choice1.getText().toString());
-                System.out.println("end");
+                //Todo 앞에 숫자도 붙이자
                 choice1Str = " " + choice1.getText().toString()+ " \n";
-                System.out.println(choice1Str);
                 if(num < 8 && choice1Str.equals(recorded.getText().toString())) {
                     num = num*2;
+                    if(num > 3){
+                        leafNode = true;
+                    }
+                    script.setVisibility(View.GONE);
+                    toggle_script = false;
                     showCard(num);
                 }
 //                else Toast.makeText(StoryCardActivity.this, "Story End", Toast.LENGTH_SHORT).show();
             }
         });
+
         choice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.print("start");
-                System.out.print("recordedText:");
-                System.out.print(recorded.getText().toString());
-                System.out.println("end");
-                System.out.print("start");
-                System.out.print("choiceText:");
-                System.out.print(choice2.getText().toString());
-                System.out.println("end");
                 choice2Str = " " + choice2.getText().toString()+ " \n";
-                System.out.println(choice2Str);
+
                 if(num < 8 && choice2Str.equals(recorded.getText().toString())) {
                     num = num*2 + 1;
+                    if(num > 3){
+                        leafNode = true;
+                    }
+                    script.setVisibility(View.GONE);
+                    toggle_script = false;
                     showCard(num);
                 }
 //                else Toast.makeText(StoryCardActivity.this, "Story End", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // 스크립트 visibility Button
 
 
 
@@ -112,6 +114,25 @@ public class StoryCardActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
+
+        cardImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!toggle_script){
+                    // 이미지 뷰 불투명, 텍스트 보이기
+                    cardImg.setAlpha((float) 0.3);
+                    script.setVisibility(View.VISIBLE);
+                    toggle_script = true;
+                    System.out.println("Visible");
+                }
+                else{
+                    cardImg.setAlpha((float) 1.0);
+                    toggle_script = false;
+                    script.setVisibility(View.GONE);
+                    System.out.println("Gone");
+                }
+            }
+        });
 
 
     }
@@ -146,10 +167,21 @@ public class StoryCardActivity extends AppCompatActivity {
     }
 
     public void showCard(int num){
-        Picasso.get().load(front_url + title + "%2F" + "image" + "%2F"+ num + ".jpeg?alt=media&token=" + num).fit().into(cardImg);
+        Picasso.get().load(front_url + title + "%2F" + "image" + "%2F"+ num + ".JPG?alt=media&token=" + num).fit().into(cardImg);
         setTextFromUrl(script, front_url + title + "%2F" + "script" + "%2F"+ num + ".txt?alt=media&token=" + num);
-        setTextFromUrl(choice1, front_url + title + "%2F" + "choice1" + "%2F"+ num + ".txt?alt=media&token=" + num);
-        setTextFromUrl(choice2, front_url + title + "%2F" + "choice2" + "%2F"+ num + ".txt?alt=media&token=" + num);
+        if(num <= 3) {
+            setTextFromUrl(choice1, front_url + title + "%2F" + "choice1" + "%2F"+ num + ".txt?alt=media&token=" + num);
+            setTextFromUrl(choice2, front_url + title + "%2F" + "choice2" + "%2F"+ num + ".txt?alt=media&token=" + num);
+        }
+        else {
+            choice1.setText("  ");
+            choice2.setText("  ");
+        }
+        recorded.setText("");
+        script.setVisibility(View.GONE);
+        toggle_script = false;
+        cardImg.setAlpha((float) 1.0);
+
     }
 //    https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2FAlice%2Fchoice1%2F1.txt?alt=media&token=1
 }
