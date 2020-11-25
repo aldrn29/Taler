@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -25,23 +24,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static com.example.taler.fileKind.MP4;
-import static com.example.taler.fileKind.TXT_ENG;
-import static com.example.taler.fileKind.TXT_KOR;
-
-enum fileKind { MP4, TXT_KOR, TXT_ENG }
-
 public class MediaActivity extends AppCompatActivity {
 
     ASRmasterAPI asr;
     VideoView videoView;
-    TextView textNumber, textScript, textResult;
-    ImageButton prevButton, nextButton, playButton, recordButton;
-    Button engButton, korButton;
+    TextView textNumber, textScript, textResult, textTemp;
+    ImageButton prevButton, nextButton, playButton, hintButton, recordButton, checkButton;
 
+    enum fileKind { MP4, TXT_KOR, TXT_ENG }
     final String root = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/";
     final String[] directoryName = { "Modern.Family.S01E01.mp4", "Modern.Family.S01E01.kor", "Modern.Family.S01E01.eng" };
     int fileNum = 1;
+    int hintNum = 0;
+    String script;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -54,22 +49,24 @@ public class MediaActivity extends AppCompatActivity {
         prevButton = findViewById(R.id.imageButton_prev);
         nextButton = findViewById(R.id.imageButton_next);
         playButton = findViewById(R.id.imageButton_play);
+        hintButton = findViewById(R.id.imageButton_hint);
         recordButton = findViewById(R.id.imageButton_record);
+        checkButton = findViewById(R.id.imageButton_check);
         textScript = findViewById(R.id.textView_script);
         textResult = findViewById(R.id.textView_result);
-        engButton = findViewById(R.id.button_eng);
-        korButton = findViewById(R.id.button_kor);
+        textTemp = findViewById(R.id.textView_temp);
 
         // 음성인식 API 연결
         asr = new ASRmasterAPI(recordButton, textResult, 1);
 
         // init setting
         textNumber.setText("#." + fileNum);
-        videoView.setVideoURI(Uri.parse(getFileUri(MP4, fileNum)));
+        setTextFromUrl(textTemp, getFileUri(fileKind.TXT_ENG, fileNum));
+        videoView.setVideoURI(Uri.parse(getFileUri(fileKind.MP4, fileNum)));
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                // To do: 준비 완료되면 비디오 첫 화면 띄우기
+
             }
         });
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -114,27 +111,38 @@ public class MediaActivity extends AppCompatActivity {
             }
         });
 
-        engButton.setOnClickListener(new View.OnClickListener() {
+        hintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setTextFromUrl(textScript, getFileUri(TXT_ENG, fileNum));
+                if (hintNum == 0) {
+                    setTextFromUrl(textScript, getFileUri(fileKind.TXT_KOR, fileNum));
+                    hintNum = 1;
+                } else if (hintNum == 1) {
+                    setTextFromUrl(textScript, getFileUri(fileKind.TXT_ENG, fileNum));
+                    hintNum = 2;
+                } else {
+                    textScript.setText("");
+                    hintNum = 0;
+                }
             }
         });
 
-        korButton.setOnClickListener(new View.OnClickListener() {
+        checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setTextFromUrl(textScript, getFileUri(TXT_KOR, fileNum));
+                asr.resultCheck(textTemp);
             }
         });
     }
 
     public void setView() {
-        videoView.setVideoURI(Uri.parse(getFileUri(MP4, fileNum))); // To do: 첫화면 띄우기
+        videoView.setVideoURI(Uri.parse(getFileUri(fileKind.MP4, fileNum)));
         playButton.setSelected(false);
         textNumber.setText("#." + fileNum);
         textScript.setText("");
         textResult.setText("");
+        setTextFromUrl(textTemp, getFileUri(fileKind.TXT_ENG, fileNum));
+        hintNum = 0;
     }
 
     public String getFileUri(@NotNull fileKind kind, int num) {

@@ -80,16 +80,26 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <TextView
+            android:id="@+id/textView_temp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
             android:id="@+id/textView_script"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
-            android:padding="10dp"
+            android:layout_marginTop="45dp"
             android:background="@drawable/border_round_layout"
+            android:padding="10dp"
             android:text=""
-            android:textSize="12sp"
+            android:textSize="15sp"
             app:layout_constraintWidth_percent="0.8"
-            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintHeight_percent="0.2"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -101,63 +111,68 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
-            android:padding="10dp"
             android:background="@drawable/border_round_layout"
+            android:padding="10dp"
             android:text=""
-            android:textSize="12sp"
+            android:textSize="15sp"
             app:layout_constraintWidth_percent="0.8"
             app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toBottomOf="@id/textView_script"
+            app:layout_constraintBottom_toTopOf="@+id/imageButton_record"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/imageButton_record"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="20dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button_record"
+            android:scaleType="fitCenter"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/imageButton_check"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintVertical_bias="0.9"/>
+
+        <ImageButton
+            android:id="@+id/imageButton_check"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button_record_check"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintLeft_toRightOf="@id/imageButton_record"
+            app:layout_constraintVertical_bias="0.9"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/button_kor"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="30dp"
-        android:text="한"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/button_eng"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintVertical_bias="0.45"/>
-
-    <Button
-        android:id="@+id/button_eng"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:text="영"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/button_kor"
-        app:layout_constraintVertical_bias="0.45"/>
-
     <ImageButton
         android:id="@+id/imageButton_play"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="15dp"
         android:adjustViewBounds="true"
         android:background="@drawable/button_change"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton_record"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_hint"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"/>
 
     <ImageButton
-        android:id="@+id/imageButton_record"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="30dp"
+        android:id="@+id/imageButton_hint"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="40dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/button_record"
+        android:background="@drawable/button_hint"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -278,8 +278,8 @@ public class ASRmasterAPI implements View.OnClickListener {
 
     public String subString(String str) {
         int index = str.indexOf("recognized");
-        int startIndex = index + 14;
-        int endIndex = str.indexOf("}", startIndex) - 1;
+        int startIndex = index + 14; //Todo: 15
+        int endIndex = str.indexOf("}", startIndex) - 1; //Todo: 4
 
         return str.substring(startIndex, endIndex);
     }
@@ -287,4 +287,24 @@ public class ASRmasterAPI implements View.OnClickListener {
     public String getResult() {
         return result;
     }
-}
+
+    public void resultCheck(View text) {
+        TextView str = (TextView) text;
+        String script = str.getText().toString().toLowerCase();
+
+        Log.d("MyTag", "기존: ["+script+"]");
+        Log.d("MyTag0", "음성: ["+result+"]");
+
+        // 특수문자 처리
+        script = script.replace("?", "");
+        script = script.replace("!", "");
+
+        if (result.equals(script)) {
+            // 정답
+            Log.d("MyTag", "정답!");
+        }
+        else {
+            // 틀림
+            Log.d("MyTag", "틀림!");
+        }
+    }}
