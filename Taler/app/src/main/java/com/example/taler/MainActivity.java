@@ -17,17 +17,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
-        //Todo setIcon()으로 바꾸면 좋겠음
-        tabLayout.addTab(tabLayout.newTab().setText("Profile"));
-        tabLayout.addTab(tabLayout.newTab().setText("Contents"));
-        tabLayout.addTab(tabLayout.newTab().setText("Setting"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.tab_profile));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.tab_home));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.tab_setting));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setCurrentItem(1);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
