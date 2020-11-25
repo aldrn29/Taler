@@ -48,7 +48,8 @@ public class Fragment_Listen extends Fragment {
     ImageButton play;
     Button slow;
     Button slower;
-    Button kor_button;
+    ImageButton kor_button;
+    //Button kor_button;
     Button answer;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -140,7 +141,7 @@ public class Fragment_Listen extends Fragment {
 
             //result=  result.replaceAll("'", "");
             find_kor(eng_text, full_eng_common_url);
-            eng_text.setTextColor(Color.WHITE);
+            eng_text.setTextColor(Color.parseColor("#F3F3F3"));
 
             //버튼.
             answer.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +241,7 @@ public class Fragment_Listen extends Fragment {
                 String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[2]+"%2F";
                 String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
                 find_kor(eng_text, full_eng_common_url);
-                eng_text.setTextColor(Color.WHITE);
+                eng_text.setTextColor(Color.parseColor("#F3F3F3"));
 
                 //버튼 사용시
                 answer.setOnClickListener(new View.OnClickListener() {
@@ -329,7 +330,8 @@ public class Fragment_Listen extends Fragment {
                 String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[2]+"%2F";
                 String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
                 find_kor(eng_text, full_eng_common_url);
-                eng_text.setTextColor(Color.WHITE);
+                eng_text.setTextColor(Color.parseColor("#F3F3F3"));
+                //
 
                 //버튼 사용시
                 answer.setOnClickListener(new View.OnClickListener() {
@@ -344,7 +346,6 @@ public class Fragment_Listen extends Fragment {
                     }
                 });
                 //---------------------영문 가사--끝-------------------------------------------------//
-
                 if (count == 1) {
                     textCounter.setText(Integer.toString(1));
                     Toast.makeText(getActivity(), "첫 페이지 입니다", Toast.LENGTH_LONG).show();
