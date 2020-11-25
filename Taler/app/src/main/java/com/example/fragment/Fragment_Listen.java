@@ -87,7 +87,7 @@ public class Fragment_Listen extends Fragment {
         final String[] directoryName = {"love-yourself-mp3","love-yourself-kor","love-yourself-eng"};
         final TextView textCounter = root.findViewById(R.id.tv_pageNum);    //페이지 수 텍스트뷰
         TextView songName = root.findViewById(R.id.tv_songName); //페이지 상단에 나타날 곡제목. --> 메뉴에서 선택 시 값 들어가도록. Intent 전달.
-        songName.setText("Justin Bieber - Love Yourself"); //폰트가 너무 밋밋해서 바꿀 예정. 
+        songName.setText("Justin Bieber - Love Yourself"); //폰트가 너무 밋밋해서 바꿀 예정.
 
         final TextView kor_text = root.findViewById(R.id.tv_translated);
 
@@ -361,36 +361,36 @@ public class Fragment_Listen extends Fragment {
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         sharedViewModel.getData().observe(getViewLifecycleOwner(), new Observer<String>(){
-        String temp2;
+            String temp2;
 
-         @Override
-         public void onChanged(String s){
-             TextView temp = getView().findViewById(R.id.tv_answer);
-             String answer2 = temp.getText().toString().toLowerCase();
-             answer2 = answer2.replaceAll("'", "\\\\u0027");
-             answer2 = answer2.replaceAll(" \n", "");
+            @Override
+            public void onChanged(String s){
+                TextView temp = getView().findViewById(R.id.tv_answer);
+                String answer2 = temp.getText().toString().toLowerCase();
+                answer2 = answer2.replaceAll("'", "\\\\u0027");
+                answer2 = answer2.replaceAll(" \n", "");
 
-             TextView temp3 = getView().findViewById(R.id.tv_pageNum);
-             int temp4 = Integer.parseInt(temp3.getText().toString());
+                TextView temp3 = getView().findViewById(R.id.tv_pageNum);
+                int temp4 = Integer.parseInt(temp3.getText().toString());
 
-              temp2 = s;     //speaker fragment에서 받아온 값.
-              if (temp2.equals(answer2)) {
-                     temp.setTextColor(Color.BLUE);
-                     Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
-                     //정답인 경우 점수가 올라가도록 구현
+                temp2 = s;     //speaker fragment에서 받아온 값.
+                if (temp2.equals(answer2)) {
+                    temp.setTextColor(Color.BLUE);
+                    Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
+                    //정답인 경우 점수가 올라가도록 구현
 
-                 }
-              else if(temp4 == 6){
-                  temp.setTextColor(Color.BLUE);
-                  Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
-                  //정답인 경우 점수가 올라가도록 구현
-              }
-              else {
-                     //temp.setTextColor(Color.GREEN);
-                     Toast.makeText(getActivity(), "다시 시도해보세요" + temp2 + answer2, Toast.LENGTH_LONG).show();
-                 }      //오류값을 보기 위해 해놓은 걸로 최종본에서는 수정해야함!!
-         }});
-	}
+                }
+                else if(temp4 == 6){
+                    temp.setTextColor(Color.BLUE);
+                    Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
+                    //정답인 경우 점수가 올라가도록 구현
+                }
+                else {
+                    //temp.setTextColor(Color.GREEN);
+                    Toast.makeText(getActivity(), "다시 시도해보세요" + temp2 + answer2, Toast.LENGTH_LONG).show();
+                }      //오류값을 보기 위해 해놓은 걸로 최종본에서는 수정해야함!!
+            }});
+    }
 
 
     //--------------위의 버튼 리스너 안에 들어가는 함수들----------------------------------------------//
@@ -499,5 +499,4 @@ public class Fragment_Listen extends Fragment {
             }
         }).start();
     }
-
 }

@@ -49,10 +49,9 @@
             android:layout_height="0dp"
             android:padding="10dp"
             android:background="@drawable/border_round_layout"
-            android:text='" "'
             android:textSize="12sp"
             app:layout_constraintWidth_percent="0.7"
-            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toBottomOf="@id/tv_songName"
             app:layout_constraintBottom_toTopOf="@id/tv_translated"
             app:layout_constraintRight_toRightOf="parent"
@@ -65,11 +64,10 @@
             android:layout_marginTop="15dp"
             android:padding="10dp"
             android:background="@drawable/border_round_layout"
-            android:text='" "'
             android:textSize="12sp"
             app:drawableTint="#653232"
             app:layout_constraintWidth_percent="0.7"
-            app:layout_constraintHeight_percent="0.25"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintTop_toBottomOf="@id/tv_answer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -134,46 +132,52 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
+        app:layout_constraintVertical_bias="0.0"/>
 
     <Button
         android:id="@+id/btn_half_speed"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="5dp"
         android:text="0.5"
         android:textSize="10sp"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btn_quarters_speed"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintVertical_bias="0.4"/>
 
     <Button
         android:id="@+id/btn_quarters_speed"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
         android:text="0.75"
         android:textSize="10sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_half_speed"
+        app:layout_constraintLeft_toRightOf="@+id/btn_half_speed"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/btn_half_speed"/>
+        app:layout_constraintVertical_bias="0.4"/>
 
     <ImageButton
         android:id="@+id/btn_play"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="90dp"
         android:adjustViewBounds="true"
         android:background="@drawable/button_change"
         android:scaleType="fitCenter"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintVertical_bias="0.4"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
