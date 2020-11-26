@@ -20,12 +20,14 @@ public class CardListRecyclerViewAdapter extends RecyclerView.Adapter<CardListRe
     public class ListViewHolder extends RecyclerView.ViewHolder {
         public TextView id;
         public TextView title; //텍스트뷰 참조를 저장할 변수 꼭 이곳에 선언한다.
+        public TextView genre;
         public ImageView thumbnail;
 
         public ListViewHolder(View itemView){ //constructor
             super(itemView); //레이아웃 파일로부터 만들어진 뷰 객체를 상위 뷰홀더에 전달
             title = itemView.findViewById(R.id.title);
             id = itemView.findViewById(R.id.id);
+            genre = itemView.findViewById(R.id.genre);
             thumbnail = itemView.findViewById(R.id.thumbnail);
         }
     }
@@ -48,6 +50,7 @@ public class CardListRecyclerViewAdapter extends RecyclerView.Adapter<CardListRe
         holder.id.setText(Integer.toString(mList.get(position).getId()));
         String titleUrl = mList.get(position).getTitle();
         holder.title.setText(titleUrl);
+        holder.genre.setText(mList.get(position).getGenre());
         Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2F"+titleUrl+"%2F"+titleUrl+".jpg?alt=media&token="+titleUrl).fit().into(holder.thumbnail);
     }
 

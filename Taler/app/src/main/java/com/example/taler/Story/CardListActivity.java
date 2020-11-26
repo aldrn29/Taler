@@ -37,7 +37,7 @@ public class CardListActivity extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
 
-        int num_of_title = 2;
+        int num_of_title = 3;
         for(int i = 0; i < num_of_title; i++){
             CardDictionary data = new CardDictionary(i);
             arrayList.add(data); //리사이클러뷰 마지막줄에 삽입 첫줄에 삽입은 (0, data)
@@ -56,6 +56,7 @@ public class CardListActivity extends AppCompatActivity {
                 //identifier PK를 넘겨준다.
                 intent.putExtra("id", dict.getId());
                 intent.putExtra("title", dict.getTitle());
+                intent.putExtra("genre", dict.getGenre());
 
                 startActivity(intent);
             }
