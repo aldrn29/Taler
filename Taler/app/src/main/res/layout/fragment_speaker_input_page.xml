@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,17 +9,14 @@
         android:id="@+id/btn_speak"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="36dp"
         android:adjustViewBounds="true"
+
         android:background="@drawable/button_record"
         android:scaleType="fitCenter"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_user_speaking"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_check"/>
+        app:layout_constraintStart_toStartOf="@id/tv_user_speaking"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_speaking" />
 
     <EditText
         android:id="@+id/editText_access"
@@ -32,23 +30,24 @@
         app:layout_constraintLeft_toRightOf="@id/btn_check"
         app:layout_constraintRight_toRightOf="parent" />
 
+
     <ImageButton
         android:id="@+id/btn_check"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="188dp"
         android:adjustViewBounds="true"
         android:background="@drawable/button_record_check"
         android:scaleType="fitCenter"
-        app:layout_constraintTop_toTopOf="@id/btn_speak"
-        app:layout_constraintLeft_toRightOf="@id/btn_speak"
-        app:layout_constraintRight_toRightOf="parent"/>
-
+        app:layout_constraintEnd_toEndOf="@id/tv_user_speaking"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_speaking" />
 
     <TextView
         android:id="@+id/tv_user_speaking"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="270dp"
         android:background="@drawable/border_round_layout"
         android:inputType="textMultiLine"
         android:padding="10dp"
@@ -59,7 +58,6 @@
         app:layout_constraintHeight_percent="0.4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_speak"
         app:layout_constraintWidth_percent="0.8" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -67,10 +65,11 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="80dp"
         android:clickable="true"
         app:backgroundTint="#FBC50E"
-        android:layout_gravity="bottom|end"
         app:layout_constraintEnd_toEndOf="@id/tv_user_speaking"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,31 +98,16 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:clickable="true"
         android:visibility="invisible"
         app:backgroundTint="#FFC400"
         app:elevation="6dp"
-        android:layout_gravity="bottom|end"
-        app:pressedTranslationZ="12dp"
         app:layout_constraintBottom_toTopOf="@id/fab_home"
-        app:layout_constraintEnd_toEndOf="@id/tv_user_speaking"
-        app:layout_constraintTop_toBottomOf="@id/fab_user"
-        app:srcCompat="@drawable/whiteboard_s" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_user"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginTop="20dp"
-        android:clickable="true"
-        android:visibility="invisible"
-        app:backgroundTint="#FFC400"
-        app:layout_constraintEnd_toEndOf="@id/tv_user_speaking"
+        app:layout_constraintEnd_toEndOf="@id/fab_menu"
         app:layout_constraintTop_toTopOf="@id/tv_user_speaking"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/user_s" />
+        app:srcCompat="@drawable/whiteboard_s" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

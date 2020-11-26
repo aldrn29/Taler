@@ -56,6 +56,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import static android.app.Activity.RESULT_OK;
+
 
 public class Fragment_Speaker extends Fragment {
 
@@ -146,7 +148,7 @@ public class Fragment_Speaker extends Fragment {
         final FloatingActionButton fab = view.findViewById(R.id.fab_menu);
         final FloatingActionButton fab1 = view.findViewById(R.id.fab_home);
         final FloatingActionButton fab2 = view.findViewById(R.id.fab_word);
-        final FloatingActionButton fab3 = view.findViewById(R.id.fab_user);
+        //final FloatingActionButton fab3 = view.findViewById(R.id.fab_user);
 
         final Animation fab_open = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_open);
         final Animation fab_close = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fab_close);
@@ -233,18 +235,14 @@ public class Fragment_Speaker extends Fragment {
                 if (isFabOpen) {
                     fab1.startAnimation(fab_close);
                     fab2.startAnimation(fab_close);
-                    fab3.startAnimation(fab_close);
                     fab1.setClickable(false);
                     fab2.setClickable(false);
-                    fab3.setClickable(false);
                     isFabOpen = false;
                 } else {
                     fab1.startAnimation(fab_open);
                     fab2.startAnimation(fab_open);
-                    fab3.startAnimation(fab_open);
                     fab1.setClickable(true);
                     fab2.setClickable(true);
-                    fab3.setClickable(true);
                     isFabOpen = true;
                 }
             }
@@ -256,18 +254,14 @@ public class Fragment_Speaker extends Fragment {
                 if (isFabOpen) {
                     fab1.startAnimation(fab_close);
                     fab2.startAnimation(fab_close);
-                    fab3.startAnimation(fab_close);
                     fab1.setClickable(false);
                     fab2.setClickable(false);
-                    fab3.setClickable(false);
                     isFabOpen = false;
                 } else {
                     fab1.startAnimation(fab_open);
                     fab2.startAnimation(fab_open);
-                    fab3.startAnimation(fab_open);
                     fab1.setClickable(true);
                     fab2.setClickable(true);
-                    fab3.setClickable(true);
                     isFabOpen = true;
                 }
                 Intent intent = new Intent(getActivity(), MediaMenuActivity.class);
@@ -281,45 +275,22 @@ public class Fragment_Speaker extends Fragment {
                 if (isFabOpen) {
                     fab1.startAnimation(fab_close);
                     fab2.startAnimation(fab_close);
-                    fab3.startAnimation(fab_close);
                     fab1.setClickable(false);
                     fab2.setClickable(false);
-                    fab3.setClickable(false);
                     isFabOpen = false;
                 } else {
                     fab1.startAnimation(fab_open);
                     fab2.startAnimation(fab_open);
-                    fab3.startAnimation(fab_open);
                     fab1.setClickable(true);
                     fab2.setClickable(true);
-                    fab3.setClickable(true);
                     isFabOpen = true;
                 }
+                Intent intent = new Intent(getActivity(), FloatingActivity.class);
+                //intent.putExtra("data", "Test Popup");
+                startActivity(intent);
             }
         });
-        //user의 점수 정보, 프로필 정보 -------------------------------------------------------------//
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isFabOpen) {
-                    fab1.startAnimation(fab_close);
-                    fab2.startAnimation(fab_close);
-                    fab3.startAnimation(fab_close);
-                    fab1.setClickable(false);
-                    fab2.setClickable(false);
-                    fab3.setClickable(false);
-                    isFabOpen = false;
-                } else {
-                    fab1.startAnimation(fab_open);
-                    fab2.startAnimation(fab_open);
-                    fab3.startAnimation(fab_open);
-                    fab1.setClickable(true);
-                    fab2.setClickable(true);
-                    fab3.setClickable(true);
-                    isFabOpen = true;
-                }
-            }
-        });
+
         //-----------------------------------------------------------------------------------------//
         return view;
     }
