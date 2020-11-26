@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.example.taler.ASRmasterAPI;
 import com.example.taler.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -28,6 +32,9 @@ public class StoryCardActivity extends AppCompatActivity {
     ImageButton speechButton;
     TextView script, choice1, choice2, recorded;
     String front_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2F";
+    FirebaseDatabase mDatabase;
+    DatabaseReference mDatabaseRef;
+    FirebaseAuth mAuth;
     String title, choice1Str, choice2Str, recordedStr= "";
     Integer depth = 2;
     Integer num = 1;
@@ -39,6 +46,9 @@ public class StoryCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference();
+        final FirebaseUser currentUser = mAuth.getInstance().getCurrentUser();
         cardImg = findViewById(R.id.card_image);
         script = findViewById(R.id.script);
         choice1 = findViewById(R.id.choice1);
@@ -55,21 +65,24 @@ public class StoryCardActivity extends AppCompatActivity {
 
         //leafnode 판단을 하고 아니라면 정상작동을하고 맞다면 false로 바꾸고 마지막 엔딩 동작을 한다.
         leafNode = false;
-        if(leafNode){
-            choice1.setEnabled(false);
-            choice2.setEnabled(false);
-        }
+//        if(leafNode){
+//            choice1.setEnabled(false);
+//            choice2.setEnabled(false);
+//            recorded.setText("Story End");
+//        }
 
         showCard(num);
         choice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Todo 앞에 숫자도 붙이자
+                updateUserPoint(currentUser.getUid(), 3);
                 choice1Str = choice1.getText().toString();
                 if(num < 8 && choice1Str.equals(recorded.getText().toString())) {
                     num = num*2;
                     if(num > 3){
                         leafNode = true;
+
                     }
                     script.setVisibility(View.GONE);
                     toggle_script = false;
@@ -137,6 +150,7 @@ public class StoryCardActivity extends AppCompatActivity {
 
     }
 
+
     public void setTextFromUrl(final TextView text, final String url_input) {
         new Thread(new Runnable() {
             public void run() {
@@ -182,5 +196,10 @@ public class StoryCardActivity extends AppCompatActivity {
         toggle_script = false;
         cardImg.setAlpha((float) 1.0);
 
+    }
+
+    private void updateUserPoint(String userId, int point){
+        DatabaseReference ref = mDatabase.getReference("/users/" + userId + "/point");
+        ref.setValue(point);
     }
 }
