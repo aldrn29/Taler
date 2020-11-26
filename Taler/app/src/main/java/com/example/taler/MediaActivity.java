@@ -103,7 +103,7 @@ public class MediaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // To do: 예외처리 수정
-                if (fileNum < 3) {
+                if (fileNum < 10) {
                     fileNum++;
                     setView();
                 }

@@ -278,8 +278,8 @@ public class ASRmasterAPI implements View.OnClickListener {
 
     public String subString(String str) {
         int index = str.indexOf("recognized");
-        int startIndex = index + 14; //Todo: 15
-        int endIndex = str.indexOf("}", startIndex) - 1; //Todo: 4
+        int startIndex = index + 15;
+        int endIndex = str.indexOf("}", startIndex) - 4;
 
         return str.substring(startIndex, endIndex);
     }
@@ -292,12 +292,16 @@ public class ASRmasterAPI implements View.OnClickListener {
         TextView str = (TextView) text;
         String script = str.getText().toString().toLowerCase();
 
-        Log.d("MyTag", "기존: ["+script+"]");
-        Log.d("MyTag0", "음성: ["+result+"]");
-
-        // 특수문자 처리
+        // 특수문자 및 기타처리
         script = script.replace("?", "");
         script = script.replace("!", "");
+        script = script.replace(".", "");
+        script = script.replace(",", "");
+        result = result.replaceAll("\\\\u0027", "'");
+        result = result.replaceAll(" are", "'re");
+
+        Log.d("MyTag", "기존: ["+script+"]");
+        Log.d("MyTag", "음성: ["+result+"]");
 
         if (result.equals(script)) {
             // 정답
