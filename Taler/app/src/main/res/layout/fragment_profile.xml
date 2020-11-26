@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Profile.ProfileFragment">
 
     <TextView
-        android:id="@+id/nickname"
+        android:id="@+id/user_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="profile!!" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="TextView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/user_point"/>
+
+    <TextView
+        android:id="@+id/user_point"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="TextView2"
+        app:layout_constraintTop_toBottomOf="@id/user_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textView3"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="TextView3"
+        app:layout_constraintTop_toBottomOf="@id/user_point"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
