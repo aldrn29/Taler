@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -129,7 +130,13 @@ public class MediaActivity extends AppCompatActivity {
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                asr.resultCheck(textTemp);
+                boolean check = asr.resultCheck(textTemp);
+
+                if (check) {
+                    Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "다시 시도해보세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

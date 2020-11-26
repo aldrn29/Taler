@@ -288,7 +288,7 @@ public class ASRmasterAPI implements View.OnClickListener {
         return result;
     }
 
-    public void resultCheck(View text) {
+    public boolean resultCheck(View text) {
         TextView str = (TextView) text;
         String script = str.getText().toString().toLowerCase();
 
@@ -306,9 +306,11 @@ public class ASRmasterAPI implements View.OnClickListener {
         if (result.equals(script)) {
             // 정답
             Log.d("MyTag", "정답!");
+            return true;
         }
         else {
             // 틀림
             Log.d("MyTag", "틀림!");
+            return false;
         }
     }}
