@@ -18,8 +18,8 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                //ProfileFragment tab1 = new ProfileFragment();
-                //return tab1;
+                ProfileFragment tab1 = new ProfileFragment();
+                return tab1;
             case 1:
                 MenuFragment tab2 = new MenuFragment();
                 return tab2;

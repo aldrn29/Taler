@@ -268,7 +268,7 @@ public class Fragment_Speaker extends Fragment {
                 startActivity(intent);
             }
         });
-        //단어장 버튼 ------------------------------------------------------------------------------//
+        //진행도 기록버튼----------------------------------------------------------------------------//
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -286,7 +286,6 @@ public class Fragment_Speaker extends Fragment {
                     isFabOpen = true;
                 }
                 Intent intent = new Intent(getActivity(), FloatingActivity.class);
-                //intent.putExtra("data", "Test Popup");
                 startActivity(intent);
             }
         });
