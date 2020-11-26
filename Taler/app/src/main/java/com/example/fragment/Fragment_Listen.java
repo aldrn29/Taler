@@ -122,6 +122,7 @@ public class Fragment_Listen extends Fragment {
 
         //첫페이지 가사 default값
         if(Integer.parseInt(textCounter.getText().toString())==1) {
+            kor_text.setText("HINT");
             kor_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -174,7 +175,7 @@ public class Fragment_Listen extends Fragment {
 
                 //이전 페이지 가사 지우기
                 eng_text.setText("");
-                kor_text.setText("");
+                kor_text.setText("HINT");
 
                 textCounter.setText(Integer.toString(count + 1));
                 if (count >= 17) {
@@ -268,7 +269,7 @@ public class Fragment_Listen extends Fragment {
 
                 //이전 페이지 가사 지우기----
                 eng_text.setText("");
-                kor_text.setText("");
+                kor_text.setText("HINT");
 
                 textCounter.setText(Integer.toString(count - 1));
                 if (count <= 1) {
@@ -377,18 +378,18 @@ public class Fragment_Listen extends Fragment {
                 temp2 = s;     //speaker fragment에서 받아온 값.
                 if (temp2.equals(answer2)) {
                     temp.setTextColor(Color.BLUE);
-                    Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "정답입니다!", Toast.LENGTH_LONG).show();
                     //정답인 경우 점수가 올라가도록 구현
 
                 }
                 else if(temp4 == 6){
                     temp.setTextColor(Color.BLUE);
-                    Toast.makeText(getActivity(), "정답!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "정답입니다!", Toast.LENGTH_LONG).show();
                     //정답인 경우 점수가 올라가도록 구현
                 }
                 else {
                     //temp.setTextColor(Color.GREEN);
-                    Toast.makeText(getActivity(), "다시 시도해보세요", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "다시 시도해보세요..", Toast.LENGTH_LONG).show();
                 }
             }});
     }
