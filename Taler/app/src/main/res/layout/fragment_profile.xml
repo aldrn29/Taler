@@ -7,27 +7,27 @@
     tools:context=".Profile.ProfileFragment">
 
     <TextView
-        android:id="@+id/nickname"
+        android:id="@+id/user_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="profile!!" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/user_email"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:text="TextView1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textView2"/>
+        app:layout_constraintBottom_toTopOf="@id/user_point"/>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/user_point"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:text="TextView2"
-        app:layout_constraintTop_toBottomOf="@id/textView1"
+        app:layout_constraintTop_toBottomOf="@id/user_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/textView3"/>
@@ -37,7 +37,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:text="TextView3"
-        app:layout_constraintTop_toBottomOf="@id/textView2"
+        app:layout_constraintTop_toBottomOf="@id/user_point"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

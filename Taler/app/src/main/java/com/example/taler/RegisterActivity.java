@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText email_join, nickname_join, pwd_join;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mRef;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -31,11 +31,11 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         email_join = findViewById(R.id.sign_up_email);
-        nickname_join = findViewById(R.id.nickname);
+        nickname_join = findViewById(R.id.user_id);
         pwd_join = findViewById(R.id.sign_up_password);
         ImageButton btn_register = findViewById(R.id.button_register);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mRef = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void writeNewUser(String userId, String name, String email){
         User user = new User(name, email, 0);
-        mDatabase.child("users").child(userId).setValue(user);
+        mRef.child("users").child(userId).setValue(user);
     }
 }
