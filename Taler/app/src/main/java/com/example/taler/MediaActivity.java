@@ -29,14 +29,13 @@ public class MediaActivity extends AppCompatActivity {
     ASRmasterAPI asr;
     VideoView videoView;
     TextView textNumber, textScript, textResult, textTemp;
-    ImageButton prevButton, nextButton, playButton, hintButton, recordButton, checkButton;
+    ImageButton prevButton, nextButton, playButton, recordButton, checkButton;
 
     enum fileKind { MP4, TXT_KOR, TXT_ENG }
     final String root = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/";
     final String[] directoryName = { "Modern.Family.S01E01.mp4", "Modern.Family.S01E01.kor", "Modern.Family.S01E01.eng" };
     int fileNum = 1;
     int hintNum = 0;
-    String script;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -49,7 +48,6 @@ public class MediaActivity extends AppCompatActivity {
         prevButton = findViewById(R.id.imageButton_prev);
         nextButton = findViewById(R.id.imageButton_next);
         playButton = findViewById(R.id.imageButton_play);
-        hintButton = findViewById(R.id.imageButton_hint);
         recordButton = findViewById(R.id.imageButton_record);
         checkButton = findViewById(R.id.imageButton_check);
         textScript = findViewById(R.id.textView_script);
@@ -60,7 +58,8 @@ public class MediaActivity extends AppCompatActivity {
         asr = new ASRmasterAPI(recordButton, textResult, 1);
 
         // init setting
-        textNumber.setText("#." + fileNum);
+        textNumber.setText("Modern Family  #." + fileNum);
+        textScript.setText("Hint!!");
         setTextFromUrl(textTemp, getFileUri(fileKind.TXT_ENG, fileNum));
         videoView.setVideoURI(Uri.parse(getFileUri(fileKind.MP4, fileNum)));
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -111,7 +110,7 @@ public class MediaActivity extends AppCompatActivity {
             }
         });
 
-        hintButton.setOnClickListener(new View.OnClickListener() {
+        textScript.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (hintNum == 0) {
@@ -121,7 +120,7 @@ public class MediaActivity extends AppCompatActivity {
                     setTextFromUrl(textScript, getFileUri(fileKind.TXT_ENG, fileNum));
                     hintNum = 2;
                 } else {
-                    textScript.setText("");
+                    textScript.setText("Hint!!");
                     hintNum = 0;
                 }
             }
@@ -138,8 +137,8 @@ public class MediaActivity extends AppCompatActivity {
     public void setView() {
         videoView.setVideoURI(Uri.parse(getFileUri(fileKind.MP4, fileNum)));
         playButton.setSelected(false);
-        textNumber.setText("#." + fileNum);
-        textScript.setText("");
+        textNumber.setText("Modern Family  #." + fileNum);
+        textScript.setText("Hint!!");
         textResult.setText("");
         setTextFromUrl(textTemp, getFileUri(fileKind.TXT_ENG, fileNum));
         hintNum = 0;
