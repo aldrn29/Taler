@@ -388,8 +388,8 @@ public class Fragment_Listen extends Fragment {
                 }
                 else {
                     //temp.setTextColor(Color.GREEN);
-                    Toast.makeText(getActivity(), "다시 시도해보세요" + temp2 + answer2, Toast.LENGTH_LONG).show();
-                }      //오류값을 보기 위해 해놓은 걸로 최종본에서는 수정해야함!!
+                    Toast.makeText(getActivity(), "다시 시도해보세요", Toast.LENGTH_LONG).show();
+                }
             }});
     }
 
