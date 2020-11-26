@@ -53,7 +53,7 @@ public class CardListActivity extends AppCompatActivity {
                 CardDictionary dict = arrayList.get(position); //아이덴티파이어는 현재 리스트 오더에 따른다. 타이틀카드 리스트이다.
 
                 Intent intent = new Intent(getApplicationContext(), StoryCardActivity.class);
-                //Todo identifier PK 하나를 넘겨준다.
+                //identifier PK를 넘겨준다.
                 intent.putExtra("id", dict.getId());
                 intent.putExtra("title", dict.getTitle());
 

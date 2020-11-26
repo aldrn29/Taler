@@ -29,7 +29,7 @@ public class CardListRecyclerViewAdapter extends RecyclerView.Adapter<CardListRe
             thumbnail = itemView.findViewById(R.id.thumbnail);
         }
     }
-    //Todo constructor FB로 채울것
+    //로컬 딕셔너리 리스트
     public CardListRecyclerViewAdapter(ArrayList<CardDictionary> list){
         this.mList = list;
     }
