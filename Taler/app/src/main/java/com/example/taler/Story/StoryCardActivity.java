@@ -65,7 +65,7 @@ public class StoryCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Todo 앞에 숫자도 붙이자
-                choice1Str = " " + choice1.getText().toString()+ " \n";
+                choice1Str = choice1.getText().toString();
                 if(num < 8 && choice1Str.equals(recorded.getText().toString())) {
                     num = num*2;
                     if(num > 3){
@@ -82,7 +82,7 @@ public class StoryCardActivity extends AppCompatActivity {
         choice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                choice2Str = " " + choice2.getText().toString()+ " \n";
+                choice2Str = choice2.getText().toString();
 
                 if(num < 8 && choice2Str.equals(recorded.getText().toString())) {
                     num = num*2 + 1;
@@ -183,5 +183,4 @@ public class StoryCardActivity extends AppCompatActivity {
         cardImg.setAlpha((float) 1.0);
 
     }
-//    https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2FAlice%2Fchoice1%2F1.txt?alt=media&token=1
 }

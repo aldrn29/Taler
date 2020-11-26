@@ -10,16 +10,19 @@ import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.taler.Profile.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText email_join;
-    private EditText pwd_join;
-    private ImageButton imgbtn;
+    private EditText email_join, nickname_join, pwd_join;
+    private DatabaseReference mDatabase;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -27,13 +30,15 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        email_join = (EditText) findViewById(R.id.sign_up_email);
-        pwd_join = (EditText) findViewById(R.id.sign_up_password);
-        imgbtn = (ImageButton) findViewById(R.id.button_register);
+        email_join = findViewById(R.id.sign_up_email);
+        nickname_join = findViewById(R.id.nickname);
+        pwd_join = findViewById(R.id.sign_up_password);
+        ImageButton btn_register = findViewById(R.id.button_register);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        imgbtn.setOnClickListener(new View.OnClickListener() {
+        btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -46,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                 if (task.isSuccessful()) {
+                                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                                    writeNewUser(currentUser.getUid(), nickname_join.getText().toString(), currentUser.getEmail());
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     startActivity(intent);
                                     finish();
@@ -57,5 +64,25 @@ public class RegisterActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+//    private void onAuthSuccess(FirebaseUser user){
+//        String username = usernameFromEmail(user.getEmail());
+//
+//        writeNewUser(user.getUid(), username, user.getEmail());
+//
+//        //go to next activity
+//    }
+//
+//    private String usernameFromEmail(String email) {
+//        if (email.contains("@")) {
+//            return email.split("@")[0];
+//        } else {
+//            return email;
+//        }
+//    }
+
+    private void writeNewUser(String userId, String name, String email){
+        User user = new User(name, email);
+        mDatabase.child("users").child(userId).setValue(user);
     }
 }

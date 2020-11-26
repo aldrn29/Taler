@@ -26,26 +26,24 @@ public class LoginActivity extends AppCompatActivity {
 
     private CheckBox cb_save; //로그인 시 자동완성 추가
     private Context mContext;
-    FirebaseAuth firebaseAuth;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // 기존 테마로 되돌림
         setTheme(R.style.NoTitleTheme);
 
-        Button join;
-        Button login;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mContext = this;
 
-        join = (Button) findViewById(R.id.button_sign_in);
-        login = (Button) findViewById(R.id.button_login);
+        Button join = findViewById(R.id.button_sign_in);
+        Button login = findViewById(R.id.button_login);
         email_login = (EditText) findViewById(R.id.login_email);
         pwd_login = (EditText) findViewById(R.id.login_password);
         cb_save = (CheckBox) findViewById(R.id.checkBox);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         boolean boo = PreferencesManager.getBoolean(mContext,"check");
 
         if(boo){
@@ -60,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = email_login.getText().toString().trim();
                 String pwd = pwd_login.getText().toString().trim();
 
-                firebaseAuth.signInWithEmailAndPassword(email, pwd)
+                mAuth.signInWithEmailAndPassword(email, pwd)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
