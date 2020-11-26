@@ -21,18 +21,34 @@
 
         <!-- 제목 -->
         <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text=""
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintWidth_percent="0.65"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/videoView"
+            app:layout_constraintRight_toLeftOf="@id/textView_number"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
             android:id="@+id/textView_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="1"
             android:textSize="15sp"
-            app:layout_constraintWidth_percent="0.7"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintVertical_bias="0.4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/videoView"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@id/textView_title"
+            app:layout_constraintLeft_toRightOf="@id/textView_title"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            app:layout_constraintWidth_percent="0.05" />
+
 
         <!-- mp4파일 -->
         <VideoView
@@ -41,7 +57,7 @@
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="0.7"
             app:layout_constraintHeight_percent="0.6"
-            app:layout_constraintTop_toBottomOf="@id/textView_number"
+            app:layout_constraintTop_toBottomOf="@id/textView_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>

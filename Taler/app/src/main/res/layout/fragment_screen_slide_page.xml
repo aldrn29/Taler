@@ -23,16 +23,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Song Name"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@id/tv_answer"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/tv_pageNum"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.4"
             app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintWidth_percent="0.65" />
+            app:layout_constraintVertical_bias="0.4"
+            app:layout_constraintWidth_percent="0.65"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_answer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tv_pageNum"/>
 
         <TextView
             android:id="@+id/tv_pageNum"
@@ -41,8 +41,8 @@
             android:text="1"
             android:textSize="15sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/tv_answer"
-            app:layout_constraintLeft_toRightOf="@id/tv_answer"
+            app:layout_constraintTop_toTopOf="@id/tv_songName"
+            app:layout_constraintLeft_toRightOf="@id/tv_songName"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintWidth_percent="0.05" />
 
@@ -52,30 +52,15 @@
             android:layout_height="0dp"
             android:background="@drawable/border_round_layout"
             android:padding="10dp"
+            android:textSize="15sp"
+            android:gravity="center"
             android:textColor="#F5F5F5"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@id/tv_translated"
-            app:layout_constraintHeight_percent="0.3"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintWidth_percent="0.7"
+            app:layout_constraintHeight_percent="0.6"
             app:layout_constraintTop_toBottomOf="@id/tv_songName"
-            app:layout_constraintWidth_percent="0.7" />
-
-        <TextView
-            android:id="@+id/tv_translated"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/border_round_layout"
-            android:padding="10dp"
-            android:textSize="15sp"
-            app:drawableTint="#653232"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_answer"
-            app:layout_constraintWidth_percent="0.7" />
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <ImageButton
             android:id="@+id/btn_prev"
@@ -105,7 +90,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/korea"
             android:textSize="12dp"
-            app:layout_constraintRight_toLeftOf="@id/tv_translated"
+            app:layout_constraintRight_toLeftOf="@id/tv_answer"
             app:layout_constraintStart_toStartOf="@id/btn_prev"
             app:layout_constraintTop_toBottomOf="@id/btn_prev" />
 
@@ -125,7 +110,7 @@
             android:text="!"
             android:textSize="5sp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_translated"
+            app:layout_constraintBottom_toBottomOf="@id/tv_answer"
             app:layout_constraintRight_toLeftOf="@id/tv_answer"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
@@ -135,12 +120,30 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout1"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:id="@+id/tv_translated"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/border_round_layout"
+            android:padding="10dp"
+            android:text=""
+            android:textSize="15sp"
+            android:gravity="center"
+            app:drawableTint="#653232"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btn_half_speed"
@@ -183,7 +186,5 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintVertical_bias="0.4"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

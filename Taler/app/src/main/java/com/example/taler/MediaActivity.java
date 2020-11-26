@@ -29,7 +29,7 @@ public class MediaActivity extends AppCompatActivity {
 
     ASRmasterAPI asr;
     VideoView videoView;
-    TextView textNumber, textScript, textResult, textTemp;
+    TextView textTitle, textNumber, textScript, textResult, textTemp;
     ImageButton prevButton, nextButton, playButton, recordButton, checkButton;
 
     enum fileKind { MP4, TXT_KOR, TXT_ENG }
@@ -45,6 +45,7 @@ public class MediaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_media);
 
         videoView = findViewById(R.id.videoView);
+        textTitle = findViewById(R.id.textView_title);
         textNumber = findViewById(R.id.textView_number);
         prevButton = findViewById(R.id.imageButton_prev);
         nextButton = findViewById(R.id.imageButton_next);
@@ -59,7 +60,8 @@ public class MediaActivity extends AppCompatActivity {
         asr = new ASRmasterAPI(recordButton, textResult, 1);
 
         // init setting
-        textNumber.setText("Modern Family  #." + fileNum);
+        textTitle.setText("Modern Family");
+        textNumber.setText("" + fileNum);
         textScript.setText("Hint!!");
         setTextFromUrl(textTemp, getFileUri(fileKind.TXT_ENG, fileNum));
         videoView.setVideoURI(Uri.parse(getFileUri(fileKind.MP4, fileNum)));
@@ -135,7 +137,7 @@ public class MediaActivity extends AppCompatActivity {
                 if (check) {
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "다시 시도해보세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "다시 시도해보세요..", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -144,7 +146,7 @@ public class MediaActivity extends AppCompatActivity {
     public void setView() {
         videoView.setVideoURI(Uri.parse(getFileUri(fileKind.MP4, fileNum)));
         playButton.setSelected(false);
-        textNumber.setText("Modern Family  #." + fileNum);
+        textNumber.setText("" + fileNum);
         textScript.setText("Hint!!");
         textResult.setText("");
         setTextFromUrl(textTemp, getFileUri(fileKind.TXT_ENG, fileNum));

@@ -25,7 +25,7 @@ public class MenuFragment extends Fragment {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MediaMenuActivity.class);
+                Intent intent = new Intent(getActivity(), CardListActivity.class);
                 startActivity(intent);
             }
         });
@@ -35,19 +35,19 @@ public class MenuFragment extends Fragment {
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), CardListActivity.class);
+                Intent intent = new Intent(getActivity(), MediaMenuActivity.class);
                 startActivity(intent);
             }
         });
         //임시로 사용하는 메뉴.
-        ImageButton imageButton3 = view.findViewById(R.id.imageButton3);
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), PopTestActivity.class);
-                startActivity(intent);
-            }
-        });
+//        ImageButton imageButton3 = view.findViewById(R.id.imageButton3);
+//        imageButton3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), PopTestActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         return view;
     }

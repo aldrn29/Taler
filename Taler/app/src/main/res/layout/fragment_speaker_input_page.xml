@@ -4,19 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tv_user_speaking"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/border_round_layout"
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        android:text=""
+        android:textSize="15sp"
+        android:gravity="center"
+        app:drawableTint="#653232"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.35"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_speak"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <ImageButton
         android:id="@+id/btn_speak"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:adjustViewBounds="true"
         android:background="@drawable/button_record"
         android:scaleType="fitCenter"
-        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_user_speaking"
+        app:layout_constraintTop_toBottomOf="@id/tv_user_speaking"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btn_check"/>
 
@@ -42,25 +61,6 @@
         app:layout_constraintTop_toTopOf="@id/btn_speak"
         app:layout_constraintLeft_toRightOf="@id/btn_speak"
         app:layout_constraintRight_toRightOf="parent"/>
-
-
-    <TextView
-        android:id="@+id/tv_user_speaking"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="100dp"
-        android:background="@drawable/border_round_layout"
-        android:inputType="textMultiLine"
-        android:padding="10dp"
-        android:text='""'
-        android:textSize="12sp"
-        app:drawableTint="#653232"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.4"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_speak"
-        app:layout_constraintWidth_percent="0.8" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_menu"
