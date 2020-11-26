@@ -44,7 +44,7 @@ public class ASRmasterAPI implements View.OnClickListener {
     TextView textResult;
 
     int curMode;
-    String result;
+    String result = "";
 
     int maxLenSpeech = 16000 * 45;
     byte [] speechData = new byte [maxLenSpeech * 2];
@@ -297,6 +297,7 @@ public class ASRmasterAPI implements View.OnClickListener {
         script = script.replace("!", "");
         script = script.replace(".", "");
         script = script.replace(",", "");
+        script = script.replace("~", "");
         result = result.replaceAll("\\\\u0027", "'");
         result = result.replaceAll(" are", "'re");
 
