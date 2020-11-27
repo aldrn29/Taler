@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.example.taler.MediaMenu.MediaMenuActivity;
@@ -20,9 +21,9 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        // Media Activity로 전환
-        ImageButton imageButton = view.findViewById(R.id.imageButton1);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        // Story Activity로 전환
+        FrameLayout menu1 = view.findViewById(R.id.FrameLayout_menu1);
+        menu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CardListActivity.class);
@@ -30,24 +31,15 @@ public class MenuFragment extends Fragment {
             }
         });
 
-        // Story Activity로 전환
-        ImageButton imageButton2 = view.findViewById(R.id.imageButton2);
-        imageButton2.setOnClickListener(new View.OnClickListener() {
+        // Media Activity로 전환
+        FrameLayout menu2 = view.findViewById(R.id.FrameLayout_menu2);
+        menu2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MediaMenuActivity.class);
                 startActivity(intent);
             }
         });
-        //임시로 사용하는 메뉴.
-//        ImageButton imageButton3 = view.findViewById(R.id.imageButton3);
-//        imageButton3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getActivity(), PopTestActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         return view;
     }
