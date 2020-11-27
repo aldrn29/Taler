@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,8 +37,8 @@ public class StoryCardActivity extends AppCompatActivity {
     DatabaseReference mDatabaseRef;
     FirebaseAuth mAuth;
     String title, choice1Str, choice2Str, recordedStr= "";
-    Integer depth = 2;
-    Integer num = 1;
+//    Integer depth = 2;
+    int num = 1;
     boolean leafNode = false;
     boolean toggle_script = false;
 
@@ -65,12 +66,6 @@ public class StoryCardActivity extends AppCompatActivity {
 
         //leafnode 판단을 하고 아니라면 정상작동을하고 맞다면 false로 바꾸고 마지막 엔딩 동작을 한다.
         leafNode = false;
-//        if(leafNode){
-//            choice1.setEnabled(false);
-//            choice2.setEnabled(false);
-//            recorded.setText("Story End");
-//        }
-
         showCard(num);
         choice1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,12 +75,11 @@ public class StoryCardActivity extends AppCompatActivity {
                 choice1Str = choice1.getText().toString();
                 if(num < 8 && choice1Str.equals(recorded.getText().toString())) {
                     num = num*2;
-                    if(num > 3){
-                        leafNode = true;
-
-                    }
                     script.setVisibility(View.GONE);
                     toggle_script = false;
+                    if(num > 3){
+                        leafNode = true;
+                    }
                     showCard(num);
                 }
 //                else Toast.makeText(StoryCardActivity.this, "Story End", Toast.LENGTH_SHORT).show();
@@ -186,15 +180,23 @@ public class StoryCardActivity extends AppCompatActivity {
         if(num <= 3) {
             setTextFromUrl(choice1, front_url + title + "%2F" + "choice1" + "%2F"+ num + ".txt?alt=media&token=" + num);
             setTextFromUrl(choice2, front_url + title + "%2F" + "choice2" + "%2F"+ num + ".txt?alt=media&token=" + num);
+            speechButton.setEnabled(true);
+            recorded.setText("");
+            script.setVisibility(View.GONE);
+            cardImg.setAlpha((float) 1.0);
+            toggle_script = false;
         }
         else {
             choice1.setText("  ");
             choice2.setText("  ");
+            choice1.setVisibility(View.GONE);
+            choice2.setVisibility(View.GONE);
+            speechButton.setEnabled(false);
+            recorded.setText("- THE END -");
+            script.setVisibility((View.VISIBLE));
+            cardImg.setAlpha((float) 0.3);
+            toggle_script = true;
         }
-        recorded.setText("");
-        script.setVisibility(View.GONE);
-        toggle_script = false;
-        cardImg.setAlpha((float) 1.0);
 
     }
 
