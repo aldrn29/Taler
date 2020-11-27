@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2CEA8C0F"
     tools:context=".RegisterActivity">
 
     <!-- test -->
@@ -12,7 +13,7 @@
         android:id="@+id/button_register"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="188dp"
+        android:layout_marginBottom="140dp"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
@@ -29,6 +30,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="32dp"
         android:layout_marginRight="10dp"
+        android:backgroundTint="#100101"
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,32 +42,33 @@
         android:id="@+id/nickname_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:text="Nicname"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/user_id"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/user_id" />
+        app:layout_constraintRight_toLeftOf="@id/user_id"
+        app:layout_constraintStart_toStartOf="@id/email_tv" />
 
     <EditText
         android:id="@+id/sign_up_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="128dp"
         android:layout_marginRight="10dp"
+        android:backgroundTint="#100101"
         android:ems="10"
         android:inputType="textEmailAddress"
-        app:layout_constraintHorizontal_bias="0.643"
+        app:layout_constraintHorizontal_bias="0.654"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/email_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="22dp"
         android:layout_marginLeft="20dp"
         android:text="E-mail"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/sign_up_email"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -77,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
+        android:backgroundTint="#100101"
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@id/button_register"
@@ -91,10 +95,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:text="Password"
+        android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/sign_up_password"
         app:layout_constraintEnd_toStartOf="@+id/sign_up_password"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/email_tv" />
+
+    <TextView
+        android:id="@+id/tv_refer"
+        android:layout_width="172dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="68dp"
+        android:text="TextView"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sign_up_password" />
+
+    <TextView
+        android:id="@+id/tv_register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="60dp"
+        android:text="회원가입"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/email_tv"
+        app:layout_constraintStart_toStartOf="@id/email_tv" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="54dp"
+        android:layout_height="35dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_register_title"
+        app:layout_constraintTop_toTopOf="@id/tv_register_title"
+        app:srcCompat="@drawable/splash_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

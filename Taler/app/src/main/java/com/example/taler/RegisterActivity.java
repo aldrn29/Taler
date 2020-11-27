@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taler.Profile.User;
@@ -25,6 +26,8 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mRef;
     FirebaseAuth firebaseAuth;
 
+    private TextView password_ref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,9 @@ public class RegisterActivity extends AppCompatActivity {
         nickname_join = findViewById(R.id.user_id);
         pwd_join = findViewById(R.id.sign_up_password);
         ImageButton btn_register = findViewById(R.id.button_register);
+
+        password_ref = findViewById(R.id.tv_refer);
+        password_ref.setText("*비밀번호는 영문자와 숫자를 섞어서 작성하세요*");
 
         mRef = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
