@@ -6,4 +6,5 @@
     <color name="colorBase">#FD7139</color>
     <color name="colorSub">#F3F3F3</color>
     <color name="colorSub2">#F7EDE0</color>
+    <color name="colorBlack">#000000</color>
 </resources>

@@ -111,14 +111,20 @@ public class Fragment_Listen extends Fragment {
             @Override
             public void onClick(View v) {
                 slow_player(0.5f, url_default);
-                Toast.makeText(getActivity(), "0.5배속", Toast.LENGTH_SHORT).show();
-            }});
+                slower.setEnabled(false);
+                slow.setEnabled(true);
+                slow.setTextColor(Color.parseColor("black"));
+            }
+        });
         slow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 slow_player(0.75f,url_default);
-                Toast.makeText(getActivity(), "0.75배속", Toast.LENGTH_SHORT).show();
-            }});
+                slow.setEnabled(false);
+                slower.setEnabled(true);
+                slower.setTextColor(Color.parseColor("black"));
+            }
+        });
 
         //첫페이지 가사 default값
         if(Integer.parseInt(textCounter.getText().toString())==1) {
@@ -216,13 +222,17 @@ public class Fragment_Listen extends Fragment {
                     @Override
                     public void onClick(View v) {
                         slow_player(0.5f,url);
-                        Toast.makeText(getActivity(), "0.5배속", Toast.LENGTH_SHORT).show();
+                        slower.setEnabled(false);
+                        slow.setEnabled(true);
+                        slow.setTextColor(Color.parseColor("black"));
                     }});
                 slow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         slow_player(0.75f,url);
-                        Toast.makeText(getActivity(), "0.75배속", Toast.LENGTH_SHORT).show();
+                        slow.setEnabled(false);
+                        slower.setEnabled(true);
+                        slower.setTextColor(Color.parseColor("black"));
                     }});
 
                 //-----------------------번역 가사-시작----------------------------------------------//
@@ -309,11 +319,17 @@ public class Fragment_Listen extends Fragment {
                     @Override
                     public void onClick(View v) {
                         slow_player(0.5f,url);
+                        slower.setEnabled(false);
+                        slow.setEnabled(true);
+                        slow.setTextColor(Color.parseColor("black"));
                     }});
                 slow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         slow_player(0.75f,url);
+                        slow.setEnabled(false);
+                        slower.setEnabled(true);
+                        slower.setTextColor(Color.parseColor("black"));
                     }
                 });
 
@@ -409,6 +425,11 @@ public class Fragment_Listen extends Fragment {
         try {
             closePlayer();
 
+            slower.setEnabled(true);
+            slower.setTextColor(Color.parseColor("black"));
+            slow.setEnabled(true);
+            slow.setTextColor(Color.parseColor("black"));
+
             player = new MediaPlayer();
             player.setDataSource(url);
             player.prepare();
@@ -475,6 +496,17 @@ public class Fragment_Listen extends Fragment {
                 player.setPlaybackParams(playbackParams);
                 player.prepare();
                 player.start();
+
+                // 노래 끝났을 때 버튼 이미지 변경
+                player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        slow.setEnabled(true);
+                        slow.setTextColor(Color.parseColor("black"));
+                        slower.setEnabled(true);
+                        slower.setTextColor(Color.parseColor("black"));
+                    }
+                });
 
             } catch (IOException e) {
                 e.printStackTrace();
