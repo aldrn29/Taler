@@ -14,6 +14,11 @@ import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -38,6 +43,9 @@ public class MediaActivity extends AppCompatActivity {
     int fileNum = 1;
     int hintNum = 0;
 
+    private DatabaseReference mRef;
+    FirebaseAuth firebaseAuth;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,9 @@ public class MediaActivity extends AppCompatActivity {
         textScript = findViewById(R.id.textView_script);
         textResult = findViewById(R.id.textView_result);
         textTemp = findViewById(R.id.textView_temp);
+
+        mRef = FirebaseDatabase.getInstance().getReference();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         // 음성인식 API 연결
         asr = new ASRmasterAPI(recordButton, textResult, 1);
@@ -135,6 +146,10 @@ public class MediaActivity extends AppCompatActivity {
                 boolean check = asr.resultCheck(textTemp);
 
                 if (check) {
+                    // Todo: 해당 번호(fileNum: 1~10까지 있음) 데이터 넘기기
+                    // FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                    // mRef.child("users").child(currentUser.getUid()).child("##").setValue(1);
+
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "다시 시도해보세요..", Toast.LENGTH_SHORT).show();
