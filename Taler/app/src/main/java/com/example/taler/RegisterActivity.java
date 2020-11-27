@@ -20,6 +20,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText email_join, nickname_join, pwd_join;
@@ -88,7 +92,8 @@ public class RegisterActivity extends AppCompatActivity {
 //    }
 
     private void writeNewUser(String userId, String name, String email){
-        User user = new User(name, email, 0);
+        ArrayList<Integer> defaultList = new ArrayList<>(Arrays.asList(0));
+        User user = new User(name, email, 0, defaultList);
         mRef.child("users").child(userId).setValue(user);
     }
 }

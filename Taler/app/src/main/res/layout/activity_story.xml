@@ -94,7 +94,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/border_round_layout"
             android:padding="10dp"
-            android:text=""
+            android:text="Speech"
             android:textSize="15sp"
             android:gravity="center"
             app:layout_constraintWidth_percent="0.8"

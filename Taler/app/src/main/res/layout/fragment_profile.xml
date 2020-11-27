@@ -8,38 +8,56 @@
 
     <TextView
         android:id="@+id/user_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="profile!!" />
+        android:layout_width="161dp"
+        android:layout_height="69dp"
+        android:text="profile!!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/user_email"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="20dp"
         android:text="TextView1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/user_point"/>
+        app:layout_constraintTop_toBottomOf="@+id/user_id" />
 
     <TextView
         android:id="@+id/user_point"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="99dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="36dp"
         android:text="TextView2"
-        app:layout_constraintTop_toBottomOf="@id/user_email"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textView3"/>
+        app:layout_constraintTop_toBottomOf="@+id/user_email" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:text="TextView3"
-        app:layout_constraintTop_toBottomOf="@id/user_point"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/collection_pb"
+        app:layout_constraintVertical_bias="0.122" />
+
+    <ProgressBar
+        android:id="@+id/collection_pb"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="110dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_point" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

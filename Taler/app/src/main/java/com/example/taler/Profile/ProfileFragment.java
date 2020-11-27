@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.taler.R;
@@ -19,11 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProfileFragment extends Fragment {
 
+    TextView user_id, user_email, user_point, textView3;
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabase;
-    DatabaseReference mUserIdRef, mUserEmailRef, mUserPointRef;
+    DatabaseReference mUserIdRef, mUserEmailRef, mUserPointRef, mUserProgressRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,10 +41,13 @@ public class ProfileFragment extends Fragment {
         mUserIdRef = mDatabase.getReference("/users/" + currentUser.getUid() + "/userId");
         mUserEmailRef = mDatabase.getReference("/users/" + currentUser.getUid() + "/email");
         mUserPointRef = mDatabase.getReference("/users/" + currentUser.getUid() + "/point");
+        mUserProgressRef = mDatabase.getReference("/users/" + currentUser.getUid() + "/story_progress/0");
 
-        final TextView user_id = view.findViewById(R.id.user_id);
-        final TextView user_email = view.findViewById(R.id.user_email);
-        final TextView user_point = view.findViewById(R.id.user_point);
+        user_id = view.findViewById(R.id.user_id);
+        user_email = view.findViewById(R.id.user_email);
+        user_point = view.findViewById(R.id.user_point);
+        textView3 = view.findViewById(R.id.textView3);
+        final ProgressBar collection_pb = view.findViewById(R.id.collection_pb);
 
         mUserIdRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,6 +88,29 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        mUserPointRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                ArrayList<Integer> progressList = snapshot.getValue(ArrayList.class);
+//                Integer value = progressList.size();
+//                textView3.setText(Integer.toString(value));
+//                textView3.setText(progressList.toString());
+                Integer value = snapshot.getValue(Integer.class);
+                textView3.setText(Integer.toString(value));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         return view;
+    }
+
+    private void setProgress(ProgressBar pb, int total, int progress){
+        pb.setMax(total);
+        pb.setProgress(progress);
     }
 }

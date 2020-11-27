@@ -181,7 +181,7 @@ public class StoryCardActivity extends AppCompatActivity {
             setTextFromUrl(choice1, front_url + title + "%2F" + "choice1" + "%2F"+ num + ".txt?alt=media&token=" + num);
             setTextFromUrl(choice2, front_url + title + "%2F" + "choice2" + "%2F"+ num + ".txt?alt=media&token=" + num);
             speechButton.setEnabled(true);
-            recorded.setText("");
+            recorded.setText("Speech");
             script.setVisibility(View.GONE);
             cardImg.setAlpha((float) 1.0);
             toggle_script = false;
