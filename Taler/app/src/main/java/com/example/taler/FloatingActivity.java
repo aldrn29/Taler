@@ -15,8 +15,7 @@ public class FloatingActivity extends AppCompatActivity {
     //popup 액티비티로 활용될 예정.
     //레이아웃을 테이블레이아웃과 리스트뷰 중 고민 중.
 
-       Button backpass;
-
+       Button backpass; //다시 poptest activity로 돌아감.
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,7 @@ public class FloatingActivity extends AppCompatActivity {
 
             backpass.setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) {    //다시 돌아감.
                     Intent intent = new Intent(FloatingActivity.this, PopTestActivity.class);
                     startActivity(intent);
                 }
