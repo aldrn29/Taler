@@ -83,7 +83,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/tv_answer"/>
 
-        <ImageButton
+        <!--ImageButton
             android:id="@+id/btn_watch_kor"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -94,7 +94,7 @@
             app:layout_constraintStart_toStartOf="@id/btn_prev"
             app:layout_constraintTop_toBottomOf="@id/btn_prev" />
 
-        <!--Button
+        <Button
             android:id="@+id/btn_delay"
             android:layout_width="50dp"
             android:layout_height="30dp"

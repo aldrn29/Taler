@@ -48,9 +48,7 @@ public class Fragment_Listen extends Fragment {
     ImageButton play;
     Button slow;
     Button slower;
-    ImageButton kor_button;
-    //Button kor_button;
-    Button answer;
+    int hintNum = 0;
 
     FirebaseStorage storage = FirebaseStorage.getInstance();
     //StorageReference storageRef = storage.getReference();
@@ -82,8 +80,6 @@ public class Fragment_Listen extends Fragment {
         play = root.findViewById(R.id.btn_play);   //음악 play
         slow  = root.findViewById(R.id.btn_quarters_speed);    //0.75배속
         slower = root.findViewById(R.id.btn_half_speed);       //0.5배속
-        kor_button = root.findViewById(R.id.btn_watch_kor);    //번역 가사 버튼
-        //answer = root.findViewById(R.id.btn_answer);       //정답보기 버튼
 
         final String[] directoryName = {"love-yourself-mp3","love-yourself-kor","love-yourself-eng"};
         final TextView textCounter = root.findViewById(R.id.tv_pageNum);    //페이지 수 텍스트뷰
@@ -126,17 +122,22 @@ public class Fragment_Listen extends Fragment {
             }
         });
 
+        kor_text.setText("Hint!!");
         //첫페이지 가사 default값
         if(Integer.parseInt(textCounter.getText().toString())==1) {
-            kor_text.setText("HINT");
-            kor_button.setOnClickListener(new View.OnClickListener() {
+            kor_text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     final String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/" + directoryName[1] + "%2F";
                     final String full_kor_common_url = kor_common_url + "kor_1.txt?alt=media&token=kor_1";
-                    find_kor(kor_text, full_kor_common_url);
-                    Toast.makeText(getActivity(), "번역 가사", Toast.LENGTH_LONG).show();
+
+                    if (hintNum == 0) {
+                        find_kor(kor_text, full_kor_common_url);
+                        hintNum = 1;
+                    } else {
+                        kor_text.setText("Hint!!");
+                        hintNum = 0;
+                    }
                 }
             });
             //---------------첫페이지의-영어 가사 텍스트 가져오기. ----------------------------------------//
@@ -184,7 +185,7 @@ public class Fragment_Listen extends Fragment {
 
                 //이전 페이지 가사 지우기
                 eng_text.setText("");
-                kor_text.setText("HINT");
+                kor_text.setText("Hint!!");
 
                 textCounter.setText(Integer.toString(count + 1));
                 if (count >= 17) {
@@ -238,17 +239,23 @@ public class Fragment_Listen extends Fragment {
                 //-----------------------번역 가사-시작----------------------------------------------//
                 final String kor_fileName = "kor_"+textCounter.getText().toString();
 
-                kor_button.setOnClickListener(new View.OnClickListener() {
+                kor_text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[1]+"%2F";;
                         String full_kor_common_url = kor_common_url + kor_fileName + ".txt?alt=media&token=" + kor_fileName;
 
-                        find_kor(kor_text, full_kor_common_url);
-                        Toast.makeText(getActivity(), "번역 가사", Toast.LENGTH_LONG).show();
+                        if (hintNum == 0) {
+                            find_kor(kor_text, full_kor_common_url);
+                            hintNum = 1;
+                        } else {
+                            kor_text.setText("Hint!!");
+                            hintNum = 0;
+                        }
                     }
                 });
                 //-----------------------번역 가사--끝----------------------------------------------//
+
                 //-----------------------영문 가사--------------------------------------------------//
 
                 final String eng_fileName = "eng_"+textCounter.getText().toString();
@@ -285,7 +292,7 @@ public class Fragment_Listen extends Fragment {
 
                 //이전 페이지 가사 지우기----
                 eng_text.setText("");
-                kor_text.setText("HINT");
+                kor_text.setText("Hint!!");
 
                 textCounter.setText(Integer.toString(count - 1));
                 if (count <= 1) {
@@ -336,14 +343,19 @@ public class Fragment_Listen extends Fragment {
                 //-----------------------번역 가사-시작----------------------------------------------//
                 final String kor_fileName = "kor_"+textCounter.getText().toString();
 
-                kor_button.setOnClickListener(new View.OnClickListener() {
+                kor_text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String kor_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[1]+"%2F";
                         String full_kor_common_url = kor_common_url + kor_fileName + ".txt?alt=media&token=" + kor_fileName;
 
-                        find_kor(kor_text, full_kor_common_url);
-                        Toast.makeText(getActivity(), "번역 가사", Toast.LENGTH_LONG).show();
+                        if (hintNum == 0) {
+                            find_kor(kor_text, full_kor_common_url);
+                            hintNum = 1;
+                        } else {
+                            kor_text.setText("Hint!!");
+                            hintNum = 0;
+                        }
                     }
                 });
                 //-----------------------번역 가사--끝-----------------------------------------------//
@@ -451,7 +463,7 @@ public class Fragment_Listen extends Fragment {
                 player.pause();
             }
 
-            Toast.makeText(getActivity(), "재생 시작됨.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "재생 시작됨.", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -461,7 +473,7 @@ public class Fragment_Listen extends Fragment {
         if (player != null) {
             position = player.getCurrentPosition();
             player.pause();
-            Toast.makeText(getActivity(), "일시정지됨.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "일시정지됨.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -469,14 +481,14 @@ public class Fragment_Listen extends Fragment {
         if (player != null && !player.isPlaying()) {
             player.seekTo(position);
             player.start();
-            Toast.makeText(getActivity(), "재시작됨.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "재시작됨.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void stopAudio() {
         if(player != null && player.isPlaying()){
             player.stop();
-            Toast.makeText(getActivity(), "중지됨.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "중지됨.", Toast.LENGTH_SHORT).show();
         }
     }
     public void closePlayer() {
