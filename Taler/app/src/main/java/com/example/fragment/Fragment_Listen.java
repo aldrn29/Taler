@@ -83,7 +83,7 @@ public class Fragment_Listen extends Fragment {
         slow  = root.findViewById(R.id.btn_quarters_speed);    //0.75배속
         slower = root.findViewById(R.id.btn_half_speed);       //0.5배속
         kor_button = root.findViewById(R.id.btn_watch_kor);    //번역 가사 버튼
-        answer = root.findViewById(R.id.btn_answer);       //정답보기 버튼
+        //answer = root.findViewById(R.id.btn_answer);       //정답보기 버튼
 
         final String[] directoryName = {"love-yourself-mp3","love-yourself-kor","love-yourself-eng"};
         final TextView textCounter = root.findViewById(R.id.tv_pageNum);    //페이지 수 텍스트뷰
@@ -145,6 +145,7 @@ public class Fragment_Listen extends Fragment {
             eng_text.setTextColor(Color.parseColor("#F3F3F3"));
 
             //버튼.
+            /*
             answer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -155,6 +156,8 @@ public class Fragment_Listen extends Fragment {
                     Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
                 }
             });
+
+             */
 
         }
         //-----------------------------------------------------------------------------------------//
@@ -245,6 +248,7 @@ public class Fragment_Listen extends Fragment {
                 eng_text.setTextColor(Color.parseColor("#F3F3F3"));
 
                 //버튼 사용시
+                /*
                 answer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -257,6 +261,8 @@ public class Fragment_Listen extends Fragment {
                         Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
                     }
                 });
+
+                 */
                 //---------------------영문 가사--끝-------------------------------------------------//
             }
         });
@@ -335,6 +341,7 @@ public class Fragment_Listen extends Fragment {
                 //
 
                 //버튼 사용시
+               /*
                 answer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -346,6 +353,8 @@ public class Fragment_Listen extends Fragment {
                         Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
                     }
                 });
+
+                */
                 //---------------------영문 가사--끝-------------------------------------------------//
                 if (count == 1) {
                     textCounter.setText(Integer.toString(1));

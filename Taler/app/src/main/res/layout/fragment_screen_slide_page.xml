@@ -103,17 +103,6 @@
             app:layout_constraintStart_toStartOf="@id/btn_play"
             app:layout_constraintTop_toBottomOf="@id/btn_play" /-->
 
-        <Button
-            android:id="@+id/btn_answer"
-            android:layout_width="15dp"
-            android:layout_height="25dp"
-            android:text="!"
-            android:textSize="5sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/tv_answer"
-            app:layout_constraintRight_toLeftOf="@id/tv_answer"
-            app:layout_constraintLeft_toLeftOf="parent"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
