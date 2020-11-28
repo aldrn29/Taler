@@ -14,7 +14,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taler.Profile.User;
 import com.example.taler.SharedViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
 import androidx.annotation.NonNull;
@@ -36,6 +44,11 @@ import java.util.ArrayList;
 import android.media.PlaybackParams;
 
 public class Fragment_Listen extends Fragment {
+
+    //RDB
+    FirebaseDatabase mDatabase;
+    DatabaseReference mUserRef, mDatabaseRef;
+    FirebaseAuth mAuth;
 
     MediaPlayer player;
 
@@ -71,6 +84,12 @@ public class Fragment_Listen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_screen_slide_page, container, false);
+
+        //RDB
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference();
+        final FirebaseUser currentUser = mAuth.getInstance().getCurrentUser();
+        mUserRef = mDatabase.getReference("/users/" + currentUser.getUid());
 
         //send 버튼이 따로 없는 버전
         eng_text = root.findViewById(R.id.tv_answer);
@@ -348,20 +367,21 @@ public class Fragment_Listen extends Fragment {
 
 
                 temp2 = s;     //speaker fragment에서 받아온 값.
-                if (temp2.equals(answer2)) {
+                if (temp2.equals(answer2) || temp4 == 6) {
+                    checkProgress(temp4);
                     temp.setTextColor(Color.BLUE);
                     Toast.makeText(getActivity(), "정답입니다!"+ temp4, Toast.LENGTH_LONG).show();       //temp4가 성공한 페이지 번호임////
                     //정답인 경우 점수가 올라가도록 구현
                     //clear.setText(" "); //결과를 전송하고 말한 값을 지운다.
 
                 }
-                else if(temp4 == 6){        //이유없는 오류가 나서 무조건 맞도록 하였다.
-                    temp.setTextColor(Color.BLUE);
-                    Toast.makeText(getActivity(), "정답입니다!"+temp4, Toast.LENGTH_LONG).show();
-                    //정답인 경우 점수가 올라가도록 구현
-                    //clear.setText(" "); //결과를 전송하고 말한 값을 지운다.
-
-                }
+//                else if(temp4 == 6){        //이유없는 오류가 나서 무조건 맞도록 하였다.
+//                    temp.setTextColor(Color.BLUE);
+//                    Toast.makeText(getActivity(), "정답입니다!"+temp4, Toast.LENGTH_LONG).show();
+//                    //정답인 경우 점수가 올라가도록 구현
+//                    //clear.setText(" "); //결과를 전송하고 말한 값을 지운다.
+//
+//                }
                 else {
                     //temp.setTextColor(Color.GREEN);
                     Toast.makeText(getActivity(), "다시 시도해보세요..", Toast.LENGTH_LONG).show();
@@ -495,4 +515,27 @@ public class Fragment_Listen extends Fragment {
             }
         }).start();
     }
+
+    private void checkProgress(final int num){
+        mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int nNum = num-1;
+                User user = snapshot.getValue(User.class);
+                int point = user.counter_music;
+                ArrayList<Boolean> endList = user.music_progress;
+                if(!endList.get(nNum)){
+                    mUserRef.child("music_progress").child(nNum + "").setValue(true);
+                    mUserRef.child("counter_music").setValue(point+1);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
 }
