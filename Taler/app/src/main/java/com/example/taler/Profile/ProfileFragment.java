@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
-    TextView user_id, user_email, user_point, textView3;
+    TextView user_id, user_email;
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabase;
     DatabaseReference mUserRef;
@@ -42,8 +42,6 @@ public class ProfileFragment extends Fragment {
 
         user_id = view.findViewById(R.id.user_id);
         user_email = view.findViewById(R.id.user_email);
-        user_point = view.findViewById(R.id.user_point);
-        textView3 = view.findViewById(R.id.textView3);
         final ProgressBar collection_pb = view.findViewById(R.id.collection_pb);
 
         mUserRef.addValueEventListener(new ValueEventListener() {
@@ -56,7 +54,6 @@ public class ProfileFragment extends Fragment {
 
                 user_id.setText(userId);
                 user_email.setText(userEmail);
-                user_point.setText(Integer.toString(userPoint));
                 setProgress(collection_pb, 4, userPoint);
             }
 
