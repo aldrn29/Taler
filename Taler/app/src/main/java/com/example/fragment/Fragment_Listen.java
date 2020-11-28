@@ -370,7 +370,7 @@ public class Fragment_Listen extends Fragment {
                 if (temp2.equals(answer2) || temp4 == 6) {
                     checkProgress(temp4);
                     temp.setTextColor(Color.BLUE);
-                    Toast.makeText(getActivity(), "정답입니다!"+ temp4, Toast.LENGTH_LONG).show();       //temp4가 성공한 페이지 번호임////
+                    Toast.makeText(getActivity(), "정답입니다!", Toast.LENGTH_LONG).show();       //temp4가 성공한 페이지 번호임////
                     //정답인 경우 점수가 올라가도록 구현
                     //clear.setText(" "); //결과를 전송하고 말한 값을 지운다.
 
