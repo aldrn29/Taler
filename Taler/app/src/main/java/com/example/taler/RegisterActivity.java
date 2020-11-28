@@ -92,12 +92,25 @@ public class RegisterActivity extends AppCompatActivity {
 //    }
 
     private void writeNewUser(String userId, String name, String email){
-        ArrayList<Boolean> defaultList = new ArrayList<>();
-        int num = 4;
-        for(int i = 0; i < num; i++){
-            defaultList.add(false);
+        ArrayList<Boolean> storyList, musicList, videoList;
+        storyList = new ArrayList<>();
+        musicList = new ArrayList<>();
+        videoList = new ArrayList<>();
+
+        int num_story = 4;
+        int num_music = 17;
+        int num_video = 10;
+
+        for(int i = 0; i < num_story; i++){
+            storyList.add(false);
         }
-        User user = new User(name, email, 0, defaultList);
+        for(int i = 0; i < num_music; i++){
+            musicList.add(false);
+        }
+        for(int i = 0; i < num_video; i++){
+            videoList.add(false);
+        }
+        User user = new User(name, email, 0, storyList, musicList, videoList);
         mRef.child("users").child(userId).setValue(user);
     }
 }

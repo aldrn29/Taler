@@ -20,11 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class ProfileFragment extends Fragment {
 
     TextView user_id, user_email;
@@ -50,7 +45,7 @@ public class ProfileFragment extends Fragment {
                 User user = snapshot.getValue(User.class);
                 String userId = user.userId;
                 String userEmail = user.email;
-                int userPoint = user.point;
+                int userPoint = user.counter_story;
 
                 user_id.setText(userId);
                 user_email.setText(userEmail);

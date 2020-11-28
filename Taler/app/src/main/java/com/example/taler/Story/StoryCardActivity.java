@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,15 +32,18 @@ import java.util.ArrayList;
 public class StoryCardActivity extends AppCompatActivity {
     int CHECK_NUM = 0; // 스위치 변경확인
     ASRmasterAPI asr;
+
     ImageView cardImg;
     ImageButton toggleButton;
     ImageButton speechButton;
     TextView script, choice1, choice2, recorded;
-    String front_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2F";
+
     FirebaseDatabase mDatabase;
     DatabaseReference mUserRef, mDatabaseRef;
     FirebaseAuth mAuth;
     String title, choice1Str, choice2Str, recordedStr = "";
+    String front_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2F";
+
     //    Integer depth = 2;
     int num = 1;
     boolean leafNode = false;
@@ -53,10 +55,12 @@ public class StoryCardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseRef = mDatabase.getReference();
         final FirebaseUser currentUser = mAuth.getInstance().getCurrentUser();
         mUserRef = mDatabase.getReference("/users/" + currentUser.getUid());
+
         cardImg = findViewById(R.id.card_image);
         script = findViewById(R.id.script);
         choice1 = findViewById(R.id.choice1);
@@ -216,11 +220,11 @@ public class StoryCardActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-                int point = user.point;
+                int point = user.counter_story;
                 ArrayList<Boolean> endList = user.story_progress;
                 if(!endList.get(num)){
                     mUserRef.child("story_progress").child(num + "").setValue(true);
-                    mUserRef.child("point").setValue(point+1);
+                    mUserRef.child("counter_story").setValue(point+1);
                 }
             }
 

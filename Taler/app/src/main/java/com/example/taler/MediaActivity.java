@@ -12,12 +12,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.taler.Profile.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -43,8 +48,9 @@ public class MediaActivity extends AppCompatActivity {
     int fileNum = 1;
     int hintNum = 0;
 
-    private DatabaseReference mRef;
-    FirebaseAuth firebaseAuth;
+    FirebaseDatabase mDatabase;
+    DatabaseReference mUserRef, mDatabaseRef;
+    FirebaseAuth mAuth;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -64,8 +70,11 @@ public class MediaActivity extends AppCompatActivity {
         textResult = findViewById(R.id.textView_result);
         textTemp = findViewById(R.id.textView_temp);
 
-        mRef = FirebaseDatabase.getInstance().getReference();
-        firebaseAuth = FirebaseAuth.getInstance();
+
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseRef = mDatabase.getReference();
+        final FirebaseUser currentUser = mAuth.getInstance().getCurrentUser();
+        mUserRef = mDatabase.getReference("/users/" + currentUser.getUid());
 
         // 음성인식 API 연결
         asr = new ASRmasterAPI(recordButton, textResult, 1);
@@ -146,9 +155,7 @@ public class MediaActivity extends AppCompatActivity {
                 boolean check = asr.resultCheck(textTemp);
 
                 if (check) {
-                    // Todo: 해당 번호(fileNum: 1~10까지 있음) 데이터 넘기기
-                    // FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-                    // mRef.child("users").child(currentUser.getUid()).child("##").setValue(1);
+                    checkProgress(fileNum);
 
                     Toast.makeText(getApplicationContext(), "정답입니다!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -230,5 +237,26 @@ public class MediaActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return result.trim();
+    }
+
+    private void checkProgress(final int num){
+//        System.out.println("NUM: "+num);
+        mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                int point = user.counter_video;
+                ArrayList<Boolean> endList = user.video_progress;
+                if(!endList.get(num)){
+                    mUserRef.child("video_progress").child(num + "").setValue(true);
+                    mUserRef.child("counter_video").setValue(point+1);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
