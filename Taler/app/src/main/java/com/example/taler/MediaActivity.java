@@ -48,6 +48,7 @@ public class MediaActivity extends AppCompatActivity {
     int fileNum = 1;
     int hintNum = 0;
 
+    //RDB
     FirebaseDatabase mDatabase;
     DatabaseReference mUserRef, mDatabaseRef;
     FirebaseAuth mAuth;
@@ -70,7 +71,7 @@ public class MediaActivity extends AppCompatActivity {
         textResult = findViewById(R.id.textView_result);
         textTemp = findViewById(R.id.textView_temp);
 
-
+        //RDB
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseRef = mDatabase.getReference();
         final FirebaseUser currentUser = mAuth.getInstance().getCurrentUser();
