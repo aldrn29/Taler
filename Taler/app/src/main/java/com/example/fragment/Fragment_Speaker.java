@@ -27,6 +27,7 @@ import com.example.taler.MainActivity;
 import com.example.taler.MediaActivity;
 import com.example.taler.MediaMenu.MediaMenuActivity;
 import com.example.taler.PopTestActivity;
+import com.example.taler.Profile.ProfileFragment;
 import com.example.taler.SharedViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -286,7 +287,7 @@ public class Fragment_Speaker extends Fragment {
                     fab2.setClickable(true);
                     isFabOpen = true;
                 }
-                Intent intent = new Intent(getActivity(), FloatingActivity.class);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
             }
         });
