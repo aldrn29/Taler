@@ -13,13 +13,13 @@ public class User {
     public String userId;
     public String email;
     public int point;
-    public ArrayList<Integer> story_progress;
+    public ArrayList<Boolean> story_progress;
 
     public User() {
         //디폴트 생성자, DataSnapshot.getValue(User.class) 필요사항
     }
 
-    public User(String userId, String email, int point, ArrayList<Integer> story_progress) {
+    public User(String userId, String email, int point, ArrayList<Boolean> story_progress) {
         this.userId = userId;
         this.email = email;
         this.point = point;

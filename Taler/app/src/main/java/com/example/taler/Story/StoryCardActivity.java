@@ -1,5 +1,6 @@
 package com.example.taler.Story;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,11 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.taler.ASRmasterAPI;
+import com.example.taler.Profile.User;
 import com.example.taler.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -34,13 +39,14 @@ public class StoryCardActivity extends AppCompatActivity {
     TextView script, choice1, choice2, recorded;
     String front_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/StoryCardDir%2F";
     FirebaseDatabase mDatabase;
-    DatabaseReference mDatabaseRef;
+    DatabaseReference mUserRef, mDatabaseRef;
     FirebaseAuth mAuth;
-    String title, choice1Str, choice2Str, recordedStr= "";
-//    Integer depth = 2;
+    String title, choice1Str, choice2Str, recordedStr = "";
+    //    Integer depth = 2;
     int num = 1;
     boolean leafNode = false;
     boolean toggle_script = false;
+    boolean newCollection = false;
 
 
     @Override
@@ -50,6 +56,7 @@ public class StoryCardActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance();
         mDatabaseRef = mDatabase.getReference();
         final FirebaseUser currentUser = mAuth.getInstance().getCurrentUser();
+        mUserRef = mDatabase.getReference("/users/" + currentUser.getUid());
         cardImg = findViewById(R.id.card_image);
         script = findViewById(R.id.script);
         choice1 = findViewById(R.id.choice1);
@@ -58,7 +65,7 @@ public class StoryCardActivity extends AppCompatActivity {
         speechButton = findViewById(R.id.speech_button);
         recorded = findViewById(R.id.recorded_text);
         asr = new ASRmasterAPI(speechButton, recorded, 1);
-        recordedStr= asr.getResult();
+        recordedStr = asr.getResult();
 
         Bundle extras = getIntent().getExtras();
 
@@ -67,17 +74,36 @@ public class StoryCardActivity extends AppCompatActivity {
         //leafnode 판단을 하고 아니라면 정상작동을하고 맞다면 false로 바꾸고 마지막 엔딩 동작을 한다.
         leafNode = false;
         showCard(num);
+
+        cardImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!toggle_script) {
+                    // 이미지 뷰 불투명, 텍스트 보이기
+                    cardImg.setAlpha((float) 0.3);
+                    script.setVisibility(View.VISIBLE);
+                    toggle_script = true;
+                    System.out.println("Visible");
+                } else {
+                    cardImg.setAlpha((float) 1.0);
+                    toggle_script = false;
+                    script.setVisibility(View.GONE);
+                    System.out.println("Gone");
+                }
+            }
+        });
+
         choice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Todo 앞에 숫자도 붙이자
-                updateUserPoint(currentUser.getUid(), 3);
+//                updateUserPoint(currentUser.getUid(), 3);
                 choice1Str = choice1.getText().toString();
-                if(num < 8 && choice1Str.equals(recorded.getText().toString())) {
-                    num = num*2;
+                if (num < 8 && choice1Str.equals(recorded.getText().toString())) {
+                    num = num * 2;
                     script.setVisibility(View.GONE);
                     toggle_script = false;
-                    if(num > 3){
+                    if (num > 3) {
                         leafNode = true;
                     }
                     showCard(num);
@@ -91,9 +117,9 @@ public class StoryCardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 choice2Str = choice2.getText().toString();
 
-                if(num < 8 && choice2Str.equals(recorded.getText().toString())) {
-                    num = num*2 + 1;
-                    if(num > 3){
+                if (num < 8 && choice2Str.equals(recorded.getText().toString())) {
+                    num = num * 2 + 1;
+                    if (num > 3) {
                         leafNode = true;
                     }
                     script.setVisibility(View.GONE);
@@ -105,7 +131,6 @@ public class StoryCardActivity extends AppCompatActivity {
         });
 
         // 스크립트 visibility Button
-
 
 
 //        //Button Event: play and replay
@@ -121,26 +146,6 @@ public class StoryCardActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-
-        cardImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!toggle_script){
-                    // 이미지 뷰 불투명, 텍스트 보이기
-                    cardImg.setAlpha((float) 0.3);
-                    script.setVisibility(View.VISIBLE);
-                    toggle_script = true;
-                    System.out.println("Visible");
-                }
-                else{
-                    cardImg.setAlpha((float) 1.0);
-                    toggle_script = false;
-                    script.setVisibility(View.GONE);
-                    System.out.println("Gone");
-                }
-            }
-        });
-
 
     }
 
@@ -174,19 +179,18 @@ public class StoryCardActivity extends AppCompatActivity {
         }).start();
     }
 
-    public void showCard(int num){
-        Picasso.get().load(front_url + title + "%2F" + "image" + "%2F"+ num + ".JPG?alt=media&token=" + num).fit().into(cardImg);
-        setTextFromUrl(script, front_url + title + "%2F" + "script" + "%2F"+ num + ".txt?alt=media&token=" + num);
-        if(num <= 3) {
-            setTextFromUrl(choice1, front_url + title + "%2F" + "choice1" + "%2F"+ num + ".txt?alt=media&token=" + num);
-            setTextFromUrl(choice2, front_url + title + "%2F" + "choice2" + "%2F"+ num + ".txt?alt=media&token=" + num);
+    public void showCard(int num) {
+        Picasso.get().load(front_url + title + "%2F" + "image" + "%2F" + num + ".JPG?alt=media&token=" + num).fit().into(cardImg);
+        setTextFromUrl(script, front_url + title + "%2F" + "script" + "%2F" + num + ".txt?alt=media&token=" + num);
+        if (num <= 3) {
+            setTextFromUrl(choice1, front_url + title + "%2F" + "choice1" + "%2F" + num + ".txt?alt=media&token=" + num);
+            setTextFromUrl(choice2, front_url + title + "%2F" + "choice2" + "%2F" + num + ".txt?alt=media&token=" + num);
             speechButton.setEnabled(true);
             recorded.setText("Speech");
             script.setVisibility(View.GONE);
             cardImg.setAlpha((float) 1.0);
             toggle_script = false;
-        }
-        else {
+        } else {
             choice1.setText("  ");
             choice2.setText("  ");
             choice1.setVisibility(View.GONE);
@@ -196,12 +200,34 @@ public class StoryCardActivity extends AppCompatActivity {
             script.setVisibility((View.VISIBLE));
             cardImg.setAlpha((float) 0.3);
             toggle_script = true;
+            checkEndCard(num-4);
         }
 
     }
 
-    private void updateUserPoint(String userId, int point){
-        DatabaseReference ref = mDatabase.getReference("/users/" + userId + "/point");
-        ref.setValue(point);
+//    private void updateUserPoint(String userId, int point) {
+//        DatabaseReference ref = mDatabase.getReference("/users/" + userId + "/point");
+//        ref.setValue(point);
+//    }
+
+    private void checkEndCard(final int num){
+        System.out.println("NUM: "+num);
+        mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                int point = user.point;
+                ArrayList<Boolean> endList = user.story_progress;
+                if(!endList.get(num)){
+                    mUserRef.child("story_progress").child(num + "").setValue(true);
+                    mUserRef.child("point").setValue(point+1);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

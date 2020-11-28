@@ -92,7 +92,11 @@ public class RegisterActivity extends AppCompatActivity {
 //    }
 
     private void writeNewUser(String userId, String name, String email){
-        ArrayList<Integer> defaultList = new ArrayList<>(Arrays.asList(0));
+        ArrayList<Boolean> defaultList = new ArrayList<>();
+        int num = 4;
+        for(int i = 0; i < num; i++){
+            defaultList.add(false);
+        }
         User user = new User(name, email, 0, defaultList);
         mRef.child("users").child(userId).setValue(user);
     }
