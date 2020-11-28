@@ -30,7 +30,7 @@ public class ProfileFragment extends Fragment {
     TextView user_id, user_email, user_point, textView3;
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabase;
-    DatabaseReference mUserRef;
+    DatabaseReference mUserIdRef, mUserEmailRef, mUserPointRef, mUserProgressRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +38,10 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         final FirebaseUser currentUser = mAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance();
-        mUserRef = mDatabase.getReference("/users/" + currentUser.getUid());
+        mUserIdRef = mDatabase.getReference("/users/" + currentUser.getUid() + "/userId");
+        mUserEmailRef = mDatabase.getReference("/users/" + currentUser.getUid() + "/email");
+        mUserPointRef = mDatabase.getReference("/users/" + currentUser.getUid() + "/point");
+        mUserProgressRef = mDatabase.getReference("/users/" + currentUser.getUid() + "/story_progress/0");
 
         user_id = view.findViewById(R.id.user_id);
         user_email = view.findViewById(R.id.user_email);
@@ -46,17 +49,54 @@ public class ProfileFragment extends Fragment {
         textView3 = view.findViewById(R.id.textView3);
         final ProgressBar collection_pb = view.findViewById(R.id.collection_pb);
 
-        mUserRef.addValueEventListener(new ValueEventListener() {
+        mUserIdRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
-                String userId = user.userId;
-                String userEmail = user.email;
-                int userPoint = user.point;
+                String value = snapshot.getValue(String.class);
+                user_id.setText(value);
+            }
 
-                user_id.setText(userId);
-                user_email.setText(userEmail);
-                user_point.setText(Integer.toString(userPoint));
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mUserEmailRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                user_email.setText(value);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mUserPointRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Integer value = snapshot.getValue(Integer.class);
+                user_point.setText(Integer.toString(value));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        mUserPointRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                ArrayList<Integer> progressList = snapshot.getValue(ArrayList.class);
+//                Integer value = progressList.size();
+//                textView3.setText(Integer.toString(value));
+//                textView3.setText(progressList.toString());
+                Integer value = snapshot.getValue(Integer.class);
+                textView3.setText(Integer.toString(value));
             }
 
             @Override
@@ -69,7 +109,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void setProgress(ProgressBar pb, int total, int progress) {
+    private void setProgress(ProgressBar pb, int total, int progress){
         pb.setMax(total);
         pb.setProgress(progress);
     }
