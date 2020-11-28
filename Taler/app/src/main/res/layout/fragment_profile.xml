@@ -64,7 +64,7 @@
         android:id="@+id/textView3"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="진척도 1: "
+        android:text="Story"
         android:textSize="15sp"
         android:gravity="start"
         app:layout_constraintHorizontal_bias="0.2"
@@ -74,7 +74,7 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <ProgressBar
-        android:id="@+id/collection_pb"
+        android:id="@+id/story_pb"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="110dp"
         android:layout_height="38dp"
@@ -87,7 +87,7 @@
         android:id="@+id/textView4"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="진척도 2: "
+        android:text="Music"
         android:textSize="15sp"
         android:gravity="start"
         app:layout_constraintHorizontal_bias="0.2"
@@ -97,7 +97,7 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <ProgressBar
-        android:id="@+id/collection_pb2"
+        android:id="@+id/music_pb"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="110dp"
         android:layout_height="38dp"
@@ -110,7 +110,7 @@
         android:id="@+id/textView5"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="진척도 3: "
+        android:text="Video"
         android:textSize="15sp"
         android:gravity="start"
         app:layout_constraintHorizontal_bias="0.2"
@@ -120,7 +120,7 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <ProgressBar
-        android:id="@+id/collection_pb3"
+        android:id="@+id/video_pb"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="110dp"
         android:layout_height="38dp"

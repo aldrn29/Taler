@@ -37,7 +37,9 @@ public class ProfileFragment extends Fragment {
 
         user_id = view.findViewById(R.id.user_id);
         user_email = view.findViewById(R.id.user_email);
-        final ProgressBar collection_pb = view.findViewById(R.id.collection_pb);
+        final ProgressBar storyPb = view.findViewById(R.id.story_pb);
+        final ProgressBar musicPb = view.findViewById(R.id.music_pb);
+        final ProgressBar videoPb = view.findViewById(R.id.video_pb);
 
         mUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -45,11 +47,15 @@ public class ProfileFragment extends Fragment {
                 User user = snapshot.getValue(User.class);
                 String userId = user.userId;
                 String userEmail = user.email;
-                int userPoint = user.counter_story;
+                int counterStory = user.counter_story;
+                int counterMusic = user.counter_music;
+                int counterVideo = user.counter_video;
 
                 user_id.setText(userId);
                 user_email.setText(userEmail);
-                setProgress(collection_pb, 4, userPoint);
+                setProgress(storyPb, 4, counterStory);
+                setProgress(musicPb, 17, counterMusic);
+                setProgress(videoPb, 10, counterVideo);
             }
 
             @Override
