@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Story.StoryCardActivity">
 
+
     <!-- 이미지 삽입 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout1"
@@ -58,7 +59,7 @@
             android:id="@+id/choice1"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/border_round_layout"
+            android:background="@drawable/custom_ripple_effect"
             android:text=""
             android:textSize="15sp"
             android:gravity="center"
@@ -75,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/border_round_layout"
+            android:background="@drawable/custom_ripple_effect"
             android:text=""
             android:textSize="15sp"
             android:gravity="center"
