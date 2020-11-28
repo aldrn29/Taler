@@ -57,6 +57,7 @@ public class ProfileFragment extends Fragment {
                 user_id.setText(userId);
                 user_email.setText(userEmail);
                 user_point.setText(Integer.toString(userPoint));
+                setProgress(collection_pb, 4, userPoint);
             }
 
             @Override
