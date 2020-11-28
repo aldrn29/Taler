@@ -49,6 +49,7 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.taler.R;
@@ -299,7 +300,19 @@ public class Fragment_Speaker extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class); //fragment_listen으로 값을 전달하기 위한 것.
+        /*
+        final TextView clearText = getView().findViewById(R.id.tv_user_speaking);
+        sharedViewModel.getData().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s){
+                clearText.setText(s);
+        }
+        });
+
+         */
     }
+
+
 
 
     //읽은 값을 스트링으로 반환.

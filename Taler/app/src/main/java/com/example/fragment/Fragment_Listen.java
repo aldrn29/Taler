@@ -54,6 +54,7 @@ public class Fragment_Listen extends Fragment {
     //StorageReference storageRef = storage.getReference();
     final int pausePosition=0;
     private SharedViewModel sharedViewModel;
+    String clear = " ";
 
     //로그를 찍어보기 위한 것
     private static final String TAG = "Fragment_Listen";
@@ -94,6 +95,7 @@ public class Fragment_Listen extends Fragment {
             @Override
             public void onClick(View view) {
                 playAudio(url_default);
+                //sharedViewModel.setData(clear);//////////////////////////////////////////////////////
             }});
         //일시정지 버튼은 만들자. 정지만 됨.----------------------------------------------------------//
         /*
@@ -151,20 +153,7 @@ public class Fragment_Listen extends Fragment {
             find_kor(eng_text, full_eng_common_url);
             eng_text.setTextColor(Color.parseColor("#F3F3F3"));
 
-            //버튼.
-            /*
-            answer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/" + directoryName[2] + "%2F";
-                    String full_eng_common_url = eng_common_url + "1.txt?alt=media&token=eng_1";
-                    find_kor(eng_text, full_eng_common_url);
-                    eng_text.setTextColor(Color.BLACK);
-                    Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
-                }
-            });
 
-             */
 
         }
         //-----------------------------------------------------------------------------------------//
@@ -205,18 +194,6 @@ public class Fragment_Listen extends Fragment {
                     }
                 });
 
-                //일시정지 버튼은 만들자. 아직 작동 안됨(정지된 뒤 바로 이어서 재생함)--------------------//
-                /*
-                Button pause = getView().findViewById(R.id.btn_delay);
-                pause.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        pauseAudio();
-                        if (player != null && !player.isPlaying()){
-                            resumeAudio();
-                        }
-                    }
-                });*/
 
                 //------------------------재생속도 기능---------------------------------------------//
                 slower.setOnClickListener(new View.OnClickListener() {
@@ -264,22 +241,7 @@ public class Fragment_Listen extends Fragment {
                 find_kor(eng_text, full_eng_common_url);
                 eng_text.setTextColor(Color.parseColor("#F3F3F3"));
 
-                //버튼 사용시
-                /*
-                answer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        final String eng_fileName = "eng_"+textCounter.getText().toString();
-                        String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[2]+"%2F";
-                        String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
-                        find_kor(eng_text, full_eng_common_url);
 
-                        eng_text.setTextColor(Color.BLACK);
-                        Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                 */
                 //---------------------영문 가사--끝-------------------------------------------------//
             }
         });
@@ -309,18 +271,6 @@ public class Fragment_Listen extends Fragment {
                         playAudio(url);
                     }});
 
-                //일시정지 버튼은 만들자. 아직 작동 안됨.----------------------------------------------//
-                /*
-                Button pause = getView().findViewById(R.id.btn_delay);
-                pause.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        pauseAudio();
-                        if (player != null && !player.isPlaying()){
-                            resumeAudio();
-                        }
-                    }
-                });*/
                 //------------------------재생속도 기능--- 아직 하는 중 ...--------------------------//
                 slower.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -366,23 +316,7 @@ public class Fragment_Listen extends Fragment {
                 String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
                 find_kor(eng_text, full_eng_common_url);
                 eng_text.setTextColor(Color.parseColor("#F3F3F3"));
-                //
 
-                //버튼 사용시
-               /*
-                answer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        final String eng_fileName = "eng_"+textCounter.getText().toString();
-                        String eng_common_url = "https://firebasestorage.googleapis.com/v0/b/taler-db.appspot.com/o/"+directoryName[2]+"%2F";
-                        String full_eng_common_url = eng_common_url + textCounter.getText().toString()+".txt?alt=media&token="+eng_fileName;
-                        find_kor(eng_text, full_eng_common_url);
-                        eng_text.setTextColor(Color.BLACK);
-                        Toast.makeText(getActivity(), "answer", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                */
                 //---------------------영문 가사--끝-------------------------------------------------//
                 if (count == 1) {
                     textCounter.setText(Integer.toString(1));
@@ -410,24 +344,31 @@ public class Fragment_Listen extends Fragment {
                 answer2 = answer2.replaceAll(" \n", "");
 
                 TextView temp3 = getView().findViewById(R.id.tv_pageNum);
-                int temp4 = Integer.parseInt(temp3.getText().toString());
+                int temp4 = Integer.parseInt(temp3.getText().toString());       ///////////////페이지번호///////////////
+
 
                 temp2 = s;     //speaker fragment에서 받아온 값.
                 if (temp2.equals(answer2)) {
                     temp.setTextColor(Color.BLUE);
-                    Toast.makeText(getActivity(), "정답입니다!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "정답입니다!"+ temp4, Toast.LENGTH_LONG).show();       //temp4가 성공한 페이지 번호임////
                     //정답인 경우 점수가 올라가도록 구현
+                    //clear.setText(" "); //결과를 전송하고 말한 값을 지운다.
 
                 }
-                else if(temp4 == 6){
+                else if(temp4 == 6){        //이유없는 오류가 나서 무조건 맞도록 하였다.
                     temp.setTextColor(Color.BLUE);
-                    Toast.makeText(getActivity(), "정답입니다!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "정답입니다!"+temp4, Toast.LENGTH_LONG).show();
                     //정답인 경우 점수가 올라가도록 구현
+                    //clear.setText(" "); //결과를 전송하고 말한 값을 지운다.
+
                 }
                 else {
                     //temp.setTextColor(Color.GREEN);
                     Toast.makeText(getActivity(), "다시 시도해보세요..", Toast.LENGTH_LONG).show();
+                    //clear.setText(" "); //결과를 전송하고 말한 값을 지운다.
+
                 }
+                //clear.setText(" "); //결과를 전송하고 말한 값을 지운다.
             }});
     }
 
