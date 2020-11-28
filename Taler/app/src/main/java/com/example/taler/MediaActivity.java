@@ -241,15 +241,15 @@ public class MediaActivity extends AppCompatActivity {
     }
 
     private void checkProgress(final int num){
-//        System.out.println("NUM: "+num);
         mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int nNum = num-1;
                 User user = snapshot.getValue(User.class);
                 int point = user.counter_video;
                 ArrayList<Boolean> endList = user.video_progress;
-                if(!endList.get(num)){
-                    mUserRef.child("video_progress").child(num + "").setValue(true);
+                if(!endList.get(nNum)){
+                    mUserRef.child("video_progress").child(nNum + "").setValue(true);
                     mUserRef.child("counter_video").setValue(point+1);
                 }
             }
