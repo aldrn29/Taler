@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/email_tv"
-        android:layout_width="70dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="E-mail"
         android:textSize="15sp"
@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/password_tv"
-        android:layout_width="70dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Password"
         android:textSize="15sp"
@@ -94,7 +94,7 @@
         android:id="@+id/button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LOGIN"
+        android:text="로그인"
         app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/button_sign_in"
@@ -105,7 +105,7 @@
         android:id="@+id/button_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="REGISTER"
+        android:text="회원가입"
         app:layout_constraintTop_toTopOf="@id/button_login"
         app:layout_constraintLeft_toRightOf="@id/button_login"
         app:layout_constraintRight_toRightOf="parent" />
