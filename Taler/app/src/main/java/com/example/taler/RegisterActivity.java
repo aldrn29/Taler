@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         email_join = findViewById(R.id.sign_up_email);
         nickname_join = findViewById(R.id.user_id);
         pwd_join = findViewById(R.id.sign_up_password);
-        ImageButton btn_register = findViewById(R.id.button_register);
+        Button btn_register = findViewById(R.id.button_register);
 
         password_ref = findViewById(R.id.tv_refer);
         password_ref.setText("*비밀번호는 영문자와 숫자를 섞어서 작성하세요*");

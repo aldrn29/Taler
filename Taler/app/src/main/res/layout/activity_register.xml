@@ -7,22 +7,6 @@
     android:background="#2CEA8C0F"
     tools:context=".RegisterActivity">
 
-    <!-- test -->
-
-    <ImageButton
-        android:id="@+id/button_register"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="140dp"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/menu1" />
-
     <EditText
         android:id="@+id/user_id"
         android:layout_width="wrap_content"
@@ -36,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.611"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_email" />
+        app:layout_constraintTop_toBottomOf="@id/sign_up_email" />
 
     <TextView
         android:id="@+id/nickname_tv"
@@ -83,11 +67,11 @@
         android:backgroundTint="#100101"
         android:ems="10"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@id/button_register"
+        app:layout_constraintBottom_toTopOf="@id/tv_refer"
         app:layout_constraintHorizontal_bias="0.614"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_id"
+        app:layout_constraintTop_toBottomOf="@id/user_id"
         app:layout_constraintVertical_bias="0.235" />
 
     <TextView
@@ -101,16 +85,6 @@
         app:layout_constraintEnd_toStartOf="@+id/sign_up_password"
         app:layout_constraintStart_toStartOf="@id/email_tv" />
 
-    <TextView
-        android:id="@+id/tv_refer"
-        android:layout_width="172dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="68dp"
-        android:text="TextView"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_up_password" />
 
     <TextView
         android:id="@+id/tv_register_title"
@@ -131,5 +105,28 @@
         app:layout_constraintLeft_toRightOf="@id/tv_register_title"
         app:layout_constraintTop_toTopOf="@id/tv_register_title"
         app:srcCompat="@drawable/splash_1" />
+
+
+    <TextView
+        android:id="@+id/tv_refer"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="등록"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_refer"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
