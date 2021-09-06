@@ -2,7 +2,7 @@
 음성인식을 이용한 영어 회화 학습 어플리케이션
 
 ## 시연영상
-https://youtu.be/vx2ixbu-jFY
+https://www.youtube.com/watch?v=jfjGASUqI94
 
 ## 어플리케이션 설명
 ### Taler?
