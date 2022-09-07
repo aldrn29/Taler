@@ -1,13 +1,16 @@
 # Taler  
 음성인식을 이용한 영어 회화 학습 어플리케이션
 
+<br><br>   
 ## 시연영상
 https://www.youtube.com/watch?v=jfjGASUqI94
 
+<br><br>   
 ## 어플리케이션 설명
 ### Taler?
 <img src = "image/발표자료/발표자료 (4).png">
 
+<br><br>   
 ### 시나리오
 #### 1. 스토리 카드 콘텐츠  
 <img src = "image/발표자료/발표자료 (8).png">
